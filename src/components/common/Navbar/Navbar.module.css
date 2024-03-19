@@ -1,0 +1,7 @@
+.container {
+    @apply flex sticky top-0 z-50 w-full left-0 px-4 py-4 justify-end items-end bg-blue-900 shadow-xl shadow-xl;
+}
+
+.link {
+    @apply text-sm text-white text-center mx-3 hover:text-gray-500 cursor-pointer;
+}

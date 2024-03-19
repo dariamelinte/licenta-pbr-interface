@@ -1,8 +1,10 @@
+import Page from "@/layouts/Page";
+
 const Index = () => {
   return (
-    <div>
+    <Page>
       hello world
-    </div>
+    </Page>
   );
 };
 
