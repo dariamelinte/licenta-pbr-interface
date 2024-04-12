@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Navbar } from '@/components/common';
 
-const TITLE = 'JobDescription Maker';
+const TITLE = 'CSP Interface';
 
 interface PageProps {
   title?: string;
@@ -18,7 +18,7 @@ export function PageMeta({ children }: { children: React.ReactNode }) {
 function Page({
   children,
   title = TITLE,
-  errorMessage,
+  errorMessage, 
 }: PropsWithChildren<PageProps>) {
   let content = (
     <>
