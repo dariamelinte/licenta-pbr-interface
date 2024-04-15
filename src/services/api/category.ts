@@ -1,5 +1,4 @@
 import type { AxiosPromise } from "axios";
-import axios from "axios";
 
 import { httpService } from "@/services";
 import {
@@ -27,18 +26,18 @@ export const getCategoryById = async (
 export const createCategory = async (
   category: CategoryType
 ): AxiosPromise<AddApiType<CategoryApiType>> => {
-  return axios.post("/category", { category });
+  return httpService.post("/category", { category });
 };
 
 export const updateCategory = async (
   id: string,
   category: Partial<CategoryType>
 ): AxiosPromise<UpdateApiType<CategoryApiType>> => {
-  return axios.patch(`/category/${id}`, { category });
+  return httpService.patch(`/category/${id}`, { category });
 };
 
 export const deleteCategory = async (
   id: string
 ): AxiosPromise<DeleteApiType> => {
-  return axios.delete(`/category/${id}`);
+  return httpService.delete(`/category/${id}`);
 };

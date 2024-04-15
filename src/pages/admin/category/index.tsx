@@ -16,11 +16,8 @@ const Index = () => {
   const handleGetCategories = async () => {
     try {
       const { data } = await getCategories();
-      console.log(1, data.success);
-
+  
       if (!data.success) throw Error(data.error);
-
-      console.log(2, data);
 
       setCategories(data.data);
       setLoading(false);
@@ -45,8 +42,6 @@ const Index = () => {
   useEffect(() => {
     handleGetCategories();
   }, []);
-
-  console.log(loading, categories);
 
   return (
     <Page>
