@@ -1,1 +1,10 @@
+export { default as CheckCircle } from "./CheckCircle";
+export { default as ChevronDoubleLeft } from "./ChevronDoubleLeft";
+export { default as ChevronDoubleRight } from "./ChevronDoubleRight";
+export { default as ChevronDown } from "./ChevronDown";
+export { default as ChevronLeft } from "./ChevronLeft";
+export { default as ChevronRight } from "./ChevronRight";
+export { default as PencilSquare } from "./PencilSquare";
+export { default as Trash } from "./Trash";
 export { default as UserCircle } from "./UserCircle";
+export { default as XCircle } from "./XCircle";

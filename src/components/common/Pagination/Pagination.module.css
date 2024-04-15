@@ -1,0 +1,11 @@
+.pagination {
+    @apply flex items-center gap-2 mt-12;
+}
+
+.icon {
+    @apply h-5;
+}
+
+.details {
+    @apply flex items-center gap-1 pl-5;
+}

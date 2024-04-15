@@ -3187,12 +3187,24 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tanstack/react-table@^8.16.0":
+  version "8.16.0"
+  resolved "https://npm-registry.nimbus-internal.nmbapp.net/@tanstack/react-table/-/react-table-8.16.0.tgz#92151210ff99d6925353d7a2205735d9c31af48c"
+  integrity sha512-rKRjnt8ostqN2fercRVOIH/dq7MAmOENCMvVlKx6P9Iokhh6woBGnIZEkqsY/vEJf1jN3TqLOb34xQGLVRuhAg==
+  dependencies:
+    "@tanstack/table-core" "8.16.0"
+
 "@tanstack/react-virtual@^3.0.0-beta.60":
   version "3.1.3"
   resolved "https://npm-registry.nimbus-internal.nmbapp.net/@tanstack/react-virtual/-/react-virtual-3.1.3.tgz#4ef2a7dd819a7dd2b634d50cbd6ba498f06529ec"
   integrity sha512-YCzcbF/Ws/uZ0q3Z6fagH+JVhx4JLvbSflgldMgLsuvB8aXjZLLb3HvrEVxY480F9wFlBiXlvQxOyXb5ENPrNA==
   dependencies:
     "@tanstack/virtual-core" "3.1.3"
+
+"@tanstack/table-core@8.16.0":
+  version "8.16.0"
+  resolved "https://npm-registry.nimbus-internal.nmbapp.net/@tanstack/table-core/-/table-core-8.16.0.tgz#7b58018dd3cec8e0015fe22d6bb24d18d33c891f"
+  integrity sha512-dCG8vQGk4js5v88/k83tTedWOwjGnIyONrKpHpfmSJB8jwFHl8GSu1sBBxbtACVAPtAQgwNxl0rw1d3RqRM1Tg==
 
 "@tanstack/virtual-core@3.1.3":
   version "3.1.3"
@@ -3365,6 +3377,11 @@
   version "0.0.29"
   resolved "https://npm-registry.nimbus-internal.nmbapp.net/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+
+"@types/lodash@^4.17.0":
+  version "4.17.0"
+  resolved "https://npm-registry.nimbus-internal.nmbapp.net/@types/lodash/-/lodash-4.17.0.tgz#d774355e41f372d5350a4d0714abb48194a489c3"
+  integrity sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==
 
 "@types/mime-types@^2.1.0":
   version "2.1.4"
