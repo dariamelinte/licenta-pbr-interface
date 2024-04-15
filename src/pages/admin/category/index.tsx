@@ -1,9 +1,13 @@
+import { VerticalMenu } from "@/components/common/VerticalMenu";
 import Page from "@/layouts/Page";
 
 const Index = () => {
   return (
     <Page>
-      hello world
+      <div className="flex">
+        <VerticalMenu module="admin" />
+        hello world
+      </div>
     </Page>
   );
 };
