@@ -8,15 +8,16 @@ import useStore from "@/stores";
 import styles from "./ConfirmationDialog.module.css";
 
 export const ConfirmationDialog = () => {
-  const { isDialogOpen, confirmDialog, setIsDialogOpen, onConfirmDialog } =
-    useStore();
+  const { isOpen, content, setIsOpen, onConfirm } = useStore(
+    (state) => state.confirmDialog
+  );
 
   return (
-    <Transition appear show={isDialogOpen} as={Fragment}>
+    <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
-        onClose={() => setIsDialogOpen(false)}
+        onClose={() => setIsOpen(false)}
       >
         <Transition.Child
           as={Fragment}
@@ -43,14 +44,14 @@ export const ConfirmationDialog = () => {
             >
               <Dialog.Panel className={styles.panel}>
                 <Dialog.Title as="h3" className={styles.title}>
-                  {confirmDialog.title}
+                  {content.title}
                 </Dialog.Title>
-                <p className={styles.content}>{confirmDialog.content}</p>
+                <p className={styles.content}>{content.content}</p>
 
                 <div className={styles.row}>
                   <Button
                     className={cx(styles.button, "m-0 md:mr-4")}
-                    onClick={() => setIsDialogOpen(false)}
+                    onClick={() => setIsOpen(false)}
                     theme="base"
                   >
                     Cancel
@@ -58,11 +59,11 @@ export const ConfirmationDialog = () => {
                   <Button
                     className={styles.button}
                     onClick={() => {
-                      onConfirmDialog();
-                      setIsDialogOpen(false);
+                      onConfirm();
+                      setIsOpen(false);
                     }}
                   >
-                    {confirmDialog.action}
+                    {content.action}
                   </Button>
                 </div>
               </Dialog.Panel>

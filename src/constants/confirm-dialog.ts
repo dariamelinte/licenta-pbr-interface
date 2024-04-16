@@ -1,4 +1,4 @@
-import type { ConfirmDialogType } from '@/types/common/ConfirmDialog';
+import type { ConfirmDialogType } from '@/types/common/confirmDialog';
 
 export const confirm: { [key: string]: ConfirmDialogType } = {
   delete: {

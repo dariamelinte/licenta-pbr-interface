@@ -1,21 +1,12 @@
 import { create } from 'zustand';
 
-import type { StoreType } from '@/types/common/Store';
+import { StoreType } from '@/types/store';
 
-const useStore = create<StoreType>((set) => ({
-  level: '',
-  isDialogOpen: false,
-  confirmDialog: {
-    title: '',
-    content: '',
-    action: '',
-  },
-  onConfirmDialog: () => {},
+import { confirmDialogSlice } from './confirmDialog';
 
-  setLevel: (level) => set({ level }),
-  setIsDialogOpen: (isDialogOpen) => set({ isDialogOpen }),
-  setConfirmDialog: (confirmDialog) => set({ confirmDialog }),
-  setOnConfirmDialog: (onConfirmDialog) => set({ onConfirmDialog }),
-}));
+
+const useStore = create<StoreType>((...a) => ({
+  ...confirmDialogSlice(...a),
+}))
 
 export default useStore;

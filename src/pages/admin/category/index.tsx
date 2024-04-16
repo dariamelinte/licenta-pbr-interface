@@ -9,13 +9,15 @@ import useStore from "@/stores";
 import { VerticalMenuPage } from "@/layouts";
 import { categoryColumns } from "@/components/common/Tables";
 import { confirm } from "@/constants/confirm-dialog";
-import { ConfirmDialogType } from "@/types/common/ConfirmDialog";
+import { ConfirmDialogType } from "@/types/store/confirmDialog";
 
 const Index = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [categories, setCategories] = useState<CategoryApiType[]>([]);
 
-  const { setConfirmDialog, setIsDialogOpen, setOnConfirmDialog } = useStore();
+  const { setContent, setIsOpen, setOnConfirm } = useStore(
+    (state) => state.confirmDialog
+  );
 
   const handleGetCategories = async () => {
     try {
@@ -53,9 +55,9 @@ const Index = () => {
   }, []);
 
   const handleConfirmDelete = (id: string) => {
-    setIsDialogOpen(true);
-    setConfirmDialog(confirm.delete as ConfirmDialogType);
-    setOnConfirmDialog(() => handleDeleteCategories(id));
+    setIsOpen(true);
+    setContent(confirm.delete as ConfirmDialogType);
+    setOnConfirm(() => handleDeleteCategories(id));
   };
 
   if (loading) {

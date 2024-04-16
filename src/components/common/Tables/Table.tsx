@@ -23,9 +23,10 @@ type TableProps<T> = {
   title: string;
   data: T[];
   columns: (columnHelper: ColumnHelper<T>) => AccessorKeyColumnDef<T, any>[];
+  onAddData?: () => void;
 };
 
-export function Table<T>({ title, data, columns }: TableProps<T>) {
+export function Table<T>({ title, data, columns, onAddData }: TableProps<T>) {
   const columnHelper = createColumnHelper<TableProps<T>["data"][number]>();
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -46,7 +47,7 @@ export function Table<T>({ title, data, columns }: TableProps<T>) {
     <div className={styles.container}>
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>{title}</h2>
-        <Button icon={<Plus />} />
+        {onAddData ? <Button icon={<Plus />} onClick={onAddData} /> : null}
       </div>
       <table className={styles.table}>
         <thead className={styles.header}>
