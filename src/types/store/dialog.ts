@@ -1,16 +1,13 @@
-export type ConfirmDialogType = {
+export type DialogType = {
   title: string;
   content: string;
   action: string;
 };
 
-export type ConfirmDialogStoreType = {
-  confirmDialog: {
+export type DialogStoreType = {
+  dialog: {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
-  
-    content: ConfirmDialogType;
-    setContent: (content: ConfirmDialogType) => void;
   
     onConfirm: () => void;
     setOnConfirm: (onConfirm: () => void) => void;

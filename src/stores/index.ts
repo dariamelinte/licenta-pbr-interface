@@ -2,12 +2,12 @@ import { create } from 'zustand';
 
 import { StoreType } from '@/types/store';
 
-import { confirmDialogSlice } from './confirmDialog';
+import { dialogSlice } from './dialog';
 import { categorySlice } from './category';
 
 
 const useStore = create<StoreType>((...a) => ({
-  ...confirmDialogSlice(...a),
+  ...dialogSlice(...a),
   ...categorySlice(...a)
 }))
 

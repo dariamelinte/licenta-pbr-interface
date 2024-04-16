@@ -1,6 +1,6 @@
 import { BoolResponse } from './BoolResponse';
 import { Button } from './Buttons';
-import { ConfirmationDialog } from './ConfirmationDialog';
+import * as Dialog from './Dialogs';
 import * as Form from './Form';
 import { Loading } from './Loading';
 import { Navbar } from './Navbar';
@@ -12,7 +12,7 @@ import * as Table from './Tables';
 export {
   BoolResponse,
   Button,
-  ConfirmationDialog,
+  Dialog,
   Form,
   Loading,
   Navbar,

@@ -1,6 +1,6 @@
-import type { ConfirmDialogType } from '@/types/common/confirmDialog';
+import type { DialogType } from '@/types/common/dialog';
 
-export const confirm: { [key: string]: ConfirmDialogType } = {
+export const confirm: { [key: string]: DialogType } = {
   delete: {
     title: 'Are you sure?',
     content:

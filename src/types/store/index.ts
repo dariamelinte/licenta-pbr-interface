@@ -1,4 +1,4 @@
 import { CategoryStoreType } from "./category";
-import { ConfirmDialogStoreType } from "./confirmDialog";
+import { DialogStoreType } from "./dialog";
 
-export type StoreType =  ConfirmDialogStoreType & CategoryStoreType;
+export type StoreType =  DialogStoreType & CategoryStoreType;
