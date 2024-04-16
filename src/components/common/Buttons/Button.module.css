@@ -63,3 +63,8 @@
 .text {
   @apply p-0;
 }
+
+/* Rounded */
+.rounded {
+  @apply rounded-full;
+}

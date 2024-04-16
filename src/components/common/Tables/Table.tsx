@@ -1,4 +1,8 @@
-import type { SortingState } from "@tanstack/react-table";
+import type {
+  AccessorKeyColumnDef,
+  ColumnHelper,
+  SortingState,
+} from "@tanstack/react-table";
 import {
   createColumnHelper,
   flexRender,
@@ -8,53 +12,27 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import cx from "classnames";
-import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { ConfirmationDialog, Pagination } from "@/components/common";
-import { ChevronDown } from "@/components/icons";
-import useStore from "@/stores";
-import { confirm } from "@/constants/confirm-dialog";
-import { CategoryApiType } from "@/types/common/api";
-import type { ConfirmDialogType } from "@/types/common/ConfirmDialog";
-
-import type { IdColProps } from "./columns/category";
-import { columns } from "./columns/category";
+import { Button, Pagination } from "@/components/common";
+import { ChevronDown, Plus } from "@/components/icons";
 
 import styles from "./Tables.module.css";
 
-type CategoryTableProps = IdColProps & {
-  categories: CategoryApiType[];
-  onDeleteCategory: (categoryId: string) => void;
+type TableProps<T> = {
+  title: string;
+  data: T[];
+  columns: (columnHelper: ColumnHelper<T>) => AccessorKeyColumnDef<T, any>[];
 };
 
-export default function CategoryTable({
-  categories,
-  onDeleteCategory,
-  ...rest
-}: CategoryTableProps) {
-  const router = useRouter();
-  const columnHelper =
-    createColumnHelper<CategoryTableProps["categories"][number]>();
-
-  const { setConfirmDialog, setIsDialogOpen, setOnConfirmDialog } = useStore();
-
-  const handleConfirmDelete = (batchId: string) => {
-    setIsDialogOpen(true);
-    setConfirmDialog(confirm.delete as ConfirmDialogType);
-    setOnConfirmDialog(() => onDeleteCategory(batchId));
-  };
+export function Table<T>({ title, data, columns }: TableProps<T>) {
+  const columnHelper = createColumnHelper<TableProps<T>["data"][number]>();
 
   const [sorting, setSorting] = useState<SortingState>([]);
 
-  const table = useReactTable({
-    data: categories,
-    columns: columns({
-      columnHelper,
-      onDelete: handleConfirmDelete,
-      onEdit: (id: string) => router.push(`/admin/category/${id}`),
-      ...rest,
-    }),
+  const table = useReactTable<T>({
+    data,
+    columns: columns(columnHelper),
     state: {
       sorting,
     },
@@ -65,7 +43,11 @@ export default function CategoryTable({
   });
 
   return (
-    <div className="w-full px-4 py-2">
+    <div className={styles.container}>
+      <div className={styles.titleContainer}>
+        <h2 className={styles.title}>{title}</h2>
+        <Button icon={<Plus />} />
+      </div>
       <table className={styles.table}>
         <thead className={styles.header}>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -116,7 +98,6 @@ export default function CategoryTable({
       </table>
 
       <Pagination table={table} />
-      <ConfirmationDialog />
     </div>
   );
 }

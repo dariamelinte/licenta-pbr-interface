@@ -5,6 +5,7 @@ export { default as ChevronDown } from "./ChevronDown";
 export { default as ChevronLeft } from "./ChevronLeft";
 export { default as ChevronRight } from "./ChevronRight";
 export { default as PencilSquare } from "./PencilSquare";
+export { default as Plus } from "./Plus";
 export { default as Trash } from "./Trash";
 export { default as UserCircle } from "./UserCircle";
 export { default as XCircle } from "./XCircle";

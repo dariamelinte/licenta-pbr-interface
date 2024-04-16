@@ -24,6 +24,7 @@ export type ButtonProps = {
   underlined?: boolean;
   children?: React.ReactNode;
   loading?: boolean;
+  rounded?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -39,6 +40,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       underlined,
       loading = false,
+      rounded = false,
       ...props
     },
     ref
@@ -52,6 +54,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           [styles[theme] as string]: !underlined,
           [styles['underlined-button'] as string]: underlined,
           [styles[`underlined-${theme}`] as string]: underlined,
+          [styles.rounded as string]: rounded,
         },
         styles[size],
         className

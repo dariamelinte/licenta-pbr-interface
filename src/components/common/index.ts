@@ -7,6 +7,7 @@ import { Navbar } from './Navbar';
 import { Options } from './Options';
 import { Pagination } from './Pagination';
 import { VerticalMenu } from './VerticalMenu';
+import * as Table from './Tables';
 
 export {
   BoolResponse,
@@ -18,4 +19,5 @@ export {
   Options,
   Pagination,
   VerticalMenu,
+  Table
 };

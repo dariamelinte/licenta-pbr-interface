@@ -6,7 +6,7 @@ import { Navbar } from '@/components/common';
 
 const TITLE = 'CSP Interface';
 
-interface PageProps {
+export interface PageProps {
   title?: string;
   errorMessage?: string;
 }
@@ -15,7 +15,7 @@ export function PageMeta({ children }: { children: React.ReactNode }) {
   return <div className="min-h-screen bg-slate-200">{children}</div>;
 }
 
-function Page({
+export function Page({
   children,
   title = TITLE,
   errorMessage, 
@@ -44,5 +44,3 @@ function Page({
     </>
   );
 }
-
-export default Page;

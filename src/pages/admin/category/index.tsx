@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-import CategoryTable from "@/components/common/Tables/CategoryTable";
-import { VerticalMenu } from "@/components/common/VerticalMenu";
-import Page from "@/layouts/Page";
-import { deleteCategory, getCategories } from "@/services/api/category";
+import { Loading, Table, ConfirmationDialog } from "@/components/common";
 import { ERROR_MESSAGE } from "@/constants/messages";
+import { deleteCategory, getCategories } from "@/services/api/category";
 import { CategoryApiType } from "@/types/common/api";
-import { Loading } from "@/components/common";
+import useStore from "@/stores";
+import { VerticalMenuPage } from "@/layouts";
+import { categoryColumns } from "@/components/common/Tables";
+import { confirm } from "@/constants/confirm-dialog";
+import { ConfirmDialogType } from "@/types/common/ConfirmDialog";
 
 const Index = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [categories, setCategories] = useState<CategoryApiType[]>([]);
 
+  const { setConfirmDialog, setIsDialogOpen, setOnConfirmDialog } = useStore();
+
   const handleGetCategories = async () => {
     try {
       const { data } = await getCategories();
-  
+
       if (!data.success) throw Error(data.error);
 
       setCategories(data.data);
@@ -33,6 +37,11 @@ const Index = () => {
 
       if (!data.success) throw Error(data.error);
 
+      const updatedCategories = categories.filter(
+        ({ _id: { $oid } }) => $oid !== id
+      );
+      setCategories(updatedCategories);
+
       toast.info(data.message);
     } catch (error: any) {
       toast.error(error || ERROR_MESSAGE.default);
@@ -43,20 +52,35 @@ const Index = () => {
     handleGetCategories();
   }, []);
 
+  const handleConfirmDelete = (id: string) => {
+    setIsDialogOpen(true);
+    setConfirmDialog(confirm.delete as ConfirmDialogType);
+    setOnConfirmDialog(() => handleDeleteCategories(id));
+  };
+
+  if (loading) {
+    return (
+      <VerticalMenuPage module="admin">
+        <Loading size="large" />
+      </VerticalMenuPage>
+    );
+  }
+
   return (
-    <Page>
-      <div className="flex">
-        <VerticalMenu module="admin" />
-        {loading ? (
-          <Loading size="large" />
-        ) : (
-          <CategoryTable
-            categories={categories}
-            onDeleteCategory={handleDeleteCategories}
-          />
-        )}
-      </div>
-    </Page>
+    <VerticalMenuPage module="admin">
+      <Table.Table<CategoryApiType>
+        title="Categories"
+        data={categories}
+        columns={(columnHelper) =>
+          categoryColumns({
+            columnHelper,
+            onDelete: handleConfirmDelete,
+            onEdit: (id) => console.log(`here ${id}`),
+          })
+        }
+      />
+      <ConfirmationDialog />
+    </VerticalMenuPage>
   );
 };
 

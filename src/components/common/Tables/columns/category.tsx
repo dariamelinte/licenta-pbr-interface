@@ -1,28 +1,22 @@
 import type { ColumnHelper } from "@tanstack/react-table";
-import Link from "next/link";
 
 import { Options } from "@/components/common";
 import { CategoryApiType } from "@/types/common/api";
 
-export type IdColProps = {
-  check?: boolean;
-  options?: boolean;
-};
-
-type ColumnsProps = IdColProps & {
+type CategoryColumnsProps = {
   columnHelper: ColumnHelper<CategoryApiType>;
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
 };
 
-export const columns = ({ columnHelper, onDelete, onEdit }: ColumnsProps) => [
+export const categoryColumns = ({
+  columnHelper,
+  onDelete,
+  onEdit,
+}: CategoryColumnsProps) => [
   columnHelper.accessor("name", {
-    header: "Category",
-    cell: (info) => (
-      <Link href={`/admin/category/${info.row.original._id.$oid}`}>
-        {info.getValue()}
-      </Link>
-    ),
+    header: "Name",
+    cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("_id.$oid", {
     header: "",

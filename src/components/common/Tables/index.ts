@@ -1,1 +1,2 @@
-export * from './CategoryTable';
+export * from './Table';
+export * from './columns';
