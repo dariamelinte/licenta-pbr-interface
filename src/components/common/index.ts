@@ -6,8 +6,8 @@ import { Loading } from './Loading';
 import { Navbar } from './Navbar';
 import { Options } from './Options';
 import { Pagination } from './Pagination';
-import { VerticalMenu } from './VerticalMenu';
 import * as Table from './Tables';
+import { VerticalMenu } from './VerticalMenu';
 
 export {
   BoolResponse,
@@ -18,6 +18,6 @@ export {
   Navbar,
   Options,
   Pagination,
+  Table,
   VerticalMenu,
-  Table
 };

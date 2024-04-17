@@ -1,6 +1,6 @@
-import { StateCreator } from "zustand";
+import type { StateCreator } from 'zustand';
 
-import { DialogStoreType } from "@/types/store/dialog";
+import type { DialogStoreType } from '@/types/store/dialog';
 
 export const dialogSlice: StateCreator<
   DialogStoreType,

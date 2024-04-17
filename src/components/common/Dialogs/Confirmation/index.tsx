@@ -1,13 +1,12 @@
-import { Dialog } from "@headlessui/react";
-import cx from "classnames";
+import { Dialog } from '@headlessui/react';
+import cx from 'classnames';
 
-import { Button } from "@/components/common";
-import useStore from "@/stores";
-import { ConfirmDialogType } from "@/types/store/dialog";
+import { Button } from '@/components/common';
+import useStore from '@/stores';
+import type { ConfirmDialogType } from '@/types/store/dialog';
 
-import { CustomDialog } from "../Dialog";
-
-import styles from "./Confirmation.module.css";
+import { CustomDialog } from '../Dialog';
+import styles from './Confirmation.module.css';
 
 export const Confirmation: React.FC<ConfirmDialogType> = ({
   title,
@@ -26,7 +25,7 @@ export const Confirmation: React.FC<ConfirmDialogType> = ({
 
         <div className={styles.row}>
           <Button
-            className={cx(styles.button, "m-0 md:mr-4")}
+            className={cx(styles.button, 'm-0 md:mr-4')}
             onClick={() => setOpen(null)}
             theme="base"
           >

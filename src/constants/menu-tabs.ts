@@ -8,27 +8,27 @@ export type ModuleType = 'admin';
 export const tabs: { [key in ModuleType]: MenuTab[] } = {
   admin: [
     {
-      text: "Categories",
+      text: 'Categories',
       url: `/admin/category`,
     },
     {
-      text: "Object Models",
+      text: 'Object Models',
       url: `/admin/object-model`,
     },
     {
-      text: "Users",
+      text: 'Users',
       url: `/admin/user`,
     },
     {
-      text: "Tests",
+      text: 'Tests',
       url: `/admin/tests`,
     },
     {
-      text: "Results",
+      text: 'Results',
       url: `/admin/result`,
     },
     {
-      text: "Groups",
+      text: 'Groups',
       url: `/admin/group`,
     },
   ],

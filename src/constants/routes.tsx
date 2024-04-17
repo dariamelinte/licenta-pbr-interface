@@ -1,15 +1,15 @@
-import { UserCircle } from "@/components/icons";
+import { UserCircle } from '@/components/icons';
 
 type Route = {
-    text: string;
-    url: string;
-    icon?: React.JSX.Element;
-  };
-  
+  text: string;
+  url: string;
+  icon?: React.JSX.Element;
+};
+
 export const routes: Route[] = [
-    {
-        text: 'Profile',
-        url: '/profile',
-        icon: <UserCircle />
-    },
+  {
+    text: 'Profile',
+    url: '/profile',
+    icon: <UserCircle />,
+  },
 ];

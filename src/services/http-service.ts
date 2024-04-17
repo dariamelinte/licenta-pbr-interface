@@ -9,7 +9,9 @@ const createApiConfig = () => {
       'Cache-Control': 'no-cache',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': '*',
-      'Access-Control-Allow-Headers': ['Origin, X-Requested-With, Content-Type, Accept']
+      'Access-Control-Allow-Headers': [
+        'Origin, X-Requested-With, Content-Type, Accept',
+      ],
     },
     httpsAgent: new https.Agent({
       rejectUnauthorized: false,

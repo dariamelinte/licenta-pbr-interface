@@ -1,11 +1,11 @@
-import { StateCreator } from "zustand";
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
+import type { StateCreator } from 'zustand';
 
-import * as service from "@/services/api/category";
-import { CategoryStoreType } from "@/types/store/category";
-import { ERROR_MESSAGE } from "@/constants/messages";
-import { CategoryType } from "@/types/common/category";
-import { CategoryApiType } from "@/types/common/api";
+import { ERROR_MESSAGE } from '@/constants/messages';
+import * as service from '@/services/api/category';
+import type { CategoryApiType } from '@/types/common/api';
+import type { CategoryType } from '@/types/common/category';
+import type { CategoryStoreType } from '@/types/store/category';
 
 export const categorySlice: StateCreator<
   CategoryStoreType,
@@ -48,7 +48,7 @@ export const categorySlice: StateCreator<
         if (!data.success) throw Error(data.error);
 
         const updatedCategories = get().category.categories.filter(
-          ({ _id: { $oid } }) => $oid !== id
+          ({ _id: { $oid } }) => $oid !== id,
         );
 
         set({
@@ -88,10 +88,10 @@ export const categorySlice: StateCreator<
         const { data } = await service.updateCategory(_id.$oid, category);
         if (!data.success) throw Error(data.error);
 
-        const categories = get().category.categories;
+        const { categories } = get().category;
 
         const updatedCategoryIndex = categories.findIndex(
-          ({ _id: { $oid } }) => $oid === _id.$oid
+          ({ _id: { $oid } }) => $oid === _id.$oid,
         );
 
         categories[updatedCategoryIndex] = data.data;

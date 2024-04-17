@@ -18,7 +18,7 @@ export function PageMeta({ children }: { children: React.ReactNode }) {
 export function Page({
   children,
   title = TITLE,
-  errorMessage, 
+  errorMessage,
 }: PropsWithChildren<PageProps>) {
   let content = (
     <>

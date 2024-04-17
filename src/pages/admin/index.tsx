@@ -1,5 +1,5 @@
-import { VerticalMenu } from "@/components/common/VerticalMenu";
-import Page from "@/layouts/Page";
+import { VerticalMenu } from '@/components/common/VerticalMenu';
+import { Page } from '@/layouts/Page';
 
 const Index = () => {
   return (

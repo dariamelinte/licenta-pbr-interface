@@ -5,10 +5,10 @@ export type ConfirmDialogType = {
 };
 
 export type OpenType =
-  | "confirm-delete"
-  | "confirm-empty"
-  | "category-create"
-  | "category-edit"
+  | 'confirm-delete'
+  | 'confirm-empty'
+  | 'category-create'
+  | 'category-edit'
   | null;
 
 export type DialogStoreType = {

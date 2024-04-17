@@ -1,5 +1,5 @@
-import { CategoryType } from "@/types/common/category";
+import type { CategoryType } from '@/types/common/category';
 
 export const INITIAL_CATEGORY: CategoryType = {
-  name: ''
+  name: '',
 };

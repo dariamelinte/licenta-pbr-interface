@@ -1,4 +1,4 @@
-import { CategoryStoreType } from "./category";
-import { DialogStoreType } from "./dialog";
+import type { CategoryStoreType } from './category';
+import type { DialogStoreType } from './dialog';
 
-export type StoreType =  DialogStoreType & CategoryStoreType;
+export type StoreType = DialogStoreType & CategoryStoreType;

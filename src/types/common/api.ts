@@ -1,4 +1,4 @@
-import { CategoryType } from "./category";
+import type { CategoryType } from './category';
 
 export type OidType = { _id: { $oid: string } };
 

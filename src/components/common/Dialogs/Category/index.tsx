@@ -1,18 +1,17 @@
-import { Dialog } from "@headlessui/react";
-import cx from "classnames";
-import { Form, Formik } from "formik";
+import { Dialog } from '@headlessui/react';
+import cx from 'classnames';
+import { Form, Formik } from 'formik';
 
-import { Button, Form as CommonForm } from "@/components/common";
-import useStore from "@/stores";
-import { CategoryApiType } from "@/types/common/api";
-import { CategoryType } from "@/types/common/category";
-import { categorySchema } from "@/constants/validation-schemas";
-import { INITIAL_CATEGORY } from "@/constants/initial-objects";
-import { categoryLabels } from "@/constants/labels";
+import { Button, Form as CommonForm } from '@/components/common';
+import { INITIAL_CATEGORY } from '@/constants/initial-objects';
+import { categoryLabels } from '@/constants/labels';
+import { categorySchema } from '@/constants/validation-schemas';
+import useStore from '@/stores';
+import type { CategoryApiType } from '@/types/common/api';
+import type { CategoryType } from '@/types/common/category';
 
-import { CustomDialog } from "../Dialog";
-
-import styles from "./Category.module.css";
+import { CustomDialog } from '../Dialog';
+import styles from './Category.module.css';
 
 type CategoryProps = {
   category: CategoryApiType | null;
@@ -25,7 +24,7 @@ export const Category: React.FC<CategoryProps> = ({ category }) => {
     <CustomDialog>
       <Dialog.Panel className={styles.panel}>
         <Dialog.Title as="h3" className={styles.title}>
-          {category ? "Update" : "Create new"} category
+          {category ? 'Update' : 'Create new'} category
         </Dialog.Title>
 
         <Formik<CategoryType>
@@ -37,7 +36,7 @@ export const Category: React.FC<CategoryProps> = ({ category }) => {
           }}
         >
           <Form className="w-full">
-            <div className={cx(styles.row, "my-4")}>
+            <div className={cx(styles.row, 'my-4')}>
               <CommonForm.InputField
                 name="name"
                 label={categoryLabels.name}
@@ -47,7 +46,7 @@ export const Category: React.FC<CategoryProps> = ({ category }) => {
             </div>
             <div className={styles.row}>
               <Button
-                className={cx(styles.button, "m-0 md:mr-4")}
+                className={cx(styles.button, 'm-0 md:mr-4')}
                 onClick={() => setOpen(null)}
                 theme="base"
               >

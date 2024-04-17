@@ -1,8 +1,5 @@
 import { Button } from '@/components/common/Buttons';
-import {
-  PencilSquare,
-  Trash
-} from '@/components/icons';
+import { PencilSquare, Trash } from '@/components/icons';
 
 import styles from './Options.module.css';
 
@@ -11,10 +8,7 @@ type OptionsProps = {
   onDelete: () => void;
 };
 
-export const Options: React.FC<OptionsProps> = ({
-  onDelete,
-  onEdit,
-}) => {
+export const Options: React.FC<OptionsProps> = ({ onDelete, onEdit }) => {
   return (
     <div className={styles.container}>
       <Button

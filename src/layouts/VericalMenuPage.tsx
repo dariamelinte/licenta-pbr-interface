@@ -2,13 +2,14 @@ import type { PropsWithChildren } from 'react';
 import React from 'react';
 
 import { VerticalMenu } from '@/components/common';
-import { ModuleType } from '@/constants/menu-tabs';
+import type { ModuleType } from '@/constants/menu-tabs';
 
-import { Page, PageProps } from './Page';
+import type { PageProps } from './Page';
+import { Page } from './Page';
 
 type VerticalMenuPageProps = PageProps & {
   module: ModuleType;
-}
+};
 
 export function VerticalMenuPage({
   module,
@@ -24,4 +25,3 @@ export function VerticalMenuPage({
     </Page>
   );
 }
-

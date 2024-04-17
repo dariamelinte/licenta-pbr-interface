@@ -1,7 +1,7 @@
-import type { ColumnHelper } from "@tanstack/react-table";
+import type { ColumnHelper } from '@tanstack/react-table';
 
-import { Options } from "@/components/common";
-import { CategoryApiType } from "@/types/common/api";
+import { Options } from '@/components/common';
+import type { CategoryApiType } from '@/types/common/api';
 
 type CategoryColumnsProps = {
   columnHelper: ColumnHelper<CategoryApiType>;
@@ -14,12 +14,12 @@ export const categoryColumns = ({
   onDelete,
   onEdit,
 }: CategoryColumnsProps) => [
-  columnHelper.accessor("name", {
-    header: "Name",
+  columnHelper.accessor('name', {
+    header: 'Name',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("_id.$oid", {
-    header: "",
+  columnHelper.accessor('_id.$oid', {
+    header: '',
     cell: (info) => (
       <Options
         onEdit={() => onEdit(info.row.original)}
