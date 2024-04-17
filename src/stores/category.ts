@@ -83,15 +83,28 @@ export const categorySlice: StateCreator<
       }
     },
 
-    updateCategory: async (category: CategoryApiType) => {
-      // try {
-      //   const { data } = await service.updateCategory(category);
-      //   if (!data.success) throw Error(data.error);
-      //   get().category.getCategories();
-      //   toast.info(data.message);
-      // } catch (error: any) {
-      //   toast.error(error || ERROR_MESSAGE.default);
-      // }
+    updateCategory: async ({ _id, ...category }: CategoryApiType) => {
+      try {
+        const { data } = await service.updateCategory(_id.$oid, category);
+        if (!data.success) throw Error(data.error);
+
+        const categories = get().category.categories;
+
+        const updatedCategoryIndex = categories.findIndex(
+          ({ _id: { $oid } }) => $oid === _id.$oid
+        );
+
+        categories[updatedCategoryIndex] = data.data;
+
+        // categories: [...categories] was done in order to make React recognize
+        // that there is a new object, otherwise it's considered a ref to the initial
+        // categories, and the state will not be updated in the store
+        set({ category: { ...get().category, categories: [...categories] } });
+
+        toast.info(data.message);
+      } catch (error: any) {
+        toast.error(error || ERROR_MESSAGE.default);
+      }
     },
   },
 });

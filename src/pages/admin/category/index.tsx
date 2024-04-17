@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { Loading, Table, Dialog } from "@/components/common";
 import { CategoryApiType } from "@/types/common/api";
@@ -8,10 +8,17 @@ import { categoryColumns } from "@/components/common/Tables";
 import { confirm } from "@/constants/confirm-dialog";
 
 const Index = () => {
-  const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
+  const [category, setCategory] = useState<CategoryApiType | null>(null);
 
-  const { categories, loading, getCategories, deleteCategory, createCategory } =
-    useStore((state) => state.category);
+  const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
+  const {
+    categories,
+    loading,
+    getCategories,
+    deleteCategory,
+    createCategory,
+    updateCategory,
+  } = useStore((state) => state.category);
 
   useEffect(() => {
     getCategories();
@@ -37,7 +44,14 @@ const Index = () => {
               setOpen("confirm-delete");
               setOnConfirm(() => deleteCategory(id));
             },
-            onEdit: (id) => console.log(`here ${id}`),
+            onEdit: (cat) => {
+              setCategory(cat);
+              setOpen("category-edit");
+              setOnConfirm((category: CategoryApiType) => {
+                updateCategory(category);
+                setCategory(null);
+              });
+            },
           })
         }
         onAddData={() => {
@@ -46,7 +60,9 @@ const Index = () => {
         }}
       />
       {open === "confirm-delete" && <Dialog.Confirmation {...confirm.delete} />}
-      {open === "category-create" && <Dialog.Category />}
+      {(open === "category-create" || open === "category-edit") && (
+        <Dialog.Category category={category} />
+      )}
     </VerticalMenuPage>
   );
 };

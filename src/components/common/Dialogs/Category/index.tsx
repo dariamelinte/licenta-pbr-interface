@@ -15,7 +15,7 @@ import { CustomDialog } from "../Dialog";
 import styles from "./Category.module.css";
 
 type CategoryProps = {
-  category?: CategoryApiType;
+  category: CategoryApiType | null;
 };
 
 export const Category: React.FC<CategoryProps> = ({ category }) => {

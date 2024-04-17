@@ -6,7 +6,7 @@ import { CategoryApiType } from "@/types/common/api";
 type CategoryColumnsProps = {
   columnHelper: ColumnHelper<CategoryApiType>;
   onDelete: (id: string) => void;
-  onEdit: (id: string) => void;
+  onEdit: (id: CategoryApiType) => void;
 };
 
 export const categoryColumns = ({
@@ -22,7 +22,7 @@ export const categoryColumns = ({
     header: "",
     cell: (info) => (
       <Options
-        onEdit={() => onEdit(info.getValue())}
+        onEdit={() => onEdit(info.row.original)}
         onDelete={() => onDelete(info.getValue())}
       />
     ),
