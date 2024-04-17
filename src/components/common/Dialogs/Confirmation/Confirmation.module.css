@@ -1,0 +1,20 @@
+.panel {
+    @apply w-full max-w-md transform overflow-hidden rounded-2xl bg-gray-300 p-6 text-left align-middle shadow-xl transition-all;
+}
+
+.title {
+    @apply text-xl font-bold leading-6 text-gray-900 text-center;
+}
+
+.content {
+    @apply text-gray-700 my-6 text-center;
+}
+
+.row {
+    @apply flex flex-wrap justify-between items-center;
+    @apply flex-col md:flex-row;
+}
+
+.button {
+    @apply flex-1 w-full my-2;
+}

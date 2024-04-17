@@ -1,0 +1,11 @@
+.container {
+    @apply flex justify-end items-center;
+}
+
+.button {
+    @apply mx-1 z-10;
+}
+
+.icon {
+    @apply h-5;
+}

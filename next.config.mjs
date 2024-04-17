@@ -23,4 +23,7 @@ export default bundleAnalyzer({
 
     return config;
   },
+  env: {
+    API_URL: process.env.API_URL,
+  },
 });

@@ -5,6 +5,7 @@ import React from 'react';
 
 import type { ModuleType } from '@/constants/menu-tabs';
 import { tabs } from '@/constants/menu-tabs';
+
 import styles from './VerticalMenu.module.css';
 
 type VerticalMenuProps = {

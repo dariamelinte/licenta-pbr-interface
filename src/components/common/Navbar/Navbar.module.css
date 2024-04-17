@@ -1,5 +1,5 @@
 .container {
-    @apply flex sticky top-0 z-50 w-full left-0 px-4 py-4 justify-end items-end bg-blue-900 shadow-xl shadow-xl;
+    @apply flex sticky top-0 z-50 w-full left-0 px-4 py-4 justify-end items-end bg-slate-900 shadow-xl shadow-xl;
 }
 
 .link {
