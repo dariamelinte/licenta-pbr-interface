@@ -26,14 +26,14 @@ export const getCategoryById = async (
 export const createCategory = async (
   category: CategoryType
 ): AxiosPromise<AddApiType<CategoryApiType>> => {
-  return httpService.post("/category", { category });
+  return httpService.post("/category", category);
 };
 
 export const updateCategory = async (
   id: string,
   category: Partial<CategoryType>
 ): AxiosPromise<UpdateApiType<CategoryApiType>> => {
-  return httpService.patch(`/category/${id}`, { category });
+  return httpService.patch(`/category/${id}`, category);
 };
 
 export const deleteCategory = async (

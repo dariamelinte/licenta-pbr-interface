@@ -1,4 +1,5 @@
 import { CategoryApiType } from "@/types/common/api";
+import { CategoryType } from "@/types/common/category";
 
 export type CategoryStoreType = {
   category: {
@@ -7,5 +8,8 @@ export type CategoryStoreType = {
   
     getCategories: () => void;
     deleteCategory: (id: string) => void;
+
+    createCategory: (category: CategoryType) => void;
+    updateCategory: (category: CategoryApiType) => void;
   }
 };

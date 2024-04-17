@@ -8,16 +8,16 @@ type CustomDialogProps = {};
 export const CustomDialog = ({
   children,
 }: PropsWithChildren<CustomDialogProps>) => {
-  const { isOpen, setIsOpen } = useStore(
+  const { open, setOpen } = useStore(
     (state) => state.dialog
   );
 
   return (
-    <Transition appear show={isOpen} as={Fragment}>
+    <Transition appear show={!!open} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
-        onClose={() => setIsOpen(false)}
+        onClose={() => setOpen(null)}
       >
         <Transition.Child
           as={Fragment}

@@ -8,22 +8,14 @@ import { categoryColumns } from "@/components/common/Tables";
 import { confirm } from "@/constants/confirm-dialog";
 
 const Index = () => {
-  const { setIsOpen, setOnConfirm } = useStore(
-    (state) => state.dialog
-  );
+  const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
 
-  const { categories, loading, getCategories, deleteCategory } = useStore(
-    (state) => state.category
-  );
+  const { categories, loading, getCategories, deleteCategory, createCategory } =
+    useStore((state) => state.category);
 
   useEffect(() => {
     getCategories();
   }, []);
-
-  const handleConfirmDelete = (id: string) => {
-    setIsOpen(true);
-    setOnConfirm(() => deleteCategory(id));
-  };
 
   if (loading) {
     return (
@@ -41,12 +33,20 @@ const Index = () => {
         columns={(columnHelper) =>
           categoryColumns({
             columnHelper,
-            onDelete: handleConfirmDelete,
+            onDelete: (id: string) => {
+              setOpen("confirm-delete");
+              setOnConfirm(() => deleteCategory(id));
+            },
             onEdit: (id) => console.log(`here ${id}`),
           })
         }
+        onAddData={() => {
+          setOpen("category-create");
+          setOnConfirm(createCategory);
+        }}
       />
-      <Dialog.Confirmation {...confirm.delete} />
+      {open === "confirm-delete" && <Dialog.Confirmation {...confirm.delete} />}
+      {open === "category-create" && <Dialog.Category />}
     </VerticalMenuPage>
   );
 };

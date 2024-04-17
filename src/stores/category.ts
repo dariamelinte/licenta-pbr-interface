@@ -1,9 +1,11 @@
 import { StateCreator } from "zustand";
+import { toast } from "react-toastify";
 
 import * as service from "@/services/api/category";
 import { CategoryStoreType } from "@/types/store/category";
-import { toast } from "react-toastify";
 import { ERROR_MESSAGE } from "@/constants/messages";
+import { CategoryType } from "@/types/common/category";
+import { CategoryApiType } from "@/types/common/api";
 
 export const categorySlice: StateCreator<
   CategoryStoreType,
@@ -60,6 +62,36 @@ export const categorySlice: StateCreator<
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
       }
+    },
+
+    createCategory: async (category: CategoryType) => {
+      try {
+        const { data } = await service.createCategory(category);
+
+        if (!data.success) throw Error(data.error);
+
+        set({
+          category: {
+            ...get().category,
+            categories: [...get().category.categories, data.data],
+          },
+        });
+
+        toast.info(data.message);
+      } catch (error: any) {
+        toast.error(error || ERROR_MESSAGE.default);
+      }
+    },
+
+    updateCategory: async (category: CategoryApiType) => {
+      // try {
+      //   const { data } = await service.updateCategory(category);
+      //   if (!data.success) throw Error(data.error);
+      //   get().category.getCategories();
+      //   toast.info(data.message);
+      // } catch (error: any) {
+      //   toast.error(error || ERROR_MESSAGE.default);
+      // }
     },
   },
 });

@@ -3,23 +3,18 @@ import cx from "classnames";
 
 import { Button } from "@/components/common";
 import useStore from "@/stores";
+import { ConfirmDialogType } from "@/types/store/dialog";
 
 import { CustomDialog } from "../Dialog";
 
 import styles from "./Confirmation.module.css";
 
-type ConfirmationProps = {
-  title: string;
-  content: string;
-  action: string;
-};
-
-export const Confirmation: React.FC<ConfirmationProps> = ({
+export const Confirmation: React.FC<ConfirmDialogType> = ({
   title,
   content,
   action,
 }) => {
-  const { setIsOpen, onConfirm } = useStore((state) => state.dialog);
+  const { setOpen, onConfirm } = useStore((state) => state.dialog);
 
   return (
     <CustomDialog>
@@ -32,7 +27,7 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
         <div className={styles.row}>
           <Button
             className={cx(styles.button, "m-0 md:mr-4")}
-            onClick={() => setIsOpen(false)}
+            onClick={() => setOpen(null)}
             theme="base"
           >
             Cancel
@@ -41,7 +36,7 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
             className={styles.button}
             onClick={() => {
               onConfirm();
-              setIsOpen(false);
+              setOpen(null);
             }}
           >
             {action}

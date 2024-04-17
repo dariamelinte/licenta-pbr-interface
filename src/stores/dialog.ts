@@ -9,12 +9,12 @@ export const dialogSlice: StateCreator<
   DialogStoreType
 > = (set, get) => ({
   dialog: {
-    isOpen: false,
-    setIsOpen: (isOpen) =>
+    open: null,
+    setOpen: (open) =>
       set({
         dialog: {
           ...get().dialog,
-          isOpen,
+          open,
         },
       }),
 
