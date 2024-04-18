@@ -1,16 +1,21 @@
 import type {
   ObjectModelApiType,
-  ObjectModelIndecisiveApiType,
-} from "@/types/common/api";
+  ObjectModelGeometryApiType,
+  ObjectModelInfoApiType,
+} from '@/types/common/api';
 import type {
   ObjectModelFlagType,
   ObjectModelType,
-} from "@/types/common/objectModel";
+} from '@/types/common/objectModel';
 
 export type ObjectModelStoreType = {
   objectModel: {
-    objectModels: ObjectModelIndecisiveApiType[];
+    objectModels: ObjectModelApiType[];
+    objectModelInfos: ObjectModelInfoApiType[];
+    objectModelGeometries: ObjectModelGeometryApiType[];
     loading: boolean;
+
+    setLoading: (loading: boolean) => void;
 
     getObjectModels: (flag?: ObjectModelFlagType) => void;
     deleteObjectModel: (id: string) => void;

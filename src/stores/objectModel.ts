@@ -3,8 +3,15 @@ import type { StateCreator } from 'zustand';
 
 import { ERROR_MESSAGE } from '@/constants/messages';
 import * as service from '@/services/api/objectModel';
-import type { ObjectModelApiType } from '@/types/common/api';
-import type { ObjectModelFlagType, ObjectModelType } from '@/types/common/objectModel';
+import type {
+  ObjectModelApiType,
+  ObjectModelGeometryApiType,
+  ObjectModelInfoApiType,
+} from '@/types/common/api';
+import type {
+  ObjectModelFlagType,
+  ObjectModelType,
+} from '@/types/common/objectModel';
 import type { ObjectModelStoreType } from '@/types/store/objectModel';
 
 export const objectModelSlice: StateCreator<
@@ -15,7 +22,17 @@ export const objectModelSlice: StateCreator<
 > = (set, get) => ({
   objectModel: {
     objectModels: [],
+    objectModelInfos: [],
+    objectModelGeometries: [],
     loading: true,
+
+    setLoading: (loading) =>
+      set({
+        objectModel: {
+          ...get().objectModel,
+          loading,
+        },
+      }),
 
     getObjectModels: async (flag?: ObjectModelFlagType) => {
       if (get().objectModel.objectModels.length) {
@@ -23,21 +40,44 @@ export const objectModelSlice: StateCreator<
       }
 
       try {
-        const { data } = await service.getObjectModels(flag);
+        get().objectModel.setLoading(true);
 
-        if (!data.success) throw Error(data.error);
+        const {
+          data: { success, error, message, data },
+        } = await service.getObjectModels(flag);
+
+        if (!success) throw Error(error);
+
+        if (flag === 'info') {
+          set({
+            objectModel: {
+              ...get().objectModel,
+              objectModelInfos: data as ObjectModelInfoApiType[],
+            },
+          });
+        }
+
+        if (flag === 'geometry') {
+          set({
+            objectModel: {
+              ...get().objectModel,
+              objectModelGeometries: data as ObjectModelGeometryApiType[],
+            },
+          });
+        }
 
         set({
           objectModel: {
             ...get().objectModel,
-            objectModels: data.data,
-            loading: false,
+            objectModels: data as ObjectModelApiType[],
           },
         });
 
-        toast.info(data.message);
+        toast.info(message);
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
+      } finally {
+        get().objectModel.setLoading(false);
       }
     },
 
@@ -99,7 +139,12 @@ export const objectModelSlice: StateCreator<
         // objectModels: [...objectModels] was done in order to make React recognize
         // that there is a new object, otherwise it's considered a ref to the initial
         // objectModels, and the state will not be updated in the store
-        set({ objectModel: { ...get().objectModel, objectModels: [...objectModels] } });
+        set({
+          objectModel: {
+            ...get().objectModel,
+            objectModels: [...objectModels],
+          },
+        });
 
         toast.info(data.message);
       } catch (error: any) {

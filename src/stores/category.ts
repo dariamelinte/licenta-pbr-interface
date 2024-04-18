@@ -17,6 +17,14 @@ export const categorySlice: StateCreator<
     categories: [],
     loading: true,
 
+    setLoading: (loading) =>
+      set({
+        category: {
+          ...get().category,
+          loading,
+        },
+      }),
+
     getCategories: async () => {
       if (get().category.categories.length) {
         return;
@@ -38,6 +46,37 @@ export const categorySlice: StateCreator<
         toast.info(data.message);
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
+      }
+    },
+
+    getCategoryById: async (id: string) => {
+      const category = get().category.categories.find(
+        ({ _id: { $oid } }) => $oid === id,
+      );
+
+      if (category) {
+        return category;
+      }
+
+      try {
+        const {
+          data: { success, data, error, message },
+        } = await service.getCategoryById(id);
+
+        if (!success) throw Error(error);
+
+        set({
+          category: {
+            ...get().category,
+            categories: [data],
+          },
+        });
+        toast.info(message);
+
+        return data;
+      } catch (error: any) {
+        toast.error(error || ERROR_MESSAGE.default);
+        return null;
       }
     },
 

@@ -1,20 +1,20 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import { Dialog, Loading, Table } from "@/components/common";
-import { objectModelColumns } from "@/components/common/Tables";
-import { confirm } from "@/constants/confirm-dialog";
-import { VerticalMenuPage } from "@/layouts";
-import useStore from "@/stores";
-import type { ObjectModelInfoApiType } from "@/types/common/api";
-import { ConfirmDialogType } from "@/types/store/dialog";
+import { Dialog, Loading, Table } from '@/components/common';
+import { objectModelColumns } from '@/components/common/Tables';
+import { confirm } from '@/constants/confirm-dialog';
+import { VerticalMenuPage } from '@/layouts';
+import useStore from '@/stores';
+import type { ObjectModelInfoApiType } from '@/types/common/api';
+import type { ConfirmDialogType } from '@/types/store/dialog';
 
 const Index = () => {
   const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
-  const { objectModels, loading, getObjectModels, deleteObjectModel } =
+  const { objectModelInfos, loading, getObjectModels, deleteObjectModel } =
     useStore((state) => state.objectModel);
 
   useEffect(() => {
-    getObjectModels("info");
+    getObjectModels('info');
   }, [getObjectModels]);
 
   if (loading) {
@@ -29,12 +29,12 @@ const Index = () => {
     <VerticalMenuPage module="admin">
       <Table.Table<ObjectModelInfoApiType>
         title="Object models"
-        data={objectModels as ObjectModelInfoApiType[]}
+        data={objectModelInfos}
         columns={(columnHelper) =>
           objectModelColumns({
             columnHelper,
             onDelete: (id: string) => {
-              setOpen("confirm-delete");
+              setOpen('confirm-delete');
               setOnConfirm(() => deleteObjectModel(id));
             },
             onEdit: (id: string) => {
@@ -43,10 +43,10 @@ const Index = () => {
           })
         }
         onAddData={() => {
-          console.log("add");
+          console.log('add');
         }}
       />
-      {open === "confirm-delete" && (
+      {open === 'confirm-delete' && (
         <Dialog.Confirmation {...(confirm.delete as ConfirmDialogType)} />
       )}
     </VerticalMenuPage>

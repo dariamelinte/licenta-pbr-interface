@@ -1,50 +1,50 @@
-import type { AxiosPromise } from "axios";
+import type { AxiosPromise } from 'axios';
 
-import { httpService } from "@/services";
+import { httpService } from '@/services';
 import type {
   AddApiType,
-  ObjectModelApiType,
   DeleteApiType,
   GetAllApiType,
   GetByIdApiType,
-  UpdateApiType,
+  ObjectModelApiType,
   ObjectModelIndecisiveApiType,
-} from "@/types/common/api";
+  UpdateApiType,
+} from '@/types/common/api';
 import type {
   ObjectModelFlagType,
   ObjectModelType,
-} from "@/types/common/objectModel";
+} from '@/types/common/objectModel';
 
 export const getObjectModels = async (
-  flag?: ObjectModelFlagType
+  flag?: ObjectModelFlagType,
 ): AxiosPromise<GetAllApiType<ObjectModelIndecisiveApiType>> => {
-  const flagAppend = flag ? `?${flag}=true` : "";
+  const flagAppend = flag ? `?${flag}=true` : '';
   return httpService.get(`/object-model/all${flagAppend}`);
 };
 
 export const getObjectModelById = async (
   id: string,
-  flag?: ObjectModelFlagType
+  flag?: ObjectModelFlagType,
 ): AxiosPromise<GetByIdApiType<ObjectModelIndecisiveApiType>> => {
-  const flagAppend = flag ? `?${flag}=true` : "";
+  const flagAppend = flag ? `?${flag}=true` : '';
   return httpService.get(`/object-model/${id}${flagAppend}`);
 };
 
 export const createObjectModel = async (
-  objectModel: ObjectModelType
+  objectModel: ObjectModelType,
 ): AxiosPromise<AddApiType<ObjectModelApiType>> => {
-  return httpService.post("/object-model", objectModel);
+  return httpService.post('/object-model', objectModel);
 };
 
 export const updateObjectModel = async (
   id: string,
-  objectModel: Partial<ObjectModelType>
+  objectModel: Partial<ObjectModelType>,
 ): AxiosPromise<UpdateApiType<ObjectModelApiType>> => {
   return httpService.patch(`/object-model/${id}`, objectModel);
 };
 
 export const deleteObjectModel = async (
-  id: string
+  id: string,
 ): AxiosPromise<DeleteApiType> => {
   return httpService.delete(`/object-model/${id}`);
 };
