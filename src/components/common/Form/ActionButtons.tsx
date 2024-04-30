@@ -1,11 +1,11 @@
-import { useFormikContext } from "formik";
-import { useState } from "react";
 import cx from 'classnames';
+import { useFormikContext } from 'formik';
+import { useState } from 'react';
 
-import { Button } from "@/components/common/Buttons";
-import { extractStringValues } from "@/utils/extractStringValues";
+import { Button } from '@/components/common/Buttons';
+import { extractStringValues } from '@/utils/extractStringValues';
 
-import styles from "./Form.module.css";
+import styles from './Form.module.css';
 
 type ActionButtonsProps = {
   onCancel: () => void;
@@ -18,7 +18,11 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({ onCancel }) => {
   return (
     <>
       <div className={styles.row}>
-        <Button className={cx(styles.button, "mr-2")} theme="base" onClick={onCancel}>
+        <Button
+          className={cx(styles.button, 'mr-2')}
+          theme="base"
+          onClick={onCancel}
+        >
           Cancel
         </Button>
         <Button

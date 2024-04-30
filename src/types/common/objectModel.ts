@@ -4,4 +4,3 @@ export type ObjectModelInputType = {
   category: string;
   model: File | null;
 };
-

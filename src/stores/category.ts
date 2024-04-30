@@ -1,11 +1,11 @@
-import { toast } from "react-toastify";
-import type { StateCreator } from "zustand";
+import { toast } from 'react-toastify';
+import type { StateCreator } from 'zustand';
 
-import { ERROR_MESSAGE } from "@/constants/messages";
-import * as service from "@/services/api/category";
-import type { CategoryApiType } from "@/types/common/api";
-import type { CategoryType } from "@/types/common/category";
-import type { CategoryStoreType } from "@/types/store/category";
+import { ERROR_MESSAGE } from '@/constants/messages';
+import * as service from '@/services/api/category';
+import type { CategoryApiType } from '@/types/common/api';
+import type { CategoryType } from '@/types/common/category';
+import type { CategoryStoreType } from '@/types/store/category';
 
 export const categorySlice: StateCreator<
   CategoryStoreType,
@@ -85,7 +85,7 @@ export const categorySlice: StateCreator<
         if (!data.success) throw Error(data.error);
 
         const updatedCategories = get().category.categories.filter(
-          ({ _id }) => _id !== id
+          ({ _id }) => _id !== id,
         );
 
         set({
@@ -128,7 +128,7 @@ export const categorySlice: StateCreator<
         const { categories } = get().category;
 
         const updatedCategoryIndex = categories.findIndex(
-          (category) => category._id === _id
+          (category) => category._id === _id,
         );
 
         categories[updatedCategoryIndex] = data.data;

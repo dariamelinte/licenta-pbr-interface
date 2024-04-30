@@ -25,7 +25,6 @@ export const InputField: React.FC<InputFieldProps> = ({
   inputClassName,
   onChange,
   onBlur,
-  value,
   ...rest
 }) => {
   const formik = useFormikContext<{ [key: string]: string }>();

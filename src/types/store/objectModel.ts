@@ -1,5 +1,5 @@
-import type { ObjectModelApiType } from "@/types/common/api";
-import { ObjectModelInputType } from "@/types/common/objectModel";
+import type { ObjectModelApiType } from '@/types/common/api';
+import type { ObjectModelInputType } from '@/types/common/objectModel';
 
 export type ObjectModelStoreType = {
   objectModel: {

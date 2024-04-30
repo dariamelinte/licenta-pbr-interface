@@ -1,5 +1,5 @@
-import type { CategoryType } from "./category";
-import type { ObjectModelInputType } from "./objectModel";
+import type { CategoryType } from './category';
+import type { ObjectModelInputType } from './objectModel';
 
 export type OidType = { _id: string };
 
@@ -33,7 +33,7 @@ export type ModelType = {
 
 export type ObjectModelApiType = Omit<
   ObjectModelInputType,
-  "category" | "model"
+  'category' | 'model'
 > &
   OidType &
   ModelType & {
@@ -42,7 +42,7 @@ export type ObjectModelApiType = Omit<
     };
   };
 
-export type CreateObjectModelApiType = Omit<ObjectModelInputType, "model"> &
+export type CreateObjectModelApiType = Omit<ObjectModelInputType, 'model'> &
   ModelType;
 
 //

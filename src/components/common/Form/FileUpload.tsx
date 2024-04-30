@@ -1,21 +1,21 @@
-import React from 'react';
-import { Field, getIn, useFormikContext } from 'formik';
 import cx from 'classnames';
+import { Field, getIn, useFormikContext } from 'formik';
+import React from 'react';
 
-import { InputFieldProps } from './Input';
 import styles from './Form.module.css';
+import type { InputFieldProps } from './Input';
 
 export const FileUploadInput: React.FC<InputFieldProps> = ({
   className,
   name,
   label,
   inputClassName,
-  accept
+  accept,
 }) => {
   const formik = useFormikContext<{ [key: string]: string }>();
   const error = getIn(formik.errors, name);
   const touch = getIn(formik.touched, name);
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files && e.currentTarget.files[0];
     formik.setFieldValue(name, file);

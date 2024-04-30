@@ -2,7 +2,7 @@ import { Dialog } from '@headlessui/react';
 import cx from 'classnames';
 import { Form, Formik } from 'formik';
 
-import { Button, Form as CommonForm } from '@/components/common';
+import { Form as CommonForm } from '@/components/common';
 import { INITIAL_CATEGORY } from '@/constants/initial-objects';
 import { categoryLabels } from '@/constants/labels';
 import { categorySchema } from '@/constants/validation-schemas';

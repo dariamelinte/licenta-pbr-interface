@@ -64,9 +64,7 @@ const Index = () => {
       {open === 'confirm-delete' && (
         <Dialog.Confirmation {...(confirm.delete as ConfirmDialogType)} />
       )}
-      {open === 'category' && (
-        <Dialog.Category category={category} />
-      )}
+      {open === 'category' && <Dialog.Category category={category} />}
     </VerticalMenuPage>
   );
 };

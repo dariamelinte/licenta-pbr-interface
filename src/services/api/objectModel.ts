@@ -1,6 +1,6 @@
-import type { AxiosPromise } from "axios";
+import type { AxiosPromise } from 'axios';
 
-import { httpService } from "@/services";
+import { httpService } from '@/services';
 import type {
   AddApiType,
   CreateObjectModelApiType,
@@ -10,14 +10,14 @@ import type {
   ModelType,
   ObjectModelApiType,
   UpdateApiType,
-} from "@/types/common/api";
-import type { ObjectModelInputType } from "@/types/common/objectModel";
+} from '@/types/common/api';
+import type { ObjectModelInputType } from '@/types/common/objectModel';
 
 export const createObjectModel = async (
-  objectModel: CreateObjectModelApiType
+  objectModel: CreateObjectModelApiType,
 ): AxiosPromise<AddApiType<ObjectModelApiType>> => {
-  console.log(111, { objectModel })
-  return httpService.post("/object-models", objectModel);
+  console.log(111, { objectModel });
+  return httpService.post('/object-models', objectModel);
 };
 
 export const getObjectModels = async (): AxiosPromise<
@@ -27,30 +27,30 @@ export const getObjectModels = async (): AxiosPromise<
 };
 
 export const getObjectModelById = async (
-  id: string
+  id: string,
 ): AxiosPromise<GetByIdApiType<ObjectModelApiType>> => {
   return httpService.get(`/object-models/id/${id}`);
 };
 
 export const updateObjectModel = async (
   id: string,
-  objectModel: Partial<ObjectModelInputType>
+  objectModel: Partial<ObjectModelInputType>,
 ): AxiosPromise<UpdateApiType<ObjectModelApiType>> => {
   return httpService.patch(`/object-models/id/${id}`, objectModel);
 };
 
 export const deleteObjectModel = async (
-  id: string
+  id: string,
 ): AxiosPromise<DeleteApiType> => {
   return httpService.delete(`/object-models/id/${id}`);
 };
 
 export const uploadModel = async (
-  model: FormData
+  model: FormData,
 ): AxiosPromise<AddApiType<ModelType>> => {
-  return httpService.post("/object-models/upload", model, {
+  return httpService.post('/object-models/upload', model, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      'Content-Type': 'multipart/form-data',
     },
   });
 };

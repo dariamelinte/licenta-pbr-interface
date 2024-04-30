@@ -1,21 +1,18 @@
-import { Dialog } from "@headlessui/react";
-import cx from "classnames";
-import { Form, Formik } from "formik";
-import { useEffect, useMemo } from "react";
+import { Dialog } from '@headlessui/react';
+import cx from 'classnames';
+import { Form, Formik } from 'formik';
+import { useEffect, useMemo } from 'react';
 
-import { ObjectModelInputType } from "@/types/common/objectModel";
-import { Form as CommonForm } from "@/components/common";
-import { INITIAL_OBJECT_MODEL } from "@/constants/initial-objects";
-import { objectModelLabels } from "@/constants/labels";
-import {
-  objectModelApiSchema,
-  objectModelSchema,
-} from "@/constants/validation-schemas";
-import useStore from "@/stores";
-import type { ObjectModelApiType } from "@/types/common/api";
+import { Form as CommonForm } from '@/components/common';
+import { INITIAL_OBJECT_MODEL } from '@/constants/initial-objects';
+import { objectModelLabels } from '@/constants/labels';
+import { objectModelSchema } from '@/constants/validation-schemas';
+import useStore from '@/stores';
+import type { ObjectModelApiType } from '@/types/common/api';
+import type { ObjectModelInputType } from '@/types/common/objectModel';
 
-import { CustomDialog } from "../Dialog";
-import styles from "./ObjectModel.module.css";
+import { CustomDialog } from '../Dialog';
+import styles from './ObjectModel.module.css';
 
 type ObjectModelProps = {
   objectModel: ObjectModelApiType | null;
@@ -30,7 +27,7 @@ export const ObjectModel: React.FC<ObjectModelProps> = ({ objectModel }) => {
       { value: undefined, name: objectModelLabels.category },
       ...categories.map(({ _id, name }) => ({ value: _id, name })),
     ],
-    [categories]
+    [categories],
   );
 
   useEffect(() => {
@@ -41,14 +38,12 @@ export const ObjectModel: React.FC<ObjectModelProps> = ({ objectModel }) => {
     <CustomDialog>
       <Dialog.Panel className={styles.panel}>
         <Dialog.Title as="h3" className={styles.title}>
-          {objectModel ? "Update" : "Create new"} object model
+          {objectModel ? 'Update' : 'Create new'} object model
         </Dialog.Title>
 
         <Formik<ObjectModelInputType | ObjectModelApiType>
           initialValues={objectModel || INITIAL_OBJECT_MODEL}
-          validationSchema={
-            objectModelSchema
-          }
+          validationSchema={objectModelSchema}
           onSubmit={(values) => {
             onConfirm(values);
             setOpen(null);
@@ -66,14 +61,14 @@ export const ObjectModel: React.FC<ObjectModelProps> = ({ objectModel }) => {
               </div>
               <div className={styles.row}>
                 <CommonForm.SelectField
-                  name={`category`}
+                  name="category"
                   label={objectModelLabels.category}
                   placeholder={objectModelLabels.category}
                   className={styles.field}
                   options={optionsCategories}
                 />
               </div>
-              <div className={cx(styles.row, "mb-3")}>
+              <div className={cx(styles.row, 'mb-3')}>
                 <CommonForm.TextAreaField
                   name="description"
                   label={objectModelLabels.description}
@@ -89,8 +84,9 @@ export const ObjectModel: React.FC<ObjectModelProps> = ({ objectModel }) => {
                   accept=".glb, .gltf"
                   className="flex-1"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    const file = e.currentTarget.files && e.currentTarget.files[0];
-                    setFieldValue("model", file);
+                    const file =
+                      e.currentTarget.files && e.currentTarget.files[0];
+                    setFieldValue('model', file);
                   }}
                 />
               </div>

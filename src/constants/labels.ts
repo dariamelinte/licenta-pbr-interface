@@ -6,5 +6,5 @@ export const objectModelLabels = {
   name: 'Name',
   description: 'Description',
   category: 'Category',
-  model: 'Upload model (.glb, .gltf)'
-}
+  model: 'Upload model (.glb, .gltf)',
+};

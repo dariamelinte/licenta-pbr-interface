@@ -26,7 +26,6 @@ export const dialogSlice: StateCreator<
           onConfirm,
         },
       }),
-      
 
     onCancel: () => {},
     setOnCancel: (onCancel) =>
