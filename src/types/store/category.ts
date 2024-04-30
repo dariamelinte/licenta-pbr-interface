@@ -6,7 +6,10 @@ export type CategoryStoreType = {
     categories: CategoryApiType[];
     loading: boolean;
 
+    setLoading: (loading: boolean) => void;
+
     getCategories: () => void;
+    getCategoryById: (id: string) => Promise<CategoryApiType | null>;
     deleteCategory: (id: string) => void;
 
     createCategory: (category: CategoryType) => void;

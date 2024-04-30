@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { Dialog, Loading, Table } from "@/components/common";
-import { categoryColumns } from "@/components/common/Tables";
-import { confirm } from "@/constants/confirm-dialog";
-import { VerticalMenuPage } from "@/layouts";
-import useStore from "@/stores";
-import type { CategoryApiType } from "@/types/common/api";
-import { ConfirmDialogType } from "@/types/store/dialog";
+import { Dialog, Loading, Table } from '@/components/common';
+import { categoryColumns } from '@/components/common/Tables';
+import { confirm } from '@/constants/confirm-dialog';
+import { VerticalMenuPage } from '@/layouts';
+import useStore from '@/stores';
+import type { CategoryApiType } from '@/types/common/api';
+import type { ConfirmDialogType } from '@/types/store/dialog';
 
 const Index = () => {
   const [category, setCategory] = useState<CategoryApiType | null>(null);
@@ -42,12 +42,12 @@ const Index = () => {
           categoryColumns({
             columnHelper,
             onDelete: (id: string) => {
-              setOpen("confirm-delete");
+              setOpen('confirm-delete');
               setOnConfirm(() => deleteCategory(id));
             },
             onEdit: (cat) => {
               setCategory(cat);
-              setOpen("category-edit");
+              setOpen('category');
               setOnConfirm((catt: CategoryApiType) => {
                 updateCategory(catt);
                 setCategory(null);
@@ -56,16 +56,15 @@ const Index = () => {
           })
         }
         onAddData={() => {
-          setOpen("category-create");
+          setCategory(null);
+          setOpen('category');
           setOnConfirm(createCategory);
         }}
       />
-      {open === "confirm-delete" && (
+      {open === 'confirm-delete' && (
         <Dialog.Confirmation {...(confirm.delete as ConfirmDialogType)} />
       )}
-      {(open === "category-create" || open === "category-edit") && (
-        <Dialog.Category category={category} />
-      )}
+      {open === 'category' && <Dialog.Category category={category} />}
     </VerticalMenuPage>
   );
 };

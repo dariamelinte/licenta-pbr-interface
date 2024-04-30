@@ -17,6 +17,14 @@ export const categorySlice: StateCreator<
     categories: [],
     loading: true,
 
+    setLoading: (loading) =>
+      set({
+        category: {
+          ...get().category,
+          loading,
+        },
+      }),
+
     getCategories: async () => {
       if (get().category.categories.length) {
         return;
@@ -41,6 +49,35 @@ export const categorySlice: StateCreator<
       }
     },
 
+    getCategoryById: async (id: string) => {
+      const category = get().category.categories.find(({ _id }) => _id === id);
+
+      if (category) {
+        return category;
+      }
+
+      try {
+        const {
+          data: { success, data, error, message },
+        } = await service.getCategoryById(id);
+
+        if (!success) throw Error(error);
+
+        set({
+          category: {
+            ...get().category,
+            categories: [data],
+          },
+        });
+        toast.info(message);
+
+        return data;
+      } catch (error: any) {
+        toast.error(error || ERROR_MESSAGE.default);
+        return null;
+      }
+    },
+
     deleteCategory: async (id: string) => {
       try {
         const { data } = await service.deleteCategory(id);
@@ -48,7 +85,7 @@ export const categorySlice: StateCreator<
         if (!data.success) throw Error(data.error);
 
         const updatedCategories = get().category.categories.filter(
-          ({ _id: { $oid } }) => $oid !== id,
+          ({ _id }) => _id !== id,
         );
 
         set({
@@ -85,13 +122,13 @@ export const categorySlice: StateCreator<
 
     updateCategory: async ({ _id, ...category }: CategoryApiType) => {
       try {
-        const { data } = await service.updateCategory(_id.$oid, category);
+        const { data } = await service.updateCategory(_id, category);
         if (!data.success) throw Error(data.error);
 
         const { categories } = get().category;
 
         const updatedCategoryIndex = categories.findIndex(
-          ({ _id: { $oid } }) => $oid === _id.$oid,
+          (category) => category._id === _id,
         );
 
         categories[updatedCategoryIndex] = data.data;

@@ -26,5 +26,14 @@ export const dialogSlice: StateCreator<
           onConfirm,
         },
       }),
+
+    onCancel: () => {},
+    setOnCancel: (onCancel) =>
+      set({
+        dialog: {
+          ...get().dialog,
+          onCancel,
+        },
+      }),
   },
 });

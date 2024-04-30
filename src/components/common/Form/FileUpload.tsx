@@ -1,74 +1,45 @@
-import React, { useRef } from 'react';
+import cx from 'classnames';
+import { Field, getIn, useFormikContext } from 'formik';
+import React from 'react';
 
-import { Button } from '@/components/common/Buttons';
+import styles from './Form.module.css';
+import type { InputFieldProps } from './Input';
 
-interface FileUploadButtonProps {
-  onFileUpload: (content: string) => void;
-  className?: string;
-}
-
-export const FileUploadButton: React.FC<FileUploadButtonProps> = ({
+export const FileUploadInput: React.FC<InputFieldProps> = ({
   className,
-  onFileUpload,
+  name,
+  label,
+  inputClassName,
+  accept,
 }) => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const formik = useFormikContext<{ [key: string]: string }>();
+  const error = getIn(formik.errors, name);
+  const touch = getIn(formik.touched, name);
 
-  const readFileContent = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        if (event.target) {
-          const content = event.target.result as string;
-          resolve(content);
-        } else {
-          reject(new Error('Failed to read file content.'));
-        }
-      };
-
-      reader.onerror = (event) => {
-        reject(
-          new Error(`Error reading file: ${event.target?.error?.message}`),
-        );
-      };
-
-      reader.readAsText(file);
-    });
-  };
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-
-    if (file && file.type === 'application/json') {
-      const fileContent = await readFileContent(file);
-      onFileUpload(fileContent);
-    } else {
-      // Handle invalid file type or no file selected
-      console.error('Invalid file type. Please select a JSON file.');
-    }
-
-    // Reset the input field to allow selecting the same file again
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files && e.currentTarget.files[0];
+    formik.setFieldValue(name, file);
   };
 
   return (
-    <>
-      <input
+    <div className={className}>
+      {label && <label className={styles.label}>{label}</label>}
+
+      <Field
+        name={name}
         type="file"
-        accept=".json"
-        ref={fileInputRef}
-        style={{ display: 'none' }}
-        onChange={handleFileChange}
+        className={cx(
+          styles.input,
+          {
+            [styles['input-error'] as string]: touch && error,
+          },
+          inputClassName,
+        )}
+        onChange={handleChange}
+        accept={accept}
       />
-      <Button
-        theme="base"
-        className={className}
-        onClick={() => fileInputRef.current?.click()}
-      >
-        Upload job description
-      </Button>
-    </>
+
+      {touch && error && <p className={styles.error}>{error}</p>}
+    </div>
   );
 };
