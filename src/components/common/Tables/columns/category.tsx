@@ -18,7 +18,7 @@ export const categoryColumns = ({
     header: 'Name',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('_id.$oid', {
+  columnHelper.accessor('_id', {
     header: '',
     cell: (info) => (
       <Options

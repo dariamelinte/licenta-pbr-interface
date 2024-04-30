@@ -29,7 +29,7 @@ export const Select: React.FC<SelectProps> = ({
 }) => (
   <select className={cx(styles.input, className)} name={name} {...rest}>
     {options.map(({ name: optionName, value }) => (
-      <option key={value} value={value}>
+      <option key={`${value}-${optionName}`} value={value}>
         {optionName}
       </option>
     ))}
@@ -88,7 +88,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({
         {...rest}
       />
 
-      {error && <p className={styles.error}>{error}</p>}
+      {error && <p className={styles.error}>{String(error)}</p>}
     </div>
   );
 };

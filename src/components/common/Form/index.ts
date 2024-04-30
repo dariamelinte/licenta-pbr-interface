@@ -5,3 +5,5 @@ export * from './InputWithDelete';
 export * from './Select';
 export * from './SelectWithDelete';
 export * from './Textarea';
+export * from './ActionButtons';
+export * from './Label';

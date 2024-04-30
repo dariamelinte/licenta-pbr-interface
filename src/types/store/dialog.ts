@@ -7,8 +7,10 @@ export type ConfirmDialogType = {
 export type OpenType =
   | 'confirm-delete'
   | 'confirm-empty'
-  | 'category-create'
-  | 'category-edit'
+  | 'category'
+  | 'category'
+  | 'object-model'
+  | 'object-model'
   | null;
 
 export type DialogStoreType = {
@@ -18,5 +20,8 @@ export type DialogStoreType = {
 
     onConfirm: (...args: any[]) => void;
     setOnConfirm: (onConfirm: (...args: any[]) => void) => void;
+
+    onCancel: (...args: any[]) => void;
+    setOnCancel: (onCancel: (...args: any[]) => void) => void;
   };
 };

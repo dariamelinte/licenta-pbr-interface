@@ -1,12 +1,12 @@
 import type { ColumnHelper } from '@tanstack/react-table';
 
 import { Options } from '@/components/common';
-import type { ObjectModelInfoApiType } from '@/types/common/api';
+import type { ObjectModelApiType } from '@/types/common/api';
 
 type ObjectModelColumnsProps = {
-  columnHelper: ColumnHelper<ObjectModelInfoApiType>;
+  columnHelper: ColumnHelper<ObjectModelApiType>;
   onDelete: (id: string) => void;
-  onEdit: (id: string) => void;
+  onEdit: (idobjectModel: ObjectModelApiType) => void;
 };
 
 export const objectModelColumns = ({
@@ -36,11 +36,11 @@ export const objectModelColumns = ({
     header: 'Category',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('_id.$oid', {
+  columnHelper.accessor('_id', {
     header: '',
     cell: (info) => (
       <Options
-        onEdit={() => onEdit(info.getValue())}
+        onEdit={() => onEdit(info.row.original)}
         onDelete={() => onDelete(info.getValue())}
       />
     ),

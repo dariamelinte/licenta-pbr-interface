@@ -1,11 +1,11 @@
-import { toast } from 'react-toastify';
-import type { StateCreator } from 'zustand';
+import { toast } from "react-toastify";
+import type { StateCreator } from "zustand";
 
-import { ERROR_MESSAGE } from '@/constants/messages';
-import * as service from '@/services/api/category';
-import type { CategoryApiType } from '@/types/common/api';
-import type { CategoryType } from '@/types/common/category';
-import type { CategoryStoreType } from '@/types/store/category';
+import { ERROR_MESSAGE } from "@/constants/messages";
+import * as service from "@/services/api/category";
+import type { CategoryApiType } from "@/types/common/api";
+import type { CategoryType } from "@/types/common/category";
+import type { CategoryStoreType } from "@/types/store/category";
 
 export const categorySlice: StateCreator<
   CategoryStoreType,
@@ -50,9 +50,7 @@ export const categorySlice: StateCreator<
     },
 
     getCategoryById: async (id: string) => {
-      const category = get().category.categories.find(
-        ({ _id: { $oid } }) => $oid === id,
-      );
+      const category = get().category.categories.find(({ _id }) => _id === id);
 
       if (category) {
         return category;
@@ -87,7 +85,7 @@ export const categorySlice: StateCreator<
         if (!data.success) throw Error(data.error);
 
         const updatedCategories = get().category.categories.filter(
-          ({ _id: { $oid } }) => $oid !== id,
+          ({ _id }) => _id !== id
         );
 
         set({
@@ -124,13 +122,13 @@ export const categorySlice: StateCreator<
 
     updateCategory: async ({ _id, ...category }: CategoryApiType) => {
       try {
-        const { data } = await service.updateCategory(_id.$oid, category);
+        const { data } = await service.updateCategory(_id, category);
         if (!data.success) throw Error(data.error);
 
         const { categories } = get().category;
 
         const updatedCategoryIndex = categories.findIndex(
-          ({ _id: { $oid } }) => $oid === _id.$oid,
+          (category) => category._id === _id
         );
 
         categories[updatedCategoryIndex] = data.data;

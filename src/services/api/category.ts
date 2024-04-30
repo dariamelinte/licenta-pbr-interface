@@ -11,33 +11,33 @@ import type {
 } from '@/types/common/api';
 import type { CategoryType } from '@/types/common/category';
 
+export const createCategory = async (
+  category: CategoryType,
+): AxiosPromise<AddApiType<CategoryApiType>> => {
+  return httpService.post('/categories', category);
+};
+
 export const getCategories = async (): AxiosPromise<
   GetAllApiType<CategoryApiType>
 > => {
-  return httpService.get('/category/all');
+  return httpService.get('/categories');
 };
 
 export const getCategoryById = async (
   id: string,
 ): AxiosPromise<GetByIdApiType<CategoryApiType>> => {
-  return httpService.get(`/category/${id}`);
-};
-
-export const createCategory = async (
-  category: CategoryType,
-): AxiosPromise<AddApiType<CategoryApiType>> => {
-  return httpService.post('/category', category);
+  return httpService.get(`/categories/id/${id}`);
 };
 
 export const updateCategory = async (
   id: string,
   category: Partial<CategoryType>,
 ): AxiosPromise<UpdateApiType<CategoryApiType>> => {
-  return httpService.patch(`/category/${id}`, category);
+  return httpService.patch(`/categories/id/${id}`, category);
 };
 
 export const deleteCategory = async (
   id: string,
 ): AxiosPromise<DeleteApiType> => {
-  return httpService.delete(`/category/${id}`);
+  return httpService.delete(`/categories/id/${id}`);
 };

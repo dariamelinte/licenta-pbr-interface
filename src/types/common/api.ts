@@ -1,11 +1,7 @@
-import type { CategoryType } from './category';
-import type {
-  ObjectModelGeometryType,
-  ObjectModelInfoType,
-  ObjectModelType,
-} from './objectModel';
+import type { CategoryType } from "./category";
+import type { ObjectModelInputType } from "./objectModel";
 
-export type OidType = { _id: { $oid: string } };
+export type OidType = { _id: string };
 
 export type ApiResponseType = {
   success: boolean;
@@ -28,20 +24,25 @@ export type DeleteApiType = ApiResponseType & { data: null };
 export type CategoryApiType = CategoryType & OidType;
 
 // object model
-export type ObjectModelApiType = Omit<ObjectModelType, 'category'> &
-  OidType & {
+export type ModelType = {
+  model: {
+    object_id: string;
+    url: string;
+  };
+};
+
+export type ObjectModelApiType = Omit<
+  ObjectModelInputType,
+  "category" | "model"
+> &
+  OidType &
+  ModelType & {
     category: OidType & {
-      name: string;
+      name?: string;
     };
   };
 
-export type ObjectModelInfoApiType = ObjectModelInfoType & OidType;
-
-export type ObjectModelGeometryApiType = ObjectModelGeometryType & OidType;
-
-export type ObjectModelIndecisiveApiType =
-  | ObjectModelApiType
-  | ObjectModelInfoApiType
-  | ObjectModelGeometryApiType;
+export type CreateObjectModelApiType = Omit<ObjectModelInputType, "model"> &
+  ModelType;
 
 //

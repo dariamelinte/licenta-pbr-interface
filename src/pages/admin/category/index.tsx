@@ -47,7 +47,7 @@ const Index = () => {
             },
             onEdit: (cat) => {
               setCategory(cat);
-              setOpen('category-edit');
+              setOpen('category');
               setOnConfirm((catt: CategoryApiType) => {
                 updateCategory(catt);
                 setCategory(null);
@@ -56,14 +56,15 @@ const Index = () => {
           })
         }
         onAddData={() => {
-          setOpen('category-create');
+          setCategory(null);
+          setOpen('category');
           setOnConfirm(createCategory);
         }}
       />
       {open === 'confirm-delete' && (
         <Dialog.Confirmation {...(confirm.delete as ConfirmDialogType)} />
       )}
-      {(open === 'category-create' || open === 'category-edit') && (
+      {open === 'category' && (
         <Dialog.Category category={category} />
       )}
     </VerticalMenuPage>

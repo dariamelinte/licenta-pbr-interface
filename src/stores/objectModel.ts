@@ -1,18 +1,13 @@
-import { toast } from 'react-toastify';
-import type { StateCreator } from 'zustand';
+import { toast } from "react-toastify";
+import type { StateCreator } from "zustand";
 
-import { ERROR_MESSAGE } from '@/constants/messages';
-import * as service from '@/services/api/objectModel';
+import { ERROR_MESSAGE } from "@/constants/messages";
+import * as service from "@/services/api/objectModel";
 import type {
   ObjectModelApiType,
-  ObjectModelGeometryApiType,
-  ObjectModelInfoApiType,
-} from '@/types/common/api';
-import type {
-  ObjectModelFlagType,
-  ObjectModelType,
-} from '@/types/common/objectModel';
-import type { ObjectModelStoreType } from '@/types/store/objectModel';
+} from "@/types/common/api";
+import type { ObjectModelStoreType } from "@/types/store/objectModel";
+import { ObjectModelInputType } from "@/types/common/objectModel";
 
 export const objectModelSlice: StateCreator<
   ObjectModelStoreType,
@@ -22,8 +17,6 @@ export const objectModelSlice: StateCreator<
 > = (set, get) => ({
   objectModel: {
     objectModels: [],
-    objectModelInfos: [],
-    objectModelGeometries: [],
     loading: true,
 
     setLoading: (loading) =>
@@ -34,7 +27,7 @@ export const objectModelSlice: StateCreator<
         },
       }),
 
-    getObjectModels: async (flag?: ObjectModelFlagType) => {
+    getObjectModels: async () => {
       if (get().objectModel.objectModels.length) {
         return;
       }
@@ -44,27 +37,9 @@ export const objectModelSlice: StateCreator<
 
         const {
           data: { success, error, message, data },
-        } = await service.getObjectModels(flag);
+        } = await service.getObjectModels();
 
         if (!success) throw Error(error);
-
-        if (flag === 'info') {
-          set({
-            objectModel: {
-              ...get().objectModel,
-              objectModelInfos: data as ObjectModelInfoApiType[],
-            },
-          });
-        }
-
-        if (flag === 'geometry') {
-          set({
-            objectModel: {
-              ...get().objectModel,
-              objectModelGeometries: data as ObjectModelGeometryApiType[],
-            },
-          });
-        }
 
         set({
           objectModel: {
@@ -88,7 +63,7 @@ export const objectModelSlice: StateCreator<
         if (!data.success) throw Error(data.error);
 
         const updatedObjectModels = get().objectModel.objectModels.filter(
-          ({ _id: { $oid } }) => $oid !== id,
+          ({ _id  }) => _id !== id
         );
 
         set({
@@ -104,49 +79,41 @@ export const objectModelSlice: StateCreator<
       }
     },
 
-    createObjectModel: async (objectModel: ObjectModelType) => {
+    createObjectModel: async ({ model, ...rest }: ObjectModelInputType) => {
       try {
-        const { data } = await service.createObjectModel(objectModel);
+        const formData = new FormData();
+        formData.append("model", model as File);
 
-        if (!data.success) throw Error(data.error);
+        const { data: dataUpload } = await service.uploadModel(formData);
+        if (!dataUpload.success) throw Error(dataUpload.error)
+
+        const { data } = await service.createObjectModel({ ...rest, model: dataUpload.data.model });
+        if (!data.success) throw Error(data.error);  
 
         set({
           objectModel: {
             ...get().objectModel,
-            objectModels: [...get().objectModel.objectModels, data.data],
+            objectModels: [
+              ...get().objectModel.objectModels,
+              data.data,
+            ],
           },
         });
 
-        toast.info(data.message);
+        // toast.info(data.message);
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
       }
     },
 
-    updateObjectModel: async ({ _id, ...objectModel }: ObjectModelApiType) => {
+    updateObjectModel: async (objectModel: ObjectModelApiType) => {
       try {
-        const { data } = await service.updateObjectModel(_id.$oid, objectModel);
-        if (!data.success) throw Error(data.error);
+        // const { data } = await service.updateObjectModel(_id, objectModel);
+        // if (!data.success) throw Error(data.error);
 
-        const { objectModels } = get().objectModel;
+        // TODO
 
-        const updatedObjectModelIndex = objectModels.findIndex(
-          ({ _id: { $oid } }) => $oid === _id.$oid,
-        );
-
-        objectModels[updatedObjectModelIndex] = data.data;
-
-        // objectModels: [...objectModels] was done in order to make React recognize
-        // that there is a new object, otherwise it's considered a ref to the initial
-        // objectModels, and the state will not be updated in the store
-        set({
-          objectModel: {
-            ...get().objectModel,
-            objectModels: [...objectModels],
-          },
-        });
-
-        toast.info(data.message);
+        // toast.info(data.message);
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
       }
