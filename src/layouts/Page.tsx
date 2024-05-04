@@ -1,9 +1,9 @@
-import Head from "next/head";
-import type { PropsWithChildren } from "react";
-import React from "react";
-import cx from "classnames";
+import cx from 'classnames';
+import Head from 'next/head';
+import type { PropsWithChildren } from 'react';
+import React from 'react';
 
-const TITLE = "CSP Interface";
+const TITLE = 'CSP Interface';
 
 export interface PageProps {
   title?: string;
@@ -19,7 +19,7 @@ export function PageMeta({
   className?: string;
 }) {
   return (
-    <div className={cx("min-h-screen bg-slate-200", className)}>{children}</div>
+    <div className={cx('min-h-screen bg-slate-200', className)}>{children}</div>
   );
 }
 

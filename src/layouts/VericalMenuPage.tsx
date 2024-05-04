@@ -4,8 +4,8 @@ import React from 'react';
 import { VerticalMenu } from '@/components/common';
 import type { ModuleType } from '@/constants/menu-tabs';
 
-import type { PageProps } from './Page';
 import { AuthPage } from './AuthPage';
+import type { PageProps } from './Page';
 
 type VerticalMenuPageProps = PageProps & {
   module: ModuleType;

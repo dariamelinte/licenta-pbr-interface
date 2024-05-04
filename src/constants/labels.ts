@@ -8,3 +8,9 @@ export const objectModelLabels = {
   category: 'Category',
   model: 'Upload model (.glb, .gltf)',
 };
+
+export const authLabels = {
+  email: 'Email',
+  password: 'Password',
+  confirm_password: 'Confirm password',
+};
