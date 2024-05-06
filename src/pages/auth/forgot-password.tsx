@@ -8,10 +8,12 @@ import { authLabels } from '@/constants/labels';
 import { forgotPasswordSchema } from '@/constants/validation-schemas';
 import { Page } from '@/layouts';
 import logo from '@/public/favicon.ico';
+import useStore from '@/stores';
 import type { ForgotPasswordFormType } from '@/types/common/auth';
 
 const Index = () => {
   const router = useRouter();
+  const { forgotPassword, loading } = useStore((state) => state.auth);
 
   return (
     <Page className="flex flex-col items-center justify-center">
@@ -20,9 +22,7 @@ const Index = () => {
         <Formik<ForgotPasswordFormType>
           initialValues={INITIAL_FORGOT_PASSWORD_FORM}
           validationSchema={forgotPasswordSchema}
-          onSubmit={(values) => {
-            console.log({ values });
-          }}
+          onSubmit={forgotPassword}
         >
           <Form className="w-full">
             <p className="text-2xl font-bold leading-none tracking-tight text-blue-900">
@@ -34,7 +34,7 @@ const Index = () => {
                 placeholder={authLabels.email}
               />
             </div>
-            <Button type="submit" className="mb-2 w-full">
+            <Button type="submit" loading={loading} className="mb-2 w-full">
               Request reset link
             </Button>
           </Form>

@@ -8,10 +8,12 @@ import { authLabels } from '@/constants/labels';
 import { registerSchema } from '@/constants/validation-schemas';
 import { Page } from '@/layouts';
 import logo from '@/public/favicon.ico';
+import useStore from '@/stores';
 import type { RegisterFormType } from '@/types/common/auth';
 
 const Index = () => {
   const router = useRouter();
+  const { register, loading } = useStore((state) => state.auth);
 
   return (
     <Page className="flex flex-col items-center justify-center">
@@ -20,9 +22,9 @@ const Index = () => {
         <Formik<RegisterFormType>
           initialValues={INITIAL_REGISTER_FORM}
           validationSchema={registerSchema}
-          onSubmit={(values) => {
-            console.log({ values });
-          }}
+          onSubmit={({ email, password }) =>
+            register({ email, password }, () => router.push('/auth/login'))
+          }
         >
           <Form className="w-full">
             <p className="text-2xl font-bold leading-none tracking-tight text-blue-900">
@@ -45,7 +47,7 @@ const Index = () => {
                 type="password"
               />
             </div>
-            <Button type="submit" className="mb-2 w-full">
+            <Button loading={loading} type="submit" className="mb-2 w-full">
               Submit
             </Button>
           </Form>

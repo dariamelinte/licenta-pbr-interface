@@ -45,4 +45,9 @@ export type ObjectModelApiType = Omit<
 export type CreateObjectModelApiType = Omit<ObjectModelInputType, 'model'> &
   ModelType;
 
-//
+// auth
+export type LoginApiType = ApiResponseType & {
+  data: {
+    token: string;
+  };
+};
