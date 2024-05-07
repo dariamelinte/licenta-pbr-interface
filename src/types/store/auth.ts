@@ -11,6 +11,8 @@ export type AuthStoreType = {
     token: string | null;
     loading: boolean;
 
+    setToken: (token: string) => void;
+
     register: (
       values: Omit<RegisterFormType, 'confirm_password'>,
       onSuccess: () => void,

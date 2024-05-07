@@ -15,6 +15,14 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
     token: null,
     loading: false,
 
+    setToken: (token) =>
+      set({
+        auth: {
+          ...get().auth,
+          token,
+        },
+      }),
+
     setLoading: (loading) =>
       set({
         auth: {

@@ -6,7 +6,7 @@ import { Button, Form as CommonForm } from '@/components/common';
 import { INITIAL_LOGIN_FORM } from '@/constants/initial-objects';
 import { authLabels } from '@/constants/labels';
 import { loginSchema } from '@/constants/validation-schemas';
-import { Page } from '@/layouts';
+import { UnauthPage } from '@/layouts';
 import logo from '@/public/favicon.ico';
 import useStore from '@/stores';
 import type { LoginFormType } from '@/types/common/auth';
@@ -16,7 +16,7 @@ const Index = () => {
   const { login, loading } = useStore((state) => state.auth);
 
   return (
-    <Page className="flex flex-col items-center justify-center">
+    <UnauthPage className="flex flex-col items-center justify-center">
       <div className="flex w-[360px] flex-col items-center rounded-xl border-t-4 border-blue-900 bg-white px-10 py-6 shadow">
         <Image alt="logo" src={logo} width={200} height={200} />
         <Formik<LoginFormType>
@@ -60,7 +60,7 @@ const Index = () => {
           Register
         </Button>
       </div>
-    </Page>
+    </UnauthPage>
   );
 };
 

@@ -2,14 +2,14 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { Button } from '@/components/common';
-import { Page } from '@/layouts';
 import logo from '@/public/favicon.ico';
+import { UnauthPage } from '@/layouts';
 
 const Index = () => {
   const router = useRouter();
 
   return (
-    <Page className="flex flex-col items-center justify-center">
+    <UnauthPage className="flex flex-col items-center justify-center">
       <div className="flex w-[360px] flex-col items-center rounded-xl border-t-4 border-blue-900 bg-white px-10 py-6  shadow">
         <Image alt="logo" src={logo} width={200} height={200} />
         <Button
@@ -33,7 +33,7 @@ const Index = () => {
           Forgot password
         </Button>
       </div>
-    </Page>
+    </UnauthPage>
   );
 };
 

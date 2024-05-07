@@ -2,33 +2,31 @@ import type { PropsWithChildren } from 'react';
 import React, { useCallback, useEffect } from 'react';
 import Cookies from 'js-cookie';
 
-import { Navbar } from '@/components/common';
-
 import { Page, type PageProps } from './Page';
 import useStore from '@/stores';
 import { useRouter } from 'next/router';
 
-export function AuthPage({
+export function UnauthPage({
   children,
   ...pageProps
 }: PropsWithChildren<PageProps>) {
   const router = useRouter()
-  const { token, setToken } = useStore(state => state.auth);
-  
+  const { token, setToken } = useStore(state => state.auth)
+
   const handleAuthUser = useCallback(() => {
-    // TODO: check if the token is expired or close to expiration
     if (token) {
+      router.push('/app');
       return
     }
 
     const cookieToken = Cookies.get(process.env.SECRET_TOKEN);
 
+    console.log({ cookieToken, boop: process.env.SECRET_TOKEN, poob: process.env.API_URL })
+
     if (cookieToken) {
       setToken(cookieToken)
-      return
+      router.push('/app')
     }
-
-    router.push('/')
   }, [token, router, setToken])
 
   useEffect(() => {
@@ -37,7 +35,6 @@ export function AuthPage({
 
   return (
     <Page {...pageProps}>
-      <Navbar />
       {children}
     </Page>
   );
