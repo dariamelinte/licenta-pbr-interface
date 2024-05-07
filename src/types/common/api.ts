@@ -1,6 +1,5 @@
 import type { CategoryType } from './category';
 import type { ObjectModelInputType } from './objectModel';
-import { ProfileType } from './user';
 
 export type OidType = { _id: string };
 
@@ -15,7 +14,7 @@ export type AddApiType<T> = ApiResponseType & { data: T };
 
 export type GetAllApiType<T> = ApiResponseType & { data: T[] };
 
-export type GetByIdApiType<T> = ApiResponseType & { data: T };
+export type GetByApiType<T> = ApiResponseType & { data: T };
 
 export type UpdateApiType<T> = ApiResponseType & { data: T };
 
@@ -54,7 +53,3 @@ export type LoginApiType = ApiResponseType & {
 };
 
 // user
-
-export type GetProfileApiType = ApiResponseType & {
-  data: ProfileType & OidType;
-}

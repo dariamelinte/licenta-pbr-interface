@@ -6,7 +6,7 @@ import type {
   CategoryApiType,
   DeleteApiType,
   GetAllApiType,
-  GetByIdApiType,
+  GetByApiType,
   UpdateApiType,
 } from '@/types/common/api';
 import type { CategoryType } from '@/types/common/category';
@@ -25,7 +25,7 @@ export const getCategories = async (): AxiosPromise<
 
 export const getCategoryById = async (
   id: string,
-): AxiosPromise<GetByIdApiType<CategoryApiType>> => {
+): AxiosPromise<GetByApiType<CategoryApiType>> => {
   return httpService.get(`/categories/id/${id}`);
 };
 

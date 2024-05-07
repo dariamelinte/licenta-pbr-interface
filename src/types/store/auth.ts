@@ -7,7 +7,7 @@ import type { ProfileType } from '@/types/common/user';
 
 export type AuthStoreType = {
   auth: {
-    user: ProfileType | null;
+    user: ProfileType;
     token: string | null;
     loading: boolean;
 
@@ -27,5 +27,8 @@ export type AuthStoreType = {
 
     setLoading: (loading: boolean) => void;
     setToken: (token: string) => void;
+
+    getProfile: (accessToken: string) => void;
+    updateProfile: (accessToken: string, values: ProfileType) => void;
   };
 };

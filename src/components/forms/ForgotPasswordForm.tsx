@@ -1,11 +1,11 @@
-import { Form, Formik } from "formik";
+import { Form, Formik } from 'formik';
 
-import { Button, Form as CommonForm } from "@/components/common";
-import { INITIAL_FORGOT_PASSWORD_FORM } from "@/constants/initial-objects";
-import { authLabels } from "@/constants/labels";
-import { forgotPasswordSchema } from "@/constants/validation-schemas";
-import useStore from "@/stores";
-import type { ForgotPasswordFormType } from "@/types/common/auth";
+import { Button, Form as CommonForm } from '@/components/common';
+import { INITIAL_FORGOT_PASSWORD_FORM } from '@/constants/initial-objects';
+import { authLabels } from '@/constants/labels';
+import { forgotPasswordSchema } from '@/constants/validation-schemas';
+import useStore from '@/stores';
+import type { ForgotPasswordFormType } from '@/types/common/auth';
 
 export const ForgotPasswordForm = () => {
   const { forgotPassword, loading } = useStore((state) => state.auth);

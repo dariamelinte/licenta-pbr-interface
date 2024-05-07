@@ -1,12 +1,12 @@
-import { Form, Formik } from "formik";
-import { useRouter } from "next/router";
+import { Form, Formik } from 'formik';
+import { useRouter } from 'next/router';
 
-import { Button, Form as CommonForm } from "@/components/common";
-import { INITIAL_LOGIN_FORM } from "@/constants/initial-objects";
-import { authLabels } from "@/constants/labels";
-import { loginSchema } from "@/constants/validation-schemas";
-import useStore from "@/stores";
-import type { LoginFormType } from "@/types/common/auth";
+import { Button, Form as CommonForm } from '@/components/common';
+import { INITIAL_LOGIN_FORM } from '@/constants/initial-objects';
+import { authLabels } from '@/constants/labels';
+import { loginSchema } from '@/constants/validation-schemas';
+import useStore from '@/stores';
+import type { LoginFormType } from '@/types/common/auth';
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -16,7 +16,7 @@ export const LoginForm = () => {
     <Formik<LoginFormType>
       initialValues={INITIAL_LOGIN_FORM}
       validationSchema={loginSchema}
-      onSubmit={(values) => login(values, () => router.push("/app"))}
+      onSubmit={(values) => login(values, () => router.push('/app'))}
     >
       <Form className="w-full">
         <p className="title">Log in</p>

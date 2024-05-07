@@ -1,8 +1,9 @@
-import { VerticalMenuPage } from "@/layouts";
-import { ProfileForm } from "@/components/forms";
-import { Button } from "@/components/common";
-import useStore from "@/stores";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+
+import { Button } from '@/components/common';
+import { ProfileForm } from '@/components/forms';
+import { VerticalMenuPage } from '@/layouts';
+import useStore from '@/stores';
 
 const Index = () => {
   const router = useRouter();
@@ -13,13 +14,13 @@ const Index = () => {
       <div className="w-full p-16">
         <div className="card">
           <ProfileForm />
-          <div className="flex w-full mt-3">
+          <div className="mt-3 flex w-full">
             <Button
               theme="base"
               className="mr-5 w-full"
               onClick={async () => {
                 await signOut();
-                router.push("/");
+                router.push('/');
               }}
             >
               Log out

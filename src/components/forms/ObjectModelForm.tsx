@@ -1,22 +1,24 @@
-import cx from "classnames";
-import { Form, Formik } from "formik";
-import { useEffect, useMemo } from "react";
+import cx from 'classnames';
+import { Form, Formik } from 'formik';
+import { useEffect, useMemo } from 'react';
 
-import { Form as CommonForm } from "@/components/common";
-import { INITIAL_OBJECT_MODEL } from "@/constants/initial-objects";
-import { objectModelLabels } from "@/constants/labels";
-import { objectModelSchema } from "@/constants/validation-schemas";
-import useStore from "@/stores";
-import type { ObjectModelApiType } from "@/types/common/api";
-import type { ObjectModelInputType } from "@/types/common/objectModel";
+import { Form as CommonForm } from '@/components/common';
+import { INITIAL_OBJECT_MODEL } from '@/constants/initial-objects';
+import { objectModelLabels } from '@/constants/labels';
+import { objectModelSchema } from '@/constants/validation-schemas';
+import useStore from '@/stores';
+import type { ObjectModelApiType } from '@/types/common/api';
+import type { ObjectModelInputType } from '@/types/common/objectModel';
 
-import styles from "./Form.module.css";
+import styles from './Form.module.css';
 
 type ObjectModelProps = {
   objectModel: ObjectModelApiType | null;
 };
 
-export const ObjectModelForm: React.FC<ObjectModelProps> = ({ objectModel }) => {
+export const ObjectModelForm: React.FC<ObjectModelProps> = ({
+  objectModel,
+}) => {
   const { setOpen, onConfirm } = useStore((state) => state.dialog);
   const { categories, getCategories } = useStore((state) => state.category);
 
@@ -25,7 +27,7 @@ export const ObjectModelForm: React.FC<ObjectModelProps> = ({ objectModel }) => 
       { value: undefined, name: objectModelLabels.category },
       ...categories.map(({ _id, name }) => ({ value: _id, name })),
     ],
-    [categories]
+    [categories],
   );
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export const ObjectModelForm: React.FC<ObjectModelProps> = ({ objectModel }) => 
               options={optionsCategories}
             />
           </div>
-          <div className={cx(styles.row, "mb-3")}>
+          <div className={cx(styles.row, 'mb-3')}>
             <CommonForm.TextAreaField
               name="description"
               label={objectModelLabels.description}
@@ -77,7 +79,7 @@ export const ObjectModelForm: React.FC<ObjectModelProps> = ({ objectModel }) => 
               className="flex-1"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const file = e.currentTarget.files && e.currentTarget.files[0];
-                setFieldValue("model", file);
+                setFieldValue('model', file);
               }}
             />
           </div>

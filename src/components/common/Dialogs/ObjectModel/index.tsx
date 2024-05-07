@@ -1,7 +1,7 @@
 import { Dialog } from '@headlessui/react';
 
-import type { ObjectModelApiType } from '@/types/common/api';
 import { ObjectModelForm } from '@/components/forms';
+import type { ObjectModelApiType } from '@/types/common/api';
 
 import { CustomDialog } from '../Dialog';
 import styles from './ObjectModel.module.css';

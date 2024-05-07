@@ -33,5 +33,5 @@ export const tabs: { [key in ModuleType]: MenuTab[] } = {
     },
   ],
   student: [],
-  professor: []
+  professor: [],
 };

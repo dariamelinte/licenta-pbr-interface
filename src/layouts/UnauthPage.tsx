@@ -1,17 +1,18 @@
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 import type { PropsWithChildren } from 'react';
 import React, { useCallback, useEffect } from 'react';
-import Cookies from 'js-cookie';
+
+import useStore from '@/stores';
 
 import { Page, type PageProps } from './Page';
-import useStore from '@/stores';
-import { useRouter } from 'next/router';
 
 export function UnauthPage({
   children,
   ...pageProps
 }: PropsWithChildren<PageProps>) {
-  const router = useRouter()
-  const { token, expiration_time, setToken } = useStore(state => state.auth)
+  const router = useRouter();
+  const { token, expiration_time, setToken } = useStore((state) => state.auth);
 
   const handleAuthUser = useCallback(() => {
     // const isAboutToExpire = (Date.now() + 10 * 60 * 1000) >= (expiration_time || 0) * 1000
@@ -22,24 +23,20 @@ export function UnauthPage({
 
     if (token) {
       router.push('/app');
-      return
+      return;
     }
 
     const cookieToken = Cookies.get(process.env.SECRET_TOKEN);
-  
+
     if (cookieToken) {
-      setToken(cookieToken)
-      router.push('/app')
+      setToken(cookieToken);
+      router.push('/app');
     }
-  }, [token, router, setToken, expiration_time])
+  }, [token, router, setToken, expiration_time]);
 
   useEffect(() => {
     handleAuthUser();
-  }, [handleAuthUser])
+  }, [handleAuthUser]);
 
-  return (
-    <Page {...pageProps}>
-      {children}
-    </Page>
-  );
+  return <Page {...pageProps}>{children}</Page>;
 }

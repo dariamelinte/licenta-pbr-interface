@@ -11,12 +11,12 @@ export function VerticalMenuPage({
   children,
   ...pageProps
 }: PropsWithChildren<PageProps>) {
-  const { email } = useStore(state => state.auth)
+  const { email } = useStore((state) => state.auth);
 
   return (
     <AuthPage {...pageProps}>
       <div className="flex">
-        {email && <VerticalMenu module={"admin"} />}
+        {email && <VerticalMenu module="admin" />}
         {children}
       </div>
     </AuthPage>

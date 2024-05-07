@@ -1,13 +1,12 @@
-import { Form, Formik } from "formik";
-import { useRouter } from "next/router";
+import { Form, Formik } from 'formik';
+import { useRouter } from 'next/router';
 
-import { Button, Form as CommonForm } from "@/components/common";
-import { INITIAL_REGISTER_FORM } from "@/constants/initial-objects";
-import { authLabels } from "@/constants/labels";
-import { registerSchema } from "@/constants/validation-schemas";
-
-import useStore from "@/stores";
-import type { RegisterFormType } from "@/types/common/auth";
+import { Button, Form as CommonForm } from '@/components/common';
+import { INITIAL_REGISTER_FORM } from '@/constants/initial-objects';
+import { authLabels } from '@/constants/labels';
+import { registerSchema } from '@/constants/validation-schemas';
+import useStore from '@/stores';
+import type { RegisterFormType } from '@/types/common/auth';
 
 export const RegisterForm = () => {
   const router = useRouter();
@@ -18,7 +17,7 @@ export const RegisterForm = () => {
       initialValues={INITIAL_REGISTER_FORM}
       validationSchema={registerSchema}
       onSubmit={({ email, password }) =>
-        register({ email, password }, () => router.push("/auth/login"))
+        register({ email, password }, () => router.push('/auth/login'))
       }
     >
       <Form className="w-full">

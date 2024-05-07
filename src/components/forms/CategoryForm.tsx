@@ -1,4 +1,3 @@
-import { Dialog } from '@headlessui/react';
 import cx from 'classnames';
 import { Form, Formik } from 'formik';
 

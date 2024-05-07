@@ -11,4 +11,4 @@ export type ProfileType = {
 
 export type CredentialType = {
   email: string;
-}
+};
