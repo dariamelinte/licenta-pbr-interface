@@ -64,7 +64,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       {...props}
     >
       {loading ? (
-        <Loading className='h-5' />
+        <Loading className='h-3' />
       ): (
         <>
           {icon}

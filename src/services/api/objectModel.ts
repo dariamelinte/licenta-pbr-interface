@@ -6,7 +6,7 @@ import type {
   CreateObjectModelApiType,
   DeleteApiType,
   GetAllApiType,
-  GetByIdApiType,
+  GetByApiType,
   ModelType,
   ObjectModelApiType,
   UpdateApiType,
@@ -28,7 +28,7 @@ export const getObjectModels = async (): AxiosPromise<
 
 export const getObjectModelById = async (
   id: string,
-): AxiosPromise<GetByIdApiType<ObjectModelApiType>> => {
+): AxiosPromise<GetByApiType<ObjectModelApiType>> => {
   return httpService.get(`/object-models/id/${id}`);
 };
 

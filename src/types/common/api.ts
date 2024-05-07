@@ -14,7 +14,7 @@ export type AddApiType<T> = ApiResponseType & { data: T };
 
 export type GetAllApiType<T> = ApiResponseType & { data: T[] };
 
-export type GetByIdApiType<T> = ApiResponseType & { data: T };
+export type GetByApiType<T> = ApiResponseType & { data: T };
 
 export type UpdateApiType<T> = ApiResponseType & { data: T };
 
@@ -45,4 +45,11 @@ export type ObjectModelApiType = Omit<
 export type CreateObjectModelApiType = Omit<ObjectModelInputType, 'model'> &
   ModelType;
 
-//
+// auth
+export type LoginApiType = ApiResponseType & {
+  data: {
+    token: string;
+  };
+};
+
+// user

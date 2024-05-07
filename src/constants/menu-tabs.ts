@@ -3,7 +3,7 @@ type MenuTab = {
   url: string;
 };
 
-export type ModuleType = 'admin';
+export type ModuleType = 'admin' | 'student' | 'professor';
 
 export const tabs: { [key in ModuleType]: MenuTab[] } = {
   admin: [
@@ -32,4 +32,6 @@ export const tabs: { [key in ModuleType]: MenuTab[] } = {
       url: `/admin/group`,
     },
   ],
+  student: [],
+  professor: [],
 };

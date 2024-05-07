@@ -9,7 +9,7 @@ type Route = {
 export const routes: Route[] = [
   {
     text: 'Profile',
-    url: '/profile',
+    url: '/app/profile',
     icon: <UserCircle />,
   },
 ];

@@ -2,26 +2,23 @@ import type { PropsWithChildren } from 'react';
 import React from 'react';
 
 import { VerticalMenu } from '@/components/common';
-import type { ModuleType } from '@/constants/menu-tabs';
+import useStore from '@/stores';
 
+import { AuthPage } from './AuthPage';
 import type { PageProps } from './Page';
-import { Page } from './Page';
-
-type VerticalMenuPageProps = PageProps & {
-  module: ModuleType;
-};
 
 export function VerticalMenuPage({
-  module,
   children,
   ...pageProps
-}: PropsWithChildren<VerticalMenuPageProps>) {
+}: PropsWithChildren<PageProps>) {
+  const { email } = useStore((state) => state.auth);
+
   return (
-    <Page {...pageProps}>
+    <AuthPage {...pageProps}>
       <div className="flex">
-        <VerticalMenu module={module} />
+        {email && <VerticalMenu module="admin" />}
         {children}
       </div>
-    </Page>
+    </AuthPage>
   );
 }

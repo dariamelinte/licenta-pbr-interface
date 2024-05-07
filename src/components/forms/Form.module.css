@@ -1,0 +1,9 @@
+
+.row {
+    @apply flex flex-wrap justify-between items-center;
+    @apply flex-col md:flex-row;
+}
+
+.field, .button {
+    @apply flex-1 w-full my-2;
+}
