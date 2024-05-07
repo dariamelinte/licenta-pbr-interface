@@ -11,23 +11,26 @@ export function UnauthPage({
   ...pageProps
 }: PropsWithChildren<PageProps>) {
   const router = useRouter()
-  const { token, setToken } = useStore(state => state.auth)
+  const { token, expiration_time, setToken } = useStore(state => state.auth)
 
   const handleAuthUser = useCallback(() => {
+    const isAboutToExpire = (Date.now() + 10 * 60 * 1000) >= (expiration_time || 0) * 1000
+    if (isAboutToExpire) {
+      return;
+    }
+
     if (token) {
       router.push('/app');
       return
     }
 
     const cookieToken = Cookies.get(process.env.SECRET_TOKEN);
-
-    console.log({ cookieToken, boop: process.env.SECRET_TOKEN, poob: process.env.API_URL })
-
+  
     if (cookieToken) {
       setToken(cookieToken)
       router.push('/app')
     }
-  }, [token, router, setToken])
+  }, [token, router, setToken, expiration_time])
 
   useEffect(() => {
     handleAuthUser();

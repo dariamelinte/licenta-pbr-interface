@@ -13,10 +13,14 @@ export function AuthPage({
   ...pageProps
 }: PropsWithChildren<PageProps>) {
   const router = useRouter()
-  const { token, setToken } = useStore(state => state.auth);
+  const { token, expiration_time, setToken } = useStore(state => state.auth);
   
   const handleAuthUser = useCallback(() => {
-    // TODO: check if the token is expired or close to expiration
+    const isAboutToExpire = (Date.now() + 10 * 60 * 1000) >= (expiration_time || 0) * 1000
+    if (isAboutToExpire) {
+      router.push('/')
+    }
+
     if (token) {
       return
     }
@@ -34,6 +38,10 @@ export function AuthPage({
   useEffect(() => {
     handleAuthUser();
   }, [handleAuthUser])
+
+  useEffect(() => {
+
+  }, [expiration_time])
 
   return (
     <Page {...pageProps}>

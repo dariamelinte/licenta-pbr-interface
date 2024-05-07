@@ -5,6 +5,8 @@ import type { StateCreator } from 'zustand';
 import { ERROR_MESSAGE } from '@/constants/messages';
 import * as service from '@/services/api/auth';
 import type { AuthStoreType } from '@/types/store/auth';
+import { parseJwt } from '@/utils/parseJwt';
+
 
 export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
   set,
@@ -15,13 +17,25 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
     token: null,
     loading: false,
 
-    setToken: (token) =>
+    credential: null,
+    expiration_time: null,
+    profile: false,
+
+    setToken: (token) => {
+      const { credential, expiration_time, profile } = parseJwt(token);
+
+      console.log({ credential, expiration_time, profile })
+
       set({
         auth: {
           ...get().auth,
           token,
+          credential,
+          expiration_time,
+          profile
         },
-      }),
+      })
+    },
 
     setLoading: (loading) =>
       set({
@@ -56,12 +70,7 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
 
         if (!data.success) throw Error(data.error);
 
-        set({
-          auth: {
-            ...get().auth,
-            ...data.data,
-          },
-        });
+        get().auth.setToken(data.data.token)
         Cookies.set(process.env.SECRET_TOKEN, data.data.token);
 
         toast.info(data.message);

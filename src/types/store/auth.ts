@@ -11,7 +11,9 @@ export type AuthStoreType = {
     token: string | null;
     loading: boolean;
 
-    setToken: (token: string) => void;
+    credential: string | null;
+    expiration_time: number | null;
+    profile: boolean;
 
     register: (
       values: Omit<RegisterFormType, 'confirm_password'>,
@@ -23,5 +25,6 @@ export type AuthStoreType = {
     signOut: () => void;
 
     setLoading: (loading: boolean) => void;
+    setToken: (token: string) => void;
   };
 };
