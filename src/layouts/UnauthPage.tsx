@@ -14,10 +14,11 @@ export function UnauthPage({
   const { token, expiration_time, setToken } = useStore(state => state.auth)
 
   const handleAuthUser = useCallback(() => {
-    const isAboutToExpire = (Date.now() + 10 * 60 * 1000) >= (expiration_time || 0) * 1000
-    if (isAboutToExpire) {
-      return;
-    }
+    // const isAboutToExpire = (Date.now() + 10 * 60 * 1000) >= (expiration_time || 0) * 1000
+
+    // if (isAboutToExpire) {
+    //   return;
+    // }
 
     if (token) {
       router.push('/app');

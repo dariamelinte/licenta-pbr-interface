@@ -14,3 +14,11 @@ export const authLabels = {
   password: 'Password',
   confirm_password: 'Confirm password',
 };
+
+export const profileLabels = {
+  last_name: 'Last name',
+  first_name: 'First name',
+  phone_number: 'Phone number',
+  institution: 'Institution',
+  role: 'Role',
+};

@@ -27,14 +27,14 @@ const Index = () => {
 
   if (loading) {
     return (
-      <VerticalMenuPage module="admin">
+      <VerticalMenuPage>
         <Loading size="large" />
       </VerticalMenuPage>
     );
   }
 
   return (
-    <VerticalMenuPage module="admin">
+    <VerticalMenuPage>
       <Table.Table<CategoryApiType>
         title="Categories"
         data={categories}

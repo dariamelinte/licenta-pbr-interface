@@ -23,7 +23,7 @@
 .base[type='button'],
 .base[type='reset'],
 .base[type='submit'] {
-  @apply text-blue-800 bg-white;
+  @apply text-blue-800 bg-blue-100;
 }
 
 

@@ -28,14 +28,14 @@ const Index = () => {
 
   if (loading) {
     return (
-      <VerticalMenuPage module="admin">
+      <VerticalMenuPage>
         <Loading size="large" />
       </VerticalMenuPage>
     );
   }
 
   return (
-    <VerticalMenuPage module="admin">
+    <VerticalMenuPage>
       <Table.Table<ObjectModelApiType>
         title="Object models"
         data={objectModels}

@@ -19,12 +19,13 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
 
     credential: null,
     expiration_time: null,
-    profile: false,
+    email: null,
+    has_profile: false,
 
     setToken: (token) => {
-      const { credential, expiration_time, profile } = parseJwt(token);
+      const { credential, expiration_time, email, has_profile } = parseJwt(token);
 
-      console.log({ credential, expiration_time, profile })
+      console.log({ credential, expiration_time, email })
 
       set({
         auth: {
@@ -32,7 +33,8 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
           token,
           credential,
           expiration_time,
-          profile
+          email,
+          has_profile
         },
       })
     },
@@ -87,19 +89,6 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
 
       try {
         console.log(values);
-        // const { data } = await service.forgotPassword(values);
-
-        // if (!data.success) throw Error(data.error);
-
-        // console.log(data)
-
-        // set({
-        //   auth: {
-        //     ...get().auth,
-        //     categories: data.data,
-        //     loading: false,
-        //   },
-        // });
 
         // toast.info(data.message);
       } catch (error: any) {
@@ -113,22 +102,24 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
       get().auth.setLoading(true);
 
       try {
-        console.log('signing out');
-        // const { data } = await service.register(values);
+        const res = await Cookies.remove(process.env.SECRET_TOKEN, { path: '' })
 
-        // if (!data.success) throw Error(data.error);
+        console.log({ res })
+        
+        set({
+          auth: {
+            ...get().auth,
+            user: null,
+            token: null,
+            loading: false,
+        
+            credential: null,
+            expiration_time: null,
+            email: null,
+            has_profile: false
+          },
+        });
 
-        // console.log(data)
-
-        // set({
-        //   auth: {
-        //     ...get().auth,
-        //     categories: data.data,
-        //     loading: false,
-        //   },
-        // });
-
-        // toast.info(data.message);
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
       } finally {

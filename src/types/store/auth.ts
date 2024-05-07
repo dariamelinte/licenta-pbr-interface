@@ -3,17 +3,18 @@ import type {
   LoginFormType,
   RegisterFormType,
 } from '@/types/common/auth';
-import type { UserType } from '@/types/common/user';
+import type { ProfileType } from '@/types/common/user';
 
 export type AuthStoreType = {
   auth: {
-    user: UserType | null;
+    user: ProfileType | null;
     token: string | null;
     loading: boolean;
 
     credential: string | null;
     expiration_time: number | null;
-    profile: boolean;
+    email: string | null;
+    has_profile: boolean;
 
     register: (
       values: Omit<RegisterFormType, 'confirm_password'>,

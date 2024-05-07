@@ -1,12 +1,14 @@
 export type UserRoleType = 'admin' | 'professor' | 'student' | 'unknown';
 
-export type UserType = {
+export type ProfileType = {
   last_name: string;
   first_name: string;
   phone_number: string;
-  email: string;
+
   institution: string;
   role: UserRoleType;
-
-  enrolled_by?: string;
 };
+
+export type CredentialType = {
+  email: string;
+}

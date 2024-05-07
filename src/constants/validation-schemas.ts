@@ -51,3 +51,11 @@ export const loginSchema = yup.object().shape({
 export const forgotPasswordSchema = yup.object().shape({
   email: yup.string().email(ERROR_MESSAGE.invalidEmail).required(),
 });
+
+export const profileSchema = yup.object().shape({
+  last_name: yup.string().required(),
+  first_name: yup.string().required(),
+  phone_number: yup.string().required(),
+  institution: yup.string().required(),
+  role: yup.string().required(),
+});

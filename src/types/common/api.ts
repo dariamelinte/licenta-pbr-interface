@@ -1,5 +1,6 @@
 import type { CategoryType } from './category';
 import type { ObjectModelInputType } from './objectModel';
+import { ProfileType } from './user';
 
 export type OidType = { _id: string };
 
@@ -51,3 +52,9 @@ export type LoginApiType = ApiResponseType & {
     token: string;
   };
 };
+
+// user
+
+export type GetProfileApiType = ApiResponseType & {
+  data: ProfileType & OidType;
+}

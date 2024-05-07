@@ -5,6 +5,7 @@ import type {
 } from '@/types/common/auth';
 import type { CategoryType } from '@/types/common/category';
 import type { ObjectModelInputType } from '@/types/common/objectModel';
+import { ProfileType } from '@/types/common/user';
 
 export const INITIAL_CATEGORY: CategoryType = {
   name: '',
@@ -30,3 +31,11 @@ export const INITIAL_REGISTER_FORM: RegisterFormType = {
 export const INITIAL_FORGOT_PASSWORD_FORM: ForgotPasswordFormType = {
   email: '',
 };
+
+export const INITIAL_PROFILE_FORM: ProfileType = {
+  last_name: '',
+  first_name: '',
+  phone_number: '',
+  institution: '',
+  role: 'student'
+}
