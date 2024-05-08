@@ -11,7 +11,10 @@ export type ObjectModelStoreType = {
     getObjectModels: () => void;
     deleteObjectModel: (token: string, id: string) => void;
 
-    createObjectModel: (token: string, objectModel: ObjectModelInputType) => void;
+    createObjectModel: (
+      token: string,
+      objectModel: ObjectModelInputType,
+    ) => void;
     updateObjectModel: (token: string, objectModel: ObjectModelApiType) => void;
   };
 };

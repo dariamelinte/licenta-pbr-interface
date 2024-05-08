@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Dialog, Loading, Table } from '@/components/common';
-import { ClipboardButton } from '@/components/common/Buttons';
+import { Button, ClipboardButton } from '@/components/common/Buttons';
 import { groupStudentsColumns } from '@/components/common/Tables/columns/groupStudents';
 import { AcademicCap, Phone, User } from '@/components/icons';
 import { confirm } from '@/constants/confirm-dialog';
@@ -16,8 +16,8 @@ const Index = () => {
   const router = useRouter();
   const [group, setGroup] = useState<CompleteGroupApiType | null>(null);
 
-  const { token } = useStore((state) => state.auth);
-  const { getGroupById, loading, updateGroup } = useStore(
+  const { token, credential, user } = useStore((state) => state.auth);
+  const { getGroupById, loading, updateGroup, groups, setGroups } = useStore(
     (state) => state.group,
   );
   const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
@@ -41,13 +41,34 @@ const Index = () => {
     updateGroup(
       token as string,
       { _id: group?._id, students: filteredStudents },
-      () =>
+      () => {
+        if (user.role === 'student') {
+          const filteredGroups = groups.filter(({ _id }) => _id !== group?._id);
+          setGroups(filteredGroups);
+
+          router.push('/app/groups');
+        }
+
         setGroup((group) => ({
           ...(group as CompleteGroupApiType),
           students,
-        })),
+        }));
+      },
     );
   };
+
+  const columnProps = useMemo(() => {
+    if (user.role === 'student') {
+      return {};
+    }
+
+    return {
+      onDelete: (id: string) => {
+        setOpen('confirm-delete');
+        setOnConfirm(() => handleRemoveStudent(id));
+      },
+    };
+  }, [user.role, setOpen, setOnConfirm, handleRemoveStudent]);
 
   useEffect(() => {
     handleGroup();
@@ -87,6 +108,19 @@ const Index = () => {
               {group.professor.institution}
             </p>
           </div>
+          {user.role === 'student' && (
+            <div className="w-full pt-8">
+              <Button
+                theme="danger"
+                onClick={() => {
+                  setOpen('confirm-leave');
+                  setOnConfirm(() => handleRemoveStudent(credential as string));
+                }}
+              >
+                Leave group
+              </Button>
+            </div>
+          )}
         </div>
         <Table.Table<ProfileType>
           className="mt-8"
@@ -95,15 +129,15 @@ const Index = () => {
           columns={(columnHelper) =>
             groupStudentsColumns({
               columnHelper,
-              onDelete: (id: string) => {
-                setOpen('confirm-delete');
-                setOnConfirm(() => handleRemoveStudent(id));
-              },
+              ...columnProps,
             })
           }
         />
         {open === 'confirm-delete' && (
           <Dialog.Confirmation {...(confirm.delete as ConfirmDialogType)} />
+        )}
+        {open === 'confirm-leave' && (
+          <Dialog.Confirmation {...(confirm.leave as ConfirmDialogType)} />
         )}
       </div>
     </VerticalMenuPage>

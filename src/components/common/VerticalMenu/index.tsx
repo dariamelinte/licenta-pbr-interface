@@ -15,7 +15,7 @@ type VerticalMenuProps = {
 export const VerticalMenu: React.FC<VerticalMenuProps> = ({ module }) => {
   const router = useRouter();
 
-  console.log(module)
+  console.log(module);
 
   return (
     <div className={styles.container}>

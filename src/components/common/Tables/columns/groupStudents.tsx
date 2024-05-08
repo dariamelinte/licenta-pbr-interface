@@ -5,7 +5,7 @@ import type { ProfileType } from '@/types/common/user';
 
 type GroupColumnsProps = {
   columnHelper: ColumnHelper<ProfileType>;
-  onDelete: (id: string) => void;
+  onDelete?: (id: string) => void;
 };
 
 export const groupStudentsColumns = ({
@@ -31,7 +31,11 @@ export const groupStudentsColumns = ({
   columnHelper.accessor('credential', {
     header: '',
     cell: (info) => (
-      <Options onDelete={() => onDelete(info.getValue() as string)} />
+      <Options
+        onDelete={
+          onDelete ? () => onDelete?.(info.getValue() as string) : undefined
+        }
+      />
     ),
   }),
 ];

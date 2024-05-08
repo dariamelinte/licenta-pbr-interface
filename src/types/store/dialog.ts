@@ -7,9 +7,11 @@ export type ConfirmDialogType = {
 export type OpenType =
   | 'confirm-delete'
   | 'confirm-empty'
+  | 'confirm-leave'
   | 'category'
   | 'object-model'
-  | 'group'
+  | 'add-group'
+  | 'join-group'
   | null;
 
 export type DialogStoreType = {

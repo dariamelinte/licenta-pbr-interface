@@ -4,7 +4,7 @@ import type {
   RegisterFormType,
 } from '@/types/common/auth';
 import type { CategoryType } from '@/types/common/category';
-import type { GroupFormType } from '@/types/common/group';
+import type { GroupFormType, JoinGroupFormType } from '@/types/common/group';
 import type { ObjectModelInputType } from '@/types/common/objectModel';
 import type { ProfileType } from '@/types/common/user';
 
@@ -45,3 +45,7 @@ export const INITIAL_GROUP = (code: string): GroupFormType => ({
   name: '',
   code,
 });
+
+export const INITIAL_JOIN_GROUP: JoinGroupFormType = {
+  code: '',
+};

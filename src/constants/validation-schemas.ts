@@ -64,3 +64,7 @@ export const groupSchema = yup.object().shape({
   name: yup.string().required(),
   code: yup.string().required(),
 });
+
+export const joinGroupSchema = yup.object().shape({
+  code: yup.string().required(),
+});

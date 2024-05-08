@@ -12,7 +12,7 @@ const Index = () => {
   const [category, setCategory] = useState<CategoryApiType | null>(null);
 
   const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
-  const { token } = useStore((state) => state.auth)
+  const { token } = useStore((state) => state.auth);
   const {
     categories,
     loading,

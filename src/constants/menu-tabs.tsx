@@ -12,12 +12,12 @@ export const tabs: { [key in UserRoleType]: MenuTab[] } = {
     {
       text: 'Categories',
       url: `/admin/category`,
-      icon: <BookOpen />
+      icon: <BookOpen />,
     },
     {
       text: 'Models',
       url: `/admin/object-model`,
-      icon: <Folder />
+      icon: <Folder />,
     },
     {
       text: 'Groups',
@@ -25,7 +25,13 @@ export const tabs: { [key in UserRoleType]: MenuTab[] } = {
       icon: <UserGroup />,
     },
   ],
-  student: [],
+  student: [
+    {
+      text: 'Groups',
+      url: '/app/groups',
+      icon: <UserGroup />,
+    },
+  ],
   professor: [
     {
       text: 'Groups',

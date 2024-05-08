@@ -120,7 +120,10 @@ export const categorySlice: StateCreator<
       }
     },
 
-    updateCategory: async (token: string, { _id, ...category }: CategoryApiType) => {
+    updateCategory: async (
+      token: string,
+      { _id, ...category }: CategoryApiType,
+    ) => {
       try {
         const { data } = await service.updateCategory(token, _id, category);
         if (!data.success) throw Error(data.error);

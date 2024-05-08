@@ -1,5 +1,5 @@
 import type { CompleteGroupApiType, GroupApiType } from '@/types/common/api';
-import type { GroupFormType } from '@/types/common/group';
+import type { GroupFormType, JoinGroupFormType } from '@/types/common/group';
 
 export type GroupStoreType = {
   group: {
@@ -7,6 +7,7 @@ export type GroupStoreType = {
     loading: boolean;
 
     setLoading: (loading: boolean) => void;
+    setGroups: (groups: GroupApiType[]) => void;
 
     getGroups: (accessToken: string) => void;
     getGroupById: (
@@ -21,5 +22,6 @@ export type GroupStoreType = {
       group: Partial<GroupApiType>,
       onSuccess?: () => void,
     ) => void;
+    joinGroup: (accessToken: string, joinGroup: JoinGroupFormType) => void;
   };
 };

@@ -5,9 +5,9 @@ import type { GroupApiType } from '@/types/common/api';
 
 type GroupColumnsProps = {
   columnHelper: ColumnHelper<GroupApiType>;
-  onDelete: (id: string) => void;
-  onView: (id: string) => void;
-  onEdit: (group: GroupApiType) => void;
+  onDelete?: (id: string) => void;
+  onView?: (id: string) => void;
+  onEdit?: (group: GroupApiType) => void;
 };
 
 export const groupColumns = ({
@@ -32,9 +32,9 @@ export const groupColumns = ({
     header: '',
     cell: (info) => (
       <Options
-        onEdit={() => onEdit(info.row.original)}
-        onDelete={() => onDelete(info.getValue())}
-        onView={() => onView(info.getValue())}
+        onEdit={onEdit ? () => onEdit(info.row.original) : undefined}
+        onDelete={onDelete ? () => onDelete?.(info.getValue()) : undefined}
+        onView={onView ? () => onView(info.getValue()) : undefined}
       />
     ),
   }),

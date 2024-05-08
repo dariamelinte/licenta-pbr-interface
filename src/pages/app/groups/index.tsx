@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Dialog, Loading, Table } from '@/components/common';
 import { groupColumns } from '@/components/common/Tables';
@@ -15,9 +15,40 @@ const Index = () => {
   const [group, setGroup] = useState<GroupFormType | null>(null);
 
   const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
-  const { token } = useStore((state) => state.auth);
-  const { groups, loading, getGroups, deleteGroup, createGroup, updateGroup } =
-    useStore((state) => state.group);
+  const { token, user } = useStore((state) => state.auth);
+  const {
+    groups,
+    loading,
+    getGroups,
+    deleteGroup,
+    createGroup,
+    updateGroup,
+    joinGroup,
+  } = useStore((state) => state.group);
+
+  const columnProps = useMemo(() => {
+    if (user.role === 'student') {
+      return {
+        onView: (id: string) => router.push(`/app/groups/${id}`),
+      };
+    }
+
+    return {
+      onDelete: (id: string) => {
+        setOpen('confirm-delete');
+        setOnConfirm(() => deleteGroup(token as string, id));
+      },
+      onEdit: (gr: GroupFormType) => {
+        setGroup(gr);
+        setOpen('add-group');
+        setOnConfirm((groupp: GroupApiType) => {
+          updateGroup(token as string, groupp);
+          setGroup(null);
+        });
+      },
+      onView: (id: string) => router.push(`/app/groups/${id}`),
+    };
+  }, [user.role, setOpen, setGroup, setOnConfirm, updateGroup, router]);
 
   useEffect(() => {
     getGroups(token as string);
@@ -40,31 +71,26 @@ const Index = () => {
         columns={(columnHelper) =>
           groupColumns({
             columnHelper,
-            onDelete: (id: string) => {
-              setOpen('confirm-delete');
-              setOnConfirm(() => deleteGroup(token as string, id));
-            },
-            onEdit: (gr) => {
-              setGroup(gr);
-              setOpen('group');
-              setOnConfirm((groupp: GroupApiType) => {
-                updateGroup(token as string, groupp);
-                setGroup(null);
-              });
-            },
-            onView: (id) => router.push(`/app/groups/${id}`),
+            ...columnProps,
           })
         }
         onAddData={() => {
-          setGroup(null);
-          setOpen('group');
-          setOnConfirm((values) => createGroup(token as string, values));
+          if (user.role === 'student') {
+            setGroup(null);
+            setOpen('join-group');
+            setOnConfirm((values) => joinGroup(token as string, values));
+          } else {
+            setGroup(null);
+            setOpen('add-group');
+            setOnConfirm((values) => createGroup(token as string, values));
+          }
         }}
       />
       {open === 'confirm-delete' && (
         <Dialog.Confirmation {...(confirm.delete as ConfirmDialogType)} />
       )}
-      {open === 'group' && <Dialog.Group group={group} />}
+      {open === 'add-group' && <Dialog.Group group={group} />}
+      {open === 'join-group' && <Dialog.JoinGroup />}
     </VerticalMenuPage>
   );
 };

@@ -10,7 +10,11 @@ import type {
   GroupApiType,
   UpdateApiType,
 } from '@/types/common/api';
-import type { GroupFormType, GroupType } from '@/types/common/group';
+import type {
+  GroupFormType,
+  GroupType,
+  JoinGroupFormType,
+} from '@/types/common/group';
 
 export const createGroup = async (
   accessToken: string,
@@ -67,11 +71,11 @@ export const deleteGroup = async (
   });
 };
 
-export const getGroupStudents = async (
+export const joinGroup = async (
   accessToken: string,
-  id: string,
-): AxiosPromise<GetByApiType<GroupApiType>> => {
-  return httpService.get(`/groups/id/${id}/students`, {
+  group: JoinGroupFormType,
+): AxiosPromise<AddApiType<GroupApiType>> => {
+  return httpService.post('/groups/join', group, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

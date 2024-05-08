@@ -23,6 +23,14 @@ export const groupSlice: StateCreator<
         },
       }),
 
+    setGroups: (groups) =>
+      set({
+        group: {
+          ...get().group,
+          groups,
+        },
+      }),
+
     getGroups: async (accessToken) => {
       if (get().group.groups.length) {
         return;
@@ -135,6 +143,25 @@ export const groupSlice: StateCreator<
         if (onSuccess) {
           onSuccess();
         }
+
+        toast.info(data.message);
+      } catch (error: any) {
+        toast.error(error || ERROR_MESSAGE.default);
+      }
+    },
+
+    joinGroup: async (accessToken, group) => {
+      try {
+        const { data } = await service.joinGroup(accessToken, group);
+
+        if (!data.success) throw Error(data.error);
+
+        set({
+          group: {
+            ...get().group,
+            groups: [...get().group.groups, data.data],
+          },
+        });
 
         toast.info(data.message);
       } catch (error: any) {

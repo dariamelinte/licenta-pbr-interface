@@ -1,11 +1,11 @@
-import { toast } from "react-toastify";
-import type { StateCreator } from "zustand";
+import { toast } from 'react-toastify';
+import type { StateCreator } from 'zustand';
 
-import { ERROR_MESSAGE } from "@/constants/messages";
-import * as service from "@/services/api/objectModel";
-import type { ObjectModelApiType } from "@/types/common/api";
-import type { ObjectModelInputType } from "@/types/common/objectModel";
-import type { ObjectModelStoreType } from "@/types/store/objectModel";
+import { ERROR_MESSAGE } from '@/constants/messages';
+import * as service from '@/services/api/objectModel';
+import type { ObjectModelApiType } from '@/types/common/api';
+import type { ObjectModelInputType } from '@/types/common/objectModel';
+import type { ObjectModelStoreType } from '@/types/store/objectModel';
 
 export const objectModelSlice: StateCreator<
   ObjectModelStoreType,
@@ -61,7 +61,7 @@ export const objectModelSlice: StateCreator<
         if (!data.success) throw Error(data.error);
 
         const updatedObjectModels = get().objectModel.objectModels.filter(
-          ({ _id }) => _id !== id
+          ({ _id }) => _id !== id,
         );
 
         set({
@@ -79,11 +79,11 @@ export const objectModelSlice: StateCreator<
 
     createObjectModel: async (
       token: string,
-      { model, ...rest }: ObjectModelInputType
+      { model, ...rest }: ObjectModelInputType,
     ) => {
       try {
         const formData = new FormData();
-        formData.append("model", model as File);
+        formData.append('model', model as File);
 
         const { data: dataUpload } = await service.uploadModel(token, formData);
         if (!dataUpload.success) throw Error(dataUpload.error);
@@ -109,7 +109,7 @@ export const objectModelSlice: StateCreator<
 
     updateObjectModel: async (
       token: string,
-      objectModel: ObjectModelApiType
+      objectModel: ObjectModelApiType,
     ) => {
       try {
         // const { data } = await service.updateObjectModel(_id, objectModel);

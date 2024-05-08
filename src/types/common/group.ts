@@ -18,3 +18,7 @@ export type CompleteGroupType = {
   professor: ProfileType;
   students: ProfileType[];
 };
+
+export type JoinGroupFormType = {
+  code: string;
+};

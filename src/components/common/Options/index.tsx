@@ -14,6 +14,7 @@ export const Options: React.FC<OptionsProps> = ({
   onEdit,
   onView,
 }) => {
+  console.log({ onDelete, onView, onEdit });
   return (
     <div className={styles.container}>
       {onView && (
