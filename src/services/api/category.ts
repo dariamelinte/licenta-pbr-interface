@@ -12,9 +12,14 @@ import type {
 import type { CategoryType } from '@/types/common/category';
 
 export const createCategory = async (
+  accessToken: string,
   category: CategoryType,
 ): AxiosPromise<AddApiType<CategoryApiType>> => {
-  return httpService.post('/categories', category);
+  return httpService.post('/categories', category, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
 
 export const getCategories = async (): AxiosPromise<
@@ -30,14 +35,24 @@ export const getCategoryById = async (
 };
 
 export const updateCategory = async (
+  accessToken: string,
   id: string,
   category: Partial<CategoryType>,
 ): AxiosPromise<UpdateApiType<CategoryApiType>> => {
-  return httpService.patch(`/categories/id/${id}`, category);
+  return httpService.patch(`/categories/id/${id}`, category, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
 
 export const deleteCategory = async (
+  accessToken: string,
   id: string,
 ): AxiosPromise<DeleteApiType> => {
-  return httpService.delete(`/categories/id/${id}`);
+  return httpService.delete(`/categories/id/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };

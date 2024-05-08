@@ -1,5 +1,5 @@
 .pagination {
-    @apply flex items-center gap-2 mt-12;
+    @apply flex items-center gap-2 mt-12 w-full;
 }
 
 .icon {

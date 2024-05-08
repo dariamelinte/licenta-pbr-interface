@@ -1,6 +1,9 @@
-export type UserRoleType = 'admin' | 'professor' | 'student' | 'unknown';
+export type UserRoleType = 'admin' | 'professor' | 'student';
 
 export type ProfileType = {
+  _id?: string;
+  credential?: string;
+
   last_name: string;
   first_name: string;
   phone_number: string;

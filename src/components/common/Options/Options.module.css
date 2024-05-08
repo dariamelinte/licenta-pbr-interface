@@ -3,7 +3,7 @@
 }
 
 .button {
-    @apply mx-1 z-10;
+    @apply mx-1 z-10 shadow-xl;
 }
 
 .icon {

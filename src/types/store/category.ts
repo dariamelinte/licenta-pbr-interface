@@ -10,9 +10,9 @@ export type CategoryStoreType = {
 
     getCategories: () => void;
     getCategoryById: (id: string) => Promise<CategoryApiType | null>;
-    deleteCategory: (id: string) => void;
+    deleteCategory: (token: string, id: string) => void;
 
-    createCategory: (category: CategoryType) => void;
-    updateCategory: (category: CategoryApiType) => void;
+    createCategory: (token: string, category: CategoryType) => void;
+    updateCategory: (token: string, category: CategoryApiType) => void;
   };
 };

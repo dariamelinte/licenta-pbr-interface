@@ -13,4 +13,9 @@ export const confirm: { [key: string]: ConfirmDialogType } = {
       'Do you really want to empty this record? This will delete all its nested children',
     action: 'Empty',
   },
+  leave: {
+    title: 'Are you sure?',
+    content: 'Do you really want to leave?',
+    action: 'Leave',
+  },
 };

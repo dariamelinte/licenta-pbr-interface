@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { VerticalMenu } from '@/components/common';
 import useStore from '@/stores';
@@ -11,12 +11,16 @@ export function VerticalMenuPage({
   children,
   ...pageProps
 }: PropsWithChildren<PageProps>) {
-  const { email } = useStore((state) => state.auth);
+  const { user, getProfile, token } = useStore((state) => state.auth);
+
+  useEffect(() => {
+    getProfile(token as string);
+  }, [getProfile, token]);
 
   return (
     <AuthPage {...pageProps}>
       <div className="flex">
-        {email && <VerticalMenu module="admin" />}
+        {user.role ? <VerticalMenu module={user.role} /> : null}
         {children}
       </div>
     </AuthPage>

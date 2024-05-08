@@ -34,7 +34,7 @@ export function AuthPage({
     }
 
     router.push('/');
-  }, [token, router, setToken]);
+  }, [token, router, setToken, expiration_time]);
 
   useEffect(() => {
     handleAuthUser();

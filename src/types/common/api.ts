@@ -1,4 +1,5 @@
 import type { CategoryType } from './category';
+import type { CompleteGroupType, GroupType } from './group';
 import type { ObjectModelInputType } from './objectModel';
 
 export type OidType = { _id: string };
@@ -52,4 +53,7 @@ export type LoginApiType = ApiResponseType & {
   };
 };
 
-// user
+// group
+export type GroupApiType = GroupType & OidType;
+
+export type CompleteGroupApiType = CompleteGroupType & OidType;

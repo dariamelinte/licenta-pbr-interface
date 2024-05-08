@@ -24,9 +24,16 @@ type TableProps<T> = {
   data: T[];
   columns: (columnHelper: ColumnHelper<T>) => AccessorKeyColumnDef<T, any>[];
   onAddData?: () => void;
+  className?: string;
 };
 
-export function Table<T>({ title, data, columns, onAddData }: TableProps<T>) {
+export function Table<T>({
+  title,
+  data,
+  columns,
+  onAddData,
+  className,
+}: TableProps<T>) {
   const columnHelper = createColumnHelper<TableProps<T>['data'][number]>();
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -44,7 +51,7 @@ export function Table<T>({ title, data, columns, onAddData }: TableProps<T>) {
   });
 
   return (
-    <div className={styles.container}>
+    <div className={cx(styles.container, 'card', className)}>
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>{title}</h2>
         {onAddData ? <Button icon={<Plus />} onClick={onAddData} /> : null}
@@ -97,6 +104,7 @@ export function Table<T>({ title, data, columns, onAddData }: TableProps<T>) {
           ))}
         </tbody>
       </table>
+      {!data.length && <div className={styles.noData}>No data available</div>}
 
       <Pagination table={table} />
     </div>

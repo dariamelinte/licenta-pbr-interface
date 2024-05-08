@@ -14,6 +14,7 @@ const Index = () => {
   );
 
   const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
+  const { token } = useStore((state) => state.auth);
   const {
     objectModels,
     loading,
@@ -37,6 +38,7 @@ const Index = () => {
   return (
     <VerticalMenuPage>
       <Table.Table<ObjectModelApiType>
+        className="m-8"
         title="Object models"
         data={objectModels}
         columns={(columnHelper) =>
@@ -44,7 +46,7 @@ const Index = () => {
             columnHelper,
             onDelete: (id: string) => {
               setOpen('confirm-delete');
-              setOnConfirm(() => deleteObjectModel(id));
+              setOnConfirm(() => deleteObjectModel(token as string, id));
             },
             onEdit: (objectM) => {
               setObjectModel(objectM);
@@ -60,7 +62,7 @@ const Index = () => {
         onAddData={() => {
           setObjectModel(null);
           setOpen('object-model');
-          setOnConfirm(createObjectModel);
+          setOnConfirm((values) => createObjectModel(token as string, values));
         }}
       />
       {open === 'confirm-delete' && (

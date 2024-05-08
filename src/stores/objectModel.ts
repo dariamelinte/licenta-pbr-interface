@@ -54,9 +54,9 @@ export const objectModelSlice: StateCreator<
       }
     },
 
-    deleteObjectModel: async (id: string) => {
+    deleteObjectModel: async (token: string, id: string) => {
       try {
-        const { data } = await service.deleteObjectModel(id);
+        const { data } = await service.deleteObjectModel(token, id);
 
         if (!data.success) throw Error(data.error);
 
@@ -77,15 +77,18 @@ export const objectModelSlice: StateCreator<
       }
     },
 
-    createObjectModel: async ({ model, ...rest }: ObjectModelInputType) => {
+    createObjectModel: async (
+      token: string,
+      { model, ...rest }: ObjectModelInputType,
+    ) => {
       try {
         const formData = new FormData();
         formData.append('model', model as File);
 
-        const { data: dataUpload } = await service.uploadModel(formData);
+        const { data: dataUpload } = await service.uploadModel(token, formData);
         if (!dataUpload.success) throw Error(dataUpload.error);
 
-        const { data } = await service.createObjectModel({
+        const { data } = await service.createObjectModel(token, {
           ...rest,
           model: dataUpload.data.model,
         });
@@ -104,7 +107,10 @@ export const objectModelSlice: StateCreator<
       }
     },
 
-    updateObjectModel: async (objectModel: ObjectModelApiType) => {
+    updateObjectModel: async (
+      token: string,
+      objectModel: ObjectModelApiType,
+    ) => {
       try {
         // const { data } = await service.updateObjectModel(_id, objectModel);
         // if (!data.success) throw Error(data.error);

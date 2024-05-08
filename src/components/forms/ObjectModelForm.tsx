@@ -55,7 +55,7 @@ export const ObjectModelForm: React.FC<ObjectModelProps> = ({
           </div>
           <div className={styles.row}>
             <CommonForm.SelectField
-              name="category"
+              name={objectModel ? 'category._id' : 'category'}
               label={objectModelLabels.category}
               placeholder={objectModelLabels.category}
               className={styles.field}

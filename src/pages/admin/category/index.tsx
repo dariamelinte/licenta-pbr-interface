@@ -12,6 +12,7 @@ const Index = () => {
   const [category, setCategory] = useState<CategoryApiType | null>(null);
 
   const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
+  const { token } = useStore((state) => state.auth);
   const {
     categories,
     loading,
@@ -36,6 +37,7 @@ const Index = () => {
   return (
     <VerticalMenuPage>
       <Table.Table<CategoryApiType>
+        className="m-8"
         title="Categories"
         data={categories}
         columns={(columnHelper) =>
@@ -43,13 +45,13 @@ const Index = () => {
             columnHelper,
             onDelete: (id: string) => {
               setOpen('confirm-delete');
-              setOnConfirm(() => deleteCategory(id));
+              setOnConfirm(() => deleteCategory(token as string, id));
             },
             onEdit: (cat) => {
               setCategory(cat);
               setOpen('category');
               setOnConfirm((catt: CategoryApiType) => {
-                updateCategory(catt);
+                updateCategory(token as string, catt);
                 setCategory(null);
               });
             },
@@ -58,7 +60,7 @@ const Index = () => {
         onAddData={() => {
           setCategory(null);
           setOpen('category');
-          setOnConfirm(createCategory);
+          setOnConfirm((values) => createCategory(token as string, values));
         }}
       />
       {open === 'confirm-delete' && (

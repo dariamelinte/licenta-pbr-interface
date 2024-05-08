@@ -59,3 +59,12 @@ export const profileSchema = yup.object().shape({
   institution: yup.string().required(),
   role: yup.string().required(),
 });
+
+export const groupSchema = yup.object().shape({
+  name: yup.string().required(),
+  code: yup.string().required(),
+});
+
+export const joinGroupSchema = yup.object().shape({
+  code: yup.string().required(),
+});
