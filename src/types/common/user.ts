@@ -1,4 +1,4 @@
-export type UserRoleType = 'admin' | 'professor' | 'student' | 'unknown';
+export type UserRoleType = 'admin' | 'professor' | 'student';
 
 export type ProfileType = {
   last_name: string;

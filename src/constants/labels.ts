@@ -22,3 +22,8 @@ export const profileLabels = {
   institution: 'Institution',
   role: 'Role',
 };
+
+export const groupLabels = {
+  name: 'Name',
+  code: 'Code',
+};

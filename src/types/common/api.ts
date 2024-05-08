@@ -1,4 +1,6 @@
+import { ok } from 'assert';
 import type { CategoryType } from './category';
+import { GroupType } from './group';
 import type { ObjectModelInputType } from './objectModel';
 
 export type OidType = { _id: string };
@@ -52,4 +54,5 @@ export type LoginApiType = ApiResponseType & {
   };
 };
 
-// user
+// group
+export type GroupApiType = GroupType & OidType;

@@ -8,9 +8,8 @@ export type OpenType =
   | 'confirm-delete'
   | 'confirm-empty'
   | 'category'
-  | 'category'
   | 'object-model'
-  | 'object-model'
+  | 'group'
   | null;
 
 export type DialogStoreType = {

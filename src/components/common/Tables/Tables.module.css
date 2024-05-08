@@ -15,12 +15,12 @@
 }
 
 .row {
-    @apply cursor-pointer bg-slate-200 text-slate-800;
+    @apply cursor-pointer bg-gray-100 text-slate-800;
     @apply border-y;
 }
 
 .row:nth-of-type(even) {
-    @apply bg-slate-300;
+    @apply bg-white;
 }
 
 .cell {
@@ -37,4 +37,8 @@
 
 .title {
     @apply text-2xl font-semibold;
+}
+
+.noData {
+    @apply text-center font-semibold w-full p-4;
 }
