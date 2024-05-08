@@ -1,12 +1,12 @@
-import cx from "classnames";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
+import cx from 'classnames';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 
-import { tabs } from "@/constants/menu-tabs";
+import { tabs } from '@/constants/menu-tabs';
+import type { UserRoleType } from '@/types/common/user';
 
-import styles from "./VerticalMenu.module.css";
-import { UserRoleType } from "@/types/common/user";
+import styles from './VerticalMenu.module.css';
 
 type VerticalMenuProps = {
   module: UserRoleType;
@@ -23,11 +23,11 @@ export const VerticalMenu: React.FC<VerticalMenuProps> = ({ module }) => {
           <Link key={url} href={url} onClick={() => router.push(url)}>
             <div
               className={cx(styles.tab, {
-                "bg-blue-800": router.asPath === url,
+                'bg-blue-800': router.asPath === url,
               })}
             >
               {icon}
-              <p className={cx({ "pl-4": icon })}>{text}</p>
+              <p className={cx({ 'pl-4': icon })}>{text}</p>
             </div>
           </Link>
         );

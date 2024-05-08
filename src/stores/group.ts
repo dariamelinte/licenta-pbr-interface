@@ -3,7 +3,6 @@ import type { StateCreator } from 'zustand';
 
 import { ERROR_MESSAGE } from '@/constants/messages';
 import * as service from '@/services/api/group';
-import type { GroupApiType } from '@/types/common/api';
 import type { GroupStoreType } from '@/types/store/group';
 
 export const groupSlice: StateCreator<
@@ -46,38 +45,26 @@ export const groupSlice: StateCreator<
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
       } finally {
-        get().group.setLoading(false)
+        get().group.setLoading(false);
       }
     },
 
     getGroupById: async (accessToken, id) => {
-      const group = get().group.groups.find(({ _id }) => _id === id);
-
-      if (group) {
-        return group;
-      }
-
       try {
-        get().group.setLoading(true)
+        get().group.setLoading(true);
         const {
           data: { success, data, error, message },
         } = await service.getGroupById(accessToken, id);
 
         if (!success) throw Error(error);
 
-        set({
-          group: {
-            ...get().group,
-            groups: [data],
-          },
-        });
         toast.info(message);
 
-        get().group.setLoading(false)
+        get().group.setLoading(false);
         return data;
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
-        get().group.setLoading(false)
+        get().group.setLoading(false);
         return null;
       }
     },
@@ -124,9 +111,13 @@ export const groupSlice: StateCreator<
       }
     },
 
-    updateGroup: async (accessToken, { _id, code, name }: GroupApiType) => {
+    updateGroup: async (accessToken, { _id, ...rest }, onSuccess) => {
       try {
-        const { data } = await service.updateGroup(accessToken, _id, { code, name });
+        const { data } = await service.updateGroup(
+          accessToken,
+          _id as string,
+          rest,
+        );
         if (!data.success) throw Error(data.error);
 
         const { groups } = get().group;
@@ -141,6 +132,9 @@ export const groupSlice: StateCreator<
         // that there is a new object, otherwise it's considered a ref to the initial
         // groups, and the state will not be updated in the store
         set({ group: { ...get().group, groups: [...groups] } });
+        if (onSuccess) {
+          onSuccess();
+        }
 
         toast.info(data.message);
       } catch (error: any) {

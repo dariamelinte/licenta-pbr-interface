@@ -1,5 +1,5 @@
-import { BookOpen, UserGroup } from "@/components/icons";
-import { UserRoleType } from "@/types/common/user";
+import { BookOpen, UserGroup } from '@/components/icons';
+import type { UserRoleType } from '@/types/common/user';
 
 type MenuTab = {
   text: string;
@@ -23,12 +23,12 @@ export const tabs: { [key in UserRoleType]: MenuTab[] } = {
     {
       text: 'Groups',
       url: '/app/groups',
-      icon: <UserGroup />
+      icon: <UserGroup />,
     },
     {
       text: 'Tests',
       url: '/app/tests',
-      icon: <BookOpen />
+      icon: <BookOpen />,
     },
   ],
 };

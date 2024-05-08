@@ -14,8 +14,8 @@ export function VerticalMenuPage({
   const { user, getProfile, token } = useStore((state) => state.auth);
 
   useEffect(() => {
-    getProfile(token as string)
-  }, [getProfile, token])
+    getProfile(token as string);
+  }, [getProfile, token]);
 
   return (
     <AuthPage {...pageProps}>

@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
 import * as React from 'react';
 
-const SvgCheckCircle = (props: SVGProps<SVGSVGElement>) => (
+const SvgUser = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -14,8 +14,8 @@ const SvgCheckCircle = (props: SVGProps<SVGSVGElement>) => (
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
     />
   </svg>
 );
-export default SvgCheckCircle;
+export default SvgUser;

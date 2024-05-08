@@ -1,3 +1,3 @@
 export * from './category';
-export * from './objectModel';
 export * from './group';
+export * from './objectModel';

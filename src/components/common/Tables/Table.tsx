@@ -2,7 +2,7 @@ import type {
   AccessorKeyColumnDef,
   ColumnHelper,
   SortingState,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 import {
   createColumnHelper,
   flexRender,
@@ -10,24 +10,31 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import cx from "classnames";
-import { useState } from "react";
+} from '@tanstack/react-table';
+import cx from 'classnames';
+import { useState } from 'react';
 
-import { Button, Pagination } from "@/components/common";
-import { ChevronDown, Plus } from "@/components/icons";
+import { Button, Pagination } from '@/components/common';
+import { ChevronDown, Plus } from '@/components/icons';
 
-import styles from "./Tables.module.css";
+import styles from './Tables.module.css';
 
 type TableProps<T> = {
   title: string;
   data: T[];
   columns: (columnHelper: ColumnHelper<T>) => AccessorKeyColumnDef<T, any>[];
   onAddData?: () => void;
+  className?: string;
 };
 
-export function Table<T>({ title, data, columns, onAddData }: TableProps<T>) {
-  const columnHelper = createColumnHelper<TableProps<T>["data"][number]>();
+export function Table<T>({
+  title,
+  data,
+  columns,
+  onAddData,
+  className,
+}: TableProps<T>) {
+  const columnHelper = createColumnHelper<TableProps<T>['data'][number]>();
 
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -44,7 +51,7 @@ export function Table<T>({ title, data, columns, onAddData }: TableProps<T>) {
   });
 
   return (
-    <div className={cx(styles.container, "card m-8")}>
+    <div className={cx(styles.container, 'card', className)}>
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>{title}</h2>
         {onAddData ? <Button icon={<Plus />} onClick={onAddData} /> : null}
@@ -62,18 +69,18 @@ export function Table<T>({ title, data, columns, onAddData }: TableProps<T>) {
                     <div
                       className={
                         header.column.getCanSort()
-                          ? cx(styles.head, "cursor-pointer select-none")
+                          ? cx(styles.head, 'cursor-pointer select-none')
                           : styles.head
                       }
                     >
                       {flexRender(
                         header.column.columnDef.header,
-                        header.getContext()
+                        header.getContext(),
                       )}
                       {{
                         asc: (
                           <ChevronDown
-                            className={cx(styles.icon, "rotate-180 transform")}
+                            className={cx(styles.icon, 'rotate-180 transform')}
                           />
                         ),
                         desc: <ChevronDown className={styles.icon} />,

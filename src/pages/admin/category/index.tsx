@@ -36,6 +36,7 @@ const Index = () => {
   return (
     <VerticalMenuPage>
       <Table.Table<CategoryApiType>
+        className="m-8"
         title="Categories"
         data={categories}
         columns={(columnHelper) =>

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import { Dialog, Loading, Table } from '@/components/common';
@@ -6,22 +7,17 @@ import { confirm } from '@/constants/confirm-dialog';
 import { VerticalMenuPage } from '@/layouts';
 import useStore from '@/stores';
 import type { GroupApiType } from '@/types/common/api';
+import type { GroupFormType } from '@/types/common/group';
 import type { ConfirmDialogType } from '@/types/store/dialog';
-import { GroupFormType } from '@/types/common/group';
 
 const Index = () => {
+  const router = useRouter();
   const [group, setGroup] = useState<GroupFormType | null>(null);
 
   const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
-  const { token } = useStore((state) => state.auth)
-  const {
-    groups,
-    loading,
-    getGroups,
-    deleteGroup,
-    createGroup,
-    updateGroup,
-  } = useStore((state) => state.group);
+  const { token } = useStore((state) => state.auth);
+  const { groups, loading, getGroups, deleteGroup, createGroup, updateGroup } =
+    useStore((state) => state.group);
 
   useEffect(() => {
     getGroups(token as string);
@@ -38,6 +34,7 @@ const Index = () => {
   return (
     <VerticalMenuPage>
       <Table.Table<GroupApiType>
+        className="m-8"
         title="Groups"
         data={groups}
         columns={(columnHelper) =>
@@ -55,6 +52,7 @@ const Index = () => {
                 setGroup(null);
               });
             },
+            onView: (id) => router.push(`/app/groups/${id}`),
           })
         }
         onAddData={() => {

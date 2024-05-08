@@ -1,21 +1,22 @@
-import type { AxiosPromise } from "axios";
+import type { AxiosPromise } from 'axios';
 
-import { httpService } from "@/services";
+import { httpService } from '@/services';
 import type {
   AddApiType,
-  GroupApiType,
+  CompleteGroupApiType,
   DeleteApiType,
   GetAllApiType,
   GetByApiType,
+  GroupApiType,
   UpdateApiType,
-} from "@/types/common/api";
-import { GroupFormType } from "@/types/common/group";
+} from '@/types/common/api';
+import type { GroupFormType, GroupType } from '@/types/common/group';
 
 export const createGroup = async (
   accessToken: string,
-  group: GroupFormType
+  group: GroupFormType,
 ): AxiosPromise<AddApiType<GroupApiType>> => {
-  return httpService.post("/groups", group, {
+  return httpService.post('/groups', group, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -23,9 +24,9 @@ export const createGroup = async (
 };
 
 export const getGroups = async (
-  accessToken: string
+  accessToken: string,
 ): AxiosPromise<GetAllApiType<GroupApiType>> => {
-  return httpService.get("/groups", {
+  return httpService.get('/groups', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -34,8 +35,8 @@ export const getGroups = async (
 
 export const getGroupById = async (
   accessToken: string,
-  id: string
-): AxiosPromise<GetByApiType<GroupApiType>> => {
+  id: string,
+): AxiosPromise<GetByApiType<CompleteGroupApiType>> => {
   return httpService.get(`/groups/id/${id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -46,7 +47,7 @@ export const getGroupById = async (
 export const updateGroup = async (
   accessToken: string,
   id: string,
-  group: Partial<GroupFormType>,
+  group: Partial<GroupType>,
 ): AxiosPromise<UpdateApiType<GroupApiType>> => {
   return httpService.patch(`/groups/id/${id}`, group, {
     headers: {
@@ -57,9 +58,20 @@ export const updateGroup = async (
 
 export const deleteGroup = async (
   accessToken: string,
-  id: string
+  id: string,
 ): AxiosPromise<DeleteApiType> => {
   return httpService.delete(`/groups/id/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
+export const getGroupStudents = async (
+  accessToken: string,
+  id: string,
+): AxiosPromise<GetByApiType<GroupApiType>> => {
+  return httpService.get(`/groups/id/${id}/students`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

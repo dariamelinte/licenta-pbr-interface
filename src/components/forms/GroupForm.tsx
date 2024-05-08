@@ -1,14 +1,14 @@
-import { v4 as uuidv4 } from "uuid";
-import { Form, Formik } from "formik";
+import { Form, Formik } from 'formik';
+import { v4 as uuidv4 } from 'uuid';
 
-import { Form as CommonForm } from "@/components/common";
-import { INITIAL_GROUP } from "@/constants/initial-objects";
-import { groupLabels } from "@/constants/labels";
-import { groupSchema } from "@/constants/validation-schemas";
-import useStore from "@/stores";
-import type { GroupFormType } from "@/types/common/group";
+import { Form as CommonForm } from '@/components/common';
+import { INITIAL_GROUP } from '@/constants/initial-objects';
+import { groupLabels } from '@/constants/labels';
+import { groupSchema } from '@/constants/validation-schemas';
+import useStore from '@/stores';
+import type { GroupFormType } from '@/types/common/group';
 
-import styles from "./Form.module.css";
+import styles from './Form.module.css';
 
 type GroupFormProps = {
   group: GroupFormType | null;

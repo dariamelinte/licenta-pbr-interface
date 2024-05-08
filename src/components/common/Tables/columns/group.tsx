@@ -6,13 +6,15 @@ import type { GroupApiType } from '@/types/common/api';
 type GroupColumnsProps = {
   columnHelper: ColumnHelper<GroupApiType>;
   onDelete: (id: string) => void;
-  onEdit: (id: GroupApiType) => void;
+  onView: (id: string) => void;
+  onEdit: (group: GroupApiType) => void;
 };
 
 export const groupColumns = ({
   columnHelper,
   onDelete,
   onEdit,
+  onView,
 }: GroupColumnsProps) => [
   columnHelper.accessor('name', {
     header: 'Name',
@@ -32,6 +34,7 @@ export const groupColumns = ({
       <Options
         onEdit={() => onEdit(info.row.original)}
         onDelete={() => onDelete(info.getValue())}
+        onView={() => onView(info.getValue())}
       />
     ),
   }),

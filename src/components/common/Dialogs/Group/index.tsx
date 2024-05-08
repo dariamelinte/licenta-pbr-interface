@@ -1,7 +1,7 @@
 import { Dialog } from '@headlessui/react';
 
 import { GroupForm } from '@/components/forms';
-import { GroupFormType } from '@/types/common/group';
+import type { GroupFormType } from '@/types/common/group';
 
 import { CustomDialog } from '../Dialog';
 import styles from './Group.module.css';
