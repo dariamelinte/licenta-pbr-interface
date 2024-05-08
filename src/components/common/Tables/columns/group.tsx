@@ -25,7 +25,7 @@ export const groupColumns = ({
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('students', {
-    header: 'No. Students',
+    header: 'No. Studs.',
     cell: (info) => info.getValue().length,
   }),
   columnHelper.accessor('_id', {

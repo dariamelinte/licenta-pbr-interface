@@ -1,6 +1,5 @@
-import type { SVGProps } from 'react';
-import * as React from 'react';
-
+import * as React from "react";
+import type { SVGProps } from "react";
 const SvgChevronDown = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -9,7 +8,7 @@ const SvgChevronDown = (props: SVGProps<SVGSVGElement>) => (
     strokeWidth={1.5}
     stroke="currentColor"
     data-slot="icon"
-    className="size-6"
+    className="w-6 h-6"
     {...props}
   >
     <path

@@ -4,5 +4,5 @@
 
 
 .container {
-    @apply w-[200px] text-white font-semibold min-h-[100vh] bg-blue-900 sticky top-0;
+    @apply w-[240px] text-white font-semibold min-h-[100vh] bg-blue-900 sticky top-0;
 }

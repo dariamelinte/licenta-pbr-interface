@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { Dialog, Loading, Table } from '@/components/common';
-import { objectModelColumns } from '@/components/common/Tables';
-import { confirm } from '@/constants/confirm-dialog';
-import { VerticalMenuPage } from '@/layouts';
-import useStore from '@/stores';
-import type { ObjectModelApiType } from '@/types/common/api';
-import type { ConfirmDialogType } from '@/types/store/dialog';
+import { Dialog, Loading, Table } from "@/components/common";
+import { objectModelColumns } from "@/components/common/Tables";
+import { confirm } from "@/constants/confirm-dialog";
+import { VerticalMenuPage } from "@/layouts";
+import useStore from "@/stores";
+import type { ObjectModelApiType } from "@/types/common/api";
+import type { ConfirmDialogType } from "@/types/store/dialog";
 
 const Index = () => {
   const [objectModel, setObjectModel] = useState<ObjectModelApiType | null>(
-    null,
+    null
   );
 
   const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
+  const { token } = useStore((state) => state.auth);
   const {
     objectModels,
     loading,
@@ -44,12 +45,12 @@ const Index = () => {
           objectModelColumns({
             columnHelper,
             onDelete: (id: string) => {
-              setOpen('confirm-delete');
-              setOnConfirm(() => deleteObjectModel(id));
+              setOpen("confirm-delete");
+              setOnConfirm(() => deleteObjectModel(token as string, id));
             },
             onEdit: (objectM) => {
               setObjectModel(objectM);
-              setOpen('object-model');
+              setOpen("object-model");
               setOnConfirm((objM) => {
                 console.log(objM);
                 // update(ombjM);
@@ -60,14 +61,14 @@ const Index = () => {
         }
         onAddData={() => {
           setObjectModel(null);
-          setOpen('object-model');
-          setOnConfirm(createObjectModel);
+          setOpen("object-model");
+          setOnConfirm((values) => createObjectModel(token as string, values));
         }}
       />
-      {open === 'confirm-delete' && (
+      {open === "confirm-delete" && (
         <Dialog.Confirmation {...(confirm.delete as ConfirmDialogType)} />
       )}
-      {open === 'object-model' && (
+      {open === "object-model" && (
         <Dialog.ObjectModel objectModel={objectModel} />
       )}
     </VerticalMenuPage>

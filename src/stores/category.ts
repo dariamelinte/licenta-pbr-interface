@@ -78,9 +78,9 @@ export const categorySlice: StateCreator<
       }
     },
 
-    deleteCategory: async (id: string) => {
+    deleteCategory: async (token: string, id: string) => {
       try {
-        const { data } = await service.deleteCategory(id);
+        const { data } = await service.deleteCategory(token, id);
 
         if (!data.success) throw Error(data.error);
 
@@ -101,9 +101,9 @@ export const categorySlice: StateCreator<
       }
     },
 
-    createCategory: async (category: CategoryType) => {
+    createCategory: async (token: string, category: CategoryType) => {
       try {
-        const { data } = await service.createCategory(category);
+        const { data } = await service.createCategory(token, category);
 
         if (!data.success) throw Error(data.error);
 
@@ -120,9 +120,9 @@ export const categorySlice: StateCreator<
       }
     },
 
-    updateCategory: async ({ _id, ...category }: CategoryApiType) => {
+    updateCategory: async (token: string, { _id, ...category }: CategoryApiType) => {
       try {
-        const { data } = await service.updateCategory(_id, category);
+        const { data } = await service.updateCategory(token, _id, category);
         if (!data.success) throw Error(data.error);
 
         const { categories } = get().category;

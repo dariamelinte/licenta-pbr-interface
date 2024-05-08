@@ -1,4 +1,4 @@
-import { BookOpen, UserGroup } from '@/components/icons';
+import { BookOpen, Folder, UserGroup } from '@/components/icons';
 import type { UserRoleType } from '@/types/common/user';
 
 type MenuTab = {
@@ -12,10 +12,17 @@ export const tabs: { [key in UserRoleType]: MenuTab[] } = {
     {
       text: 'Categories',
       url: `/admin/category`,
+      icon: <BookOpen />
     },
     {
-      text: 'Object Models',
+      text: 'Models',
       url: `/admin/object-model`,
+      icon: <Folder />
+    },
+    {
+      text: 'Groups',
+      url: '/app/groups',
+      icon: <UserGroup />,
     },
   ],
   student: [],
