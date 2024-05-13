@@ -28,8 +28,6 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
       const { credential, expiration_time, email, has_profile } =
         parseJwt(token);
 
-      console.log({ credential, expiration_time, email });
-
       set({
         auth: {
           ...get().auth,

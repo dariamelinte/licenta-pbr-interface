@@ -53,6 +53,27 @@ export const objectModelSlice: StateCreator<
         get().objectModel.setLoading(false);
       }
     },
+    
+    getObjectModelsByCategory: async (category: string) => {
+      try {
+        get().objectModel.setLoading(true);
+
+        const {
+          data: { success, error, data },
+        } = await service.getObjectModelsByCategory(category);
+
+        if (!success) throw Error(error);
+
+        get().objectModel.setLoading(false);
+        return data;
+      } catch (error: any) {
+        toast.error(error || ERROR_MESSAGE.default);
+
+        get().objectModel.setLoading(false);
+        return null;
+      }
+    },
+
 
     deleteObjectModel: async (token: string, id: string) => {
       try {

@@ -1,0 +1,31 @@
+.menuButton {
+    @apply w-[320px] rounded-xl border border-blue-200 bg-blue-100 px-3 shadow;
+}
+
+.menuButtonContent {
+    @apply flex justify-between items-center w-full;
+}
+
+.menuItems {
+    @apply w-[320px] bg-white border border-blue-200 rounded-xl mt-2;
+}
+
+.menuItem {
+    @apply bg-blue-100 rounded-xl m-2 px-3;
+}
+
+.chevron {
+    @apply h-4 w-4;
+}
+
+.searchContainer {
+    @apply px-2 pt-2 flex;
+}
+
+.field {
+    @apply flex-1 w-full rounded-xl px-2 py-1;
+}
+
+.button {
+    @apply p-1;
+}

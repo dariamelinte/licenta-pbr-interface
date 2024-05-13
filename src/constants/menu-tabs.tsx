@@ -1,4 +1,4 @@
-import { BookOpen, Folder, UserGroup } from '@/components/icons';
+import { BookOpen, Folder, PuzzlePiece, UserGroup } from '@/components/icons';
 import type { UserRoleType } from '@/types/common/user';
 
 type MenuTab = {
@@ -42,6 +42,11 @@ export const tabs: { [key in UserRoleType]: MenuTab[] } = {
       text: 'Tests',
       url: '/app/tests',
       icon: <BookOpen />,
+    },
+    {
+      text: 'Playground',
+      url: '/app/playground',
+      icon: <PuzzlePiece />,
     },
   ],
 };

@@ -1,6 +1,6 @@
-import type { AxiosPromise } from 'axios';
+import type { AxiosPromise } from "axios";
 
-import { httpService } from '@/services';
+import { httpService } from "@/services";
 import type {
   AddApiType,
   CreateObjectModelApiType,
@@ -10,15 +10,14 @@ import type {
   ModelType,
   ObjectModelApiType,
   UpdateApiType,
-} from '@/types/common/api';
-import type { ObjectModelInputType } from '@/types/common/objectModel';
+} from "@/types/common/api";
+import type { ObjectModelInputType } from "@/types/common/objectModel";
 
 export const createObjectModel = async (
   accessToken: string,
-  objectModel: CreateObjectModelApiType,
+  objectModel: CreateObjectModelApiType
 ): AxiosPromise<AddApiType<ObjectModelApiType>> => {
-  console.log(111, { objectModel });
-  return httpService.post('/object-models', objectModel, {
+  return httpService.post("/object-models", objectModel, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -31,8 +30,14 @@ export const getObjectModels = async (): AxiosPromise<
   return httpService.get(`/object-models`);
 };
 
+export const getObjectModelsByCategory = async (
+  category: string
+): AxiosPromise<GetAllApiType<ObjectModelApiType>> => {
+  return httpService.get(`/object-models/category/${category}`);
+};
+
 export const getObjectModelById = async (
-  id: string,
+  id: string
 ): AxiosPromise<GetByApiType<ObjectModelApiType>> => {
   return httpService.get(`/object-models/id/${id}`);
 };
@@ -40,7 +45,7 @@ export const getObjectModelById = async (
 export const updateObjectModel = async (
   accessToken: string,
   id: string,
-  objectModel: Partial<ObjectModelInputType>,
+  objectModel: Partial<ObjectModelInputType>
 ): AxiosPromise<UpdateApiType<ObjectModelApiType>> => {
   return httpService.patch(`/object-models/id/${id}`, objectModel, {
     headers: {
@@ -51,7 +56,7 @@ export const updateObjectModel = async (
 
 export const deleteObjectModel = async (
   accessToken: string,
-  id: string,
+  id: string
 ): AxiosPromise<DeleteApiType> => {
   return httpService.delete(`/object-models/id/${id}`, {
     headers: {
@@ -62,11 +67,11 @@ export const deleteObjectModel = async (
 
 export const uploadModel = async (
   accessToken: string,
-  model: FormData,
+  model: FormData
 ): AxiosPromise<AddApiType<ModelType>> => {
-  return httpService.post('/object-models/upload', model, {
+  return httpService.post("/object-models/upload", model, {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${accessToken}`,
     },
   });

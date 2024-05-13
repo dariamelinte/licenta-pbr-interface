@@ -15,12 +15,9 @@ type VerticalMenuProps = {
 export const VerticalMenu: React.FC<VerticalMenuProps> = ({ module }) => {
   const router = useRouter();
 
-  console.log(module);
-
   return (
     <div className={styles.container}>
       {tabs[module].map(({ url, text, icon }) => {
-        console.log(router.asPath, url, router.asPath === url);
         return (
           <Link key={url} href={url} onClick={() => router.push(url)}>
             <div
