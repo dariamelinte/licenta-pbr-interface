@@ -1,0 +1,15 @@
+.title {
+    @apply font-semibold text-xs;
+}
+
+.info {
+    @apply py-1 flex justify-between items-center;
+}
+
+.icon {
+    @apply h-5 w-5;
+}
+
+.button {
+    @apply !p-1;
+}

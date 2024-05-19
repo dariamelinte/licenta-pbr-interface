@@ -1,3 +1,5 @@
+import { modelEntensions } from "./models";
+
 export const categoryLabels = {
   name: 'Name',
 };
@@ -6,7 +8,7 @@ export const objectModelLabels = {
   name: 'Name',
   description: 'Description',
   category: 'Category',
-  model: 'Upload model (.glb, .gltf)',
+  model: `Upload model (${modelEntensions.join(", ")})`,
 };
 
 export const authLabels = {

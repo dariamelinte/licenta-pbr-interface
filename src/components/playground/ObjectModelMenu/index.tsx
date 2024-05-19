@@ -8,6 +8,7 @@ import { ChevronDown } from "@/components/icons";
 
 import styles from "./ObjectModelMenu.module.css";
 import { objectModelLabels } from "@/constants/labels";
+import { ModelView } from "../ModelView";
 
 export const ObjectModelMenu = () => {
   const { objectModels, loading, getObjectModels, getObjectModelsByCategory } =
@@ -37,6 +38,7 @@ export const ObjectModelMenu = () => {
     return <Loading size="large" />;
   }
 
+  console.log(models, objectModels)
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
@@ -80,15 +82,17 @@ export const ObjectModelMenu = () => {
                   }}
                 />
               </div>
-              {models.length ? (
-                models.map((objectModel) => (
-                  <div key={objectModel._id} className={styles.menuItem}>
-                    {objectModel.name}
-                  </div>
-                ))
-              ) : (
-                <div className="w-full text-center text-sm py-1">No results</div>
-              )}
+              <div className={styles.searchContent}>
+                {models.length ? (
+                  models.map((objectModel) => (
+                    <div key={objectModel._id} className={styles.menuItem}>
+                      <ModelView objectModel={objectModel} />
+                    </div>
+                  ))
+                ) : (
+                  <div className="w-full text-center text-sm py-1">No results</div>
+                )}
+              </div>
             </Disclosure.Panel>
           </Transition>
         </>

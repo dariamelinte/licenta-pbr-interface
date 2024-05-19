@@ -27,9 +27,7 @@ export const objectModelColumns = ({
         return '-';
       }
 
-      return description?.length > 50
-        ? `${description.substring(0, 50)}...`
-        : description;
+      return description;
     },
   }),
   columnHelper.accessor('category.name', {

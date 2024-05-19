@@ -26,10 +26,7 @@ export type CategoryApiType = CategoryType & OidType;
 
 // object model
 export type ModelType = {
-  model: {
-    object_id: string;
-    url: string;
-  };
+  model: string;
 };
 
 export type ObjectModelApiType = Omit<

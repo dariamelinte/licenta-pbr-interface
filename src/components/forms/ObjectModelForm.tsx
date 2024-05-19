@@ -11,6 +11,7 @@ import type { ObjectModelApiType } from '@/types/common/api';
 import type { ObjectModelInputType } from '@/types/common/objectModel';
 
 import styles from './Form.module.css';
+import { modelEntensions } from '@/constants/models';
 
 type ObjectModelProps = {
   objectModel: ObjectModelApiType | null;
@@ -75,7 +76,7 @@ export const ObjectModelForm: React.FC<ObjectModelProps> = ({
             <CommonForm.Label text={objectModelLabels.model} />
             <CommonForm.Input
               type="file"
-              accept=".glb, .gltf"
+              accept={modelEntensions.join(", ")}
               className="flex-1"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const file = e.currentTarget.files && e.currentTarget.files[0];

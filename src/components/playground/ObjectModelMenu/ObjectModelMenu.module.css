@@ -1,5 +1,5 @@
 .menuButton {
-    @apply w-[320px] rounded-xl border border-blue-200 bg-blue-100 px-3 shadow;
+    @apply w-[420px] rounded-xl border border-blue-200 bg-blue-100 px-3 shadow;
 }
 
 .menuButtonContent {
@@ -7,11 +7,11 @@
 }
 
 .menuItems {
-    @apply w-[320px] bg-white border border-blue-200 rounded-xl mt-2;
+    @apply w-[420px] bg-white border border-blue-200 rounded-xl mt-2;
 }
 
 .menuItem {
-    @apply bg-blue-100 rounded-xl m-2 px-3;
+    @apply h-[200px] bg-blue-100 rounded-xl m-2 px-3;
 }
 
 .chevron {
@@ -20,6 +20,10 @@
 
 .searchContainer {
     @apply px-2 pt-2 flex;
+}
+
+.searchContent {
+    @apply my-2 px-2 max-h-[640px] w-[400px] overflow-y-scroll grid grid-cols-2;
 }
 
 .field {

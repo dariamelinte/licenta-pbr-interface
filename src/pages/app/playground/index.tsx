@@ -7,9 +7,8 @@ const Index = () => {
   const router = useRouter();
 
   return (
-    <AuthPage>
-      <div>hello world, playground</div>
-      <div className="p-6">
+    <AuthPage className="max-w-[100vw] overflow-hidden">
+      <div className="p-6 absolut t-1 l-1">
         <ObjectModelMenu />
       </div>
     </AuthPage>
