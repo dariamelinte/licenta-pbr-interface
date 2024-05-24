@@ -9,9 +9,9 @@ import { objectModelSchema } from '@/constants/validation-schemas';
 import useStore from '@/stores';
 import type { ObjectModelApiType } from '@/types/common/api';
 import type { ObjectModelInputType } from '@/types/common/objectModel';
+import { modelEntensions } from '@/constants/constants';
 
 import styles from './Form.module.css';
-import { modelEntensions } from '@/constants/models';
 
 type ObjectModelProps = {
   objectModel: ObjectModelApiType | null;

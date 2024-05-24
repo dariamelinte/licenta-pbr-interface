@@ -1,58 +1,46 @@
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { Dialog, Loading, Table } from '@/components/common';
-import { groupColumns } from '@/components/common/Tables';
 import { confirm } from '@/constants/confirm-dialog';
 import { VerticalMenuPage } from '@/layouts';
 import useStore from '@/stores';
-import type { GroupApiType } from '@/types/common/api';
-import type { GroupFormType } from '@/types/common/group';
+import type { TestApiType } from '@/types/common/api';
 import type { ConfirmDialogType } from '@/types/store/dialog';
+import { testColumns } from '@/components/common/Tables/columns/test';
 
 const Index = () => {
   const router = useRouter();
-  const [group, setGroup] = useState<GroupFormType | null>(null);
 
   const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
   const { token, user } = useStore((state) => state.auth);
   const {
-    groups,
+    tests,
     loading,
-    getGroups,
-    deleteGroup,
-    createGroup,
-    updateGroup,
-    joinGroup,
-  } = useStore((state) => state.group);
+    getTests,
+    deleteTest,
+    updateTest,
+  } = useStore((state) => state.test);
 
   const columnProps = useMemo(() => {
     if (user.role === 'student') {
       return {
-        onView: (id: string) => router.push(`/app/groups/${id}`),
+        onView: (id: string) => router.push(`/app/tests/${id}`),
       };
     }
 
     return {
       onDelete: (id: string) => {
         setOpen('confirm-delete');
-        setOnConfirm(() => deleteGroup(token as string, id));
+        setOnConfirm(() => deleteTest(token as string, id));
       },
-      onEdit: (gr: GroupFormType) => {
-        setGroup(gr);
-        setOpen('add-group');
-        setOnConfirm((groupp: GroupApiType) => {
-          updateGroup(token as string, groupp);
-          setGroup(null);
-        });
-      },
-      onView: (id: string) => router.push(`/app/groups/${id}`),
+      onView: (id: string) => router.push(`/app/tests/${id}`),
     };
-  }, [user.role, setOpen, setGroup, setOnConfirm, updateGroup, router]);
+  }, [user.role, setOpen, setOnConfirm, updateTest, router]);
 
   useEffect(() => {
-    getGroups(token as string);
-  }, [getGroups, token]);
+    getTests(token as string);
+  }, [getTests, token]);
 
   if (loading) {
     return (
@@ -64,33 +52,21 @@ const Index = () => {
 
   return (
     <VerticalMenuPage>
-      <Table.Table<GroupApiType>
+      <Table.Table<TestApiType>
         className="m-8"
-        title="Groups"
-        data={groups}
+        title="Tests"
+        data={tests}
         columns={(columnHelper) =>
-          groupColumns({
+          testColumns({
             columnHelper,
             ...columnProps,
           })
         }
-        onAddData={() => {
-          if (user.role === 'student') {
-            setGroup(null);
-            setOpen('join-group');
-            setOnConfirm((values) => joinGroup(token as string, values));
-          } else {
-            setGroup(null);
-            setOpen('add-group');
-            setOnConfirm((values) => createGroup(token as string, values));
-          }
-        }}
+        onAddData={() => router.push(`/app/tests/create`)}
       />
       {open === 'confirm-delete' && (
         <Dialog.Confirmation {...(confirm.delete as ConfirmDialogType)} />
       )}
-      {open === 'add-group' && <Dialog.Group group={group} />}
-      {open === 'join-group' && <Dialog.JoinGroup />}
     </VerticalMenuPage>
   );
 };

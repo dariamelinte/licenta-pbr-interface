@@ -1,4 +1,4 @@
-import { modelEntensions } from "./models";
+import { modelEntensions } from "./constants";
 
 export const categoryLabels = {
   name: 'Name',
@@ -29,3 +29,15 @@ export const groupLabels = {
   name: 'Name',
   code: 'Code',
 };
+
+export const testLabels = {
+  status: 'Status',
+  name: 'Name',
+  description: 'Description',
+  min_score: 'Min. Score',
+  max_score: 'Max. Score',
+  start_date: 'Start date',
+  due_date: 'Due date',
+  group: 'Group',
+  instances: 'Instances'
+}

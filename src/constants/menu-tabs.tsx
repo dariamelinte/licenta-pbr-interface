@@ -25,6 +25,11 @@ export const tabs: { [key in UserRoleType]: MenuTab[] } = {
       icon: <UserGroup />,
     },
     {
+      text: 'Tests',
+      url: '/app/tests',
+      icon: <BookOpen />,
+    },
+    {
       text: 'Playground',
       url: '/app/playground',
       icon: <PuzzlePiece />,

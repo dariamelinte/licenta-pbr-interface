@@ -68,3 +68,18 @@ export const groupSchema = yup.object().shape({
 export const joinGroupSchema = yup.object().shape({
   code: yup.string().required(),
 });
+
+export const testSchema = yup.object().shape({
+  status: yup.string().required(),
+
+  name: yup.string().required(),
+  description: yup.string(),
+  min_score: yup.number().required(),
+  max_score: yup.number().required(),
+  group: yup.string().required(),
+
+  instances: yup.array().of(yup.object().shape({
+    object_model: objectModelApiSchema,
+    rotation: yup.array().of(yup.number().required()),
+  }))
+});
