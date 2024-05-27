@@ -1,20 +1,16 @@
-import { v4 as uuidv4 } from "uuid";
-
 import { ObjectModelApiType } from "@/types/common/api";
 import { Button } from "@/components/common";
 import { Plus } from "@/components/icons";
-import useStore from "@/stores";
 
 import { ModelView } from "./ModelView";
 import styles from "./ModelView.module.css";
 
 type AddModelViewProps = {
   objectModel: ObjectModelApiType;
+  addObjectInstance: (objectModelId: string) => void;
 };
 
-export const AddModelView: React.FC<AddModelViewProps> = ({ objectModel }) => {
-  const { addObjectInstance } = useStore((state) => state.playground);
-
+export const AddModelView: React.FC<AddModelViewProps> = ({ objectModel, addObjectInstance }) => {
   return (
     <>
       <div className={styles.info}>
@@ -22,11 +18,11 @@ export const AddModelView: React.FC<AddModelViewProps> = ({ objectModel }) => {
         <Button
           className={styles.button}
           icon={<Plus className={styles.icon} />}
-          onClick={() => addObjectInstance(uuidv4(), objectModel._id)}
+          onClick={() => addObjectInstance(objectModel._id)}
         />
       </div>
-      <div className="h-[120px]">
-        <ModelView model={objectModel.model} orbitControl />
+      <div className="max-h-[300px]">
+        <ModelView model={objectModel.model} />
       </div>
     </>
   );

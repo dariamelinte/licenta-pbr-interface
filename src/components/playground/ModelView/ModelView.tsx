@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -9,14 +9,12 @@ import { getCameraPerspective } from "@/constants/constants";
 
 type ModelViewProps = {
   model: string;
-  orbitControl?: boolean;
-  perspective?: boolean;
+  disableControls?: boolean;
 };
 
 export const ModelView: React.FC<ModelViewProps> = ({
   model,
-  orbitControl,
-  perspective,
+  disableControls,
 }) => {
   const [modelUrl, setModelUrl] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<THREE.Box3 | null>(null);
@@ -53,17 +51,12 @@ export const ModelView: React.FC<ModelViewProps> = ({
         <ModelLoader
           url={modelUrl}
           extension=".fbx"
-          scale={[0.06, 0.06, 0.06]}
+          scale={[0.08, 0.08, 0.08]}
           onBoundingBoxCalculated={handleBoundingBoxCalculated}
         />
       )}
-      {orbitControl && <OrbitControls />}
-      {perspective && (
-        <PerspectiveCamera
-          makeDefault
-          position={getCameraPerspective(focusedAxe)}
-        />
-      )}
+      <OrbitControls enabled={disableControls} />
+      <PerspectiveCamera position={getCameraPerspective(focusedAxe)} manual={false} />
     </Canvas>
   );
 };

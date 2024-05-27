@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { v4 as uuidv4 } from "uuid";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
@@ -15,7 +16,7 @@ const Index = () => {
   const { objectModels, loading, getObjectModels } = useStore(
     (state) => state.objectModel
   );
-  const { focusedAxe, objectInstances } = useStore((state) => state.playground);
+  const { focusedAxe, objectInstances, addObjectInstance } = useStore((state) => state.playground);
 
   useEffect(() => {
     getObjectModels();
@@ -31,7 +32,7 @@ const Index = () => {
   return (
     <AuthPage className="max-w-[100vw] overflow-hidden">
       <div className="p-3 absolute t-1 l-1 z-50">
-        <ObjectModelMenu />
+        <ObjectModelMenu onAddObjectModel={(id) => addObjectInstance(uuidv4(), id)} />
       </div>
       <div className="rounded-xl border-y-4 border-x-2 border-blue-900 bg-blue-800 mt-12 mx-3 h-[80vh] shadow overflow-hidden">
         {Object.entries(objectInstances).map(([id, instance]) => {
@@ -42,7 +43,7 @@ const Index = () => {
             toast.error("Could not find an object model");
             return;
           }
-          return <ModelView model={objectModel?.model} key={id} perspective orbitControl />;
+          return <ModelView model={objectModel?.model} key={id} disableControls />;
         })}
       </div>
       <div className="p-3 flex justify-end items-center">

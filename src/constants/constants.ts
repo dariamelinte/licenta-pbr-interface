@@ -5,9 +5,9 @@ import { CoordinatesObjectType } from "@/types/common/playground";
 export const modelEntensions = [".glb", ".gltf", ".fbx", ".obj", ".stl"];
 
 export const coordinatesAxes: CoordinatesObjectType<string> = {
-  ox: "Ox",
-  oy: "Oy",
-  oz: "Oz",
+  ox: "Side",
+  oy: "Top",
+  oz: "Front",
 };
 
 export const canvasCoordinatesAxes: CoordinatesObjectType<string> = {
@@ -19,7 +19,7 @@ export const canvasCoordinatesAxes: CoordinatesObjectType<string> = {
 export const getCameraPerspective = (
   axe?: keyof CoordinatesObjectType<any>
 ) => {
-  if (!axe) return undefined;
+  if (!axe) return new THREE.Vector3(0, 10, 0);
 
   switch (canvasCoordinatesAxes[axe]) {
     case canvasCoordinatesAxes.ox:
@@ -28,8 +28,9 @@ export const getCameraPerspective = (
       return new THREE.Vector3(10, 0, 0);
     case canvasCoordinatesAxes.oz:
       return new THREE.Vector3(0, 0, 10);
+    default:
+      return new THREE.Vector3(0, 10, 0);
   }
-  return undefined;
 };
 
 export const testStatuses = {

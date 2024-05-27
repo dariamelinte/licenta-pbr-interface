@@ -20,6 +20,7 @@
     "@tanstack/react-table": "^8.16.0",
     "@types/lodash": "^4.17.0",
     "axios": "^1.6.8",
+    "camera-controls": "^2.8.3",
     "classnames": "^2.3.2",
     "eslint-plugin-tailwindcss": "^3.15.1",
     "formik": "^2.4.5",
