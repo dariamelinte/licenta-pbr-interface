@@ -3,9 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+import cx from 'classnames'
 
 import { AuthPage } from "@/layouts";
-import { ModelView, ObjectModelMenu } from "@/components/playground";
+import { ModelView, ObjectModelMenu, Piece } from "@/components/playground";
 import useStore from "@/stores";
 import { useEffect } from "react";
 import { CoordinatesButton } from "@/components/common/Buttons";
@@ -43,7 +44,13 @@ const Index = () => {
             toast.error("Could not find an object model");
             return;
           }
-          return <ModelView model={objectModel?.model} key={id} disableControls />;
+          return (
+            <Piece>
+              <div key={id} className={cx("border-2 border-blue-900 rounded")}>
+                <ModelView model={objectModel?.model} disableControls width={400} height={400} />
+              </div>
+            </Piece>
+          );
         })}
       </div>
       <div className="p-3 flex justify-end items-center">

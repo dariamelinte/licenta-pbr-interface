@@ -17,19 +17,16 @@ export const canvasCoordinatesAxes: CoordinatesObjectType<string> = {
 };
 
 export const getCameraPerspective = (
-  axe?: keyof CoordinatesObjectType<any>
+  axe: keyof CoordinatesObjectType<any>
 ) => {
-  if (!axe) return new THREE.Vector3(0, 10, 0);
-
   switch (canvasCoordinatesAxes[axe]) {
-    case canvasCoordinatesAxes.ox:
-      return new THREE.Vector3(0, 10, 0);
     case canvasCoordinatesAxes.oy:
-      return new THREE.Vector3(10, 0, 0);
+      return [0, -10, 0];
     case canvasCoordinatesAxes.oz:
-      return new THREE.Vector3(0, 0, 10);
+      return [0, 0, 10];
     default:
-      return new THREE.Vector3(0, 10, 0);
+      // ox
+      return [10, 0, 0];
   }
 };
 

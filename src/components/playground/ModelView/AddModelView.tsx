@@ -22,7 +22,7 @@ export const AddModelView: React.FC<AddModelViewProps> = ({ objectModel, addObje
         />
       </div>
       <div className="max-h-[300px]">
-        <ModelView model={objectModel.model} />
+        <ModelView model={objectModel.model} defaultScale={[0.08, 0.08, 0.08]} />
       </div>
     </>
   );

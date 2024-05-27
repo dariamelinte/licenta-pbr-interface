@@ -16,15 +16,14 @@ export const ModelLoader: React.FC<ModelLoaderType> = ({
   url,
   extension,
   scale,
-//   onBoundingBoxCalculated,
+  onBoundingBoxCalculated,
 }) => {
   const fbx = useFBX(url);
 
   useEffect(() => {
     if (fbx) {
       const boundingBox = new THREE.Box3().setFromObject(fbx);
-      console.log({ boundingBox })
-    //   onBoundingBoxCalculated?.(boundingBox);
+      onBoundingBoxCalculated?.(boundingBox);
     }
   }, [fbx]);
 

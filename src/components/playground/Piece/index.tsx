@@ -26,7 +26,7 @@ export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
 
   return (
     <Draggable onStop={onStop} onDrag={onDrag}>
-      <div>{children}</div>
+      {children}
     </Draggable>
   );
 };

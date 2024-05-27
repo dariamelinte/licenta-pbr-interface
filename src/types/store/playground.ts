@@ -3,10 +3,12 @@ import { ObjectInstanceApiType } from "@/types/common/objectInstance";
 
 export type PlaygroundStoreType = {
   playground: {
-    focusedAxe?: keyof typeof coordinatesAxes;
+    focusedAxe: keyof typeof coordinatesAxes;
+    cameraPerspective: number[];
     objectInstances: { [key: string]: ObjectInstanceApiType };
 
-    setFocusedAxe: (focusedAxe?: keyof typeof coordinatesAxes) => void;
+    setFocusedAxe: (focusedAxe: keyof typeof coordinatesAxes) => void;
+    setCameraPerspective: (cameraPerspective: number[]) => void;
     addObjectInstance: (id: string, objectModelId: string) => void;
   };
 };
