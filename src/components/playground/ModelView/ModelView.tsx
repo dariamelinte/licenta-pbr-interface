@@ -86,7 +86,7 @@ export const ModelView: React.FC<ModelViewProps> = ({
   }, [boundingBox, focusedAxe]);
 
   return (
-    <Canvas style={{ width: width || '100%', height: height || '100%' }}>
+    <Canvas style={{ width: width || '100%', height: height || '100%', padding: 15 }}>
       <ambientLight intensity={2} />
       <pointLight position={[10, 10, 10]} intensity={4} />
       <directionalLight position={[-5, 5, 5]} intensity={4} />

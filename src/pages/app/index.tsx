@@ -1,7 +1,10 @@
-import { VerticalMenuPage } from '@/layouts';
+import { VerticalMenuPage } from "@/layouts";
 
 const Index = () => {
-  return <VerticalMenuPage>hello world</VerticalMenuPage>;
+  return (
+    <VerticalMenuPage>
+    </VerticalMenuPage>
+  );
 };
 
 export default Index;
