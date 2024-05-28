@@ -27,6 +27,7 @@ export const objectModelSchema = yup.object().shape({
   description: yup.string(),
   category: yup.string().required(),
   model: yup.mixed().nullable(),
+  size: yup.string().required(),
 });
 
 export const registerSchema = yup.object().shape({

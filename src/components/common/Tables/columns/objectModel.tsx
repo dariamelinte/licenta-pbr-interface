@@ -34,6 +34,10 @@ export const objectModelColumns = ({
     header: 'Category',
     cell: (info) => info.getValue(),
   }),
+  columnHelper.accessor('size', {
+    header: 'Size',
+    cell: (info) => <p className='capitalize'>{info.getValue()}</p>,
+  }),
   columnHelper.accessor('_id', {
     header: '',
     cell: (info) => (

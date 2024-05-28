@@ -9,6 +9,7 @@ export const objectModelLabels = {
   description: 'Description',
   category: 'Category',
   model: `Upload model (${modelEntensions.join(", ")})`,
+  size: 'Size'
 };
 
 export const authLabels = {

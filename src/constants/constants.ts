@@ -33,4 +33,10 @@ export const getCameraPerspective = (
 export const testStatuses = {
   'wip': 'Work in progress',
   'posted': 'Posted',
-}
+};
+
+export const objectModelSizes = {
+  'small': 120,
+  'medium': 340,
+  'big': 560
+};

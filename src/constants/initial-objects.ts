@@ -18,6 +18,7 @@ export const INITIAL_OBJECT_MODEL: ObjectModelInputType = {
   name: "",
   category: "",
   model: null,
+  size: 'big'
 };
 
 export const INITIAL_LOGIN_FORM: LoginFormType = {

@@ -12,6 +12,7 @@ import type { ObjectModelInputType } from '@/types/common/objectModel';
 import { modelEntensions } from '@/constants/constants';
 
 import styles from './Form.module.css';
+import arrayToOptions from '@/utils/arrayToOptions';
 
 type ObjectModelProps = {
   objectModel: ObjectModelApiType | null;
@@ -61,6 +62,15 @@ export const ObjectModelForm: React.FC<ObjectModelProps> = ({
               placeholder={objectModelLabels.category}
               className={styles.field}
               options={optionsCategories}
+            />
+          </div>
+          <div className={styles.row}>
+            <CommonForm.SelectField
+              name={'size'}
+              label={objectModelLabels.size}
+              placeholder={objectModelLabels.size}
+              className={styles.field}
+              options={arrayToOptions(['small', 'medium', 'big'])}
             />
           </div>
           <div className={cx(styles.row, 'mb-3')}>

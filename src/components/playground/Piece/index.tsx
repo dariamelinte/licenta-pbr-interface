@@ -1,20 +1,30 @@
-import { PropsWithChildren, useRef, useState } from "react";
-import Draggable from "react-draggable";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 
 type PieceProps = {
   rotate?: number;
+  initialPos: {x: number; y: number};
 };
 
 export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
   rotate = 0,
+  initialPos,
   children,
 }) => {
+  // console.log({ initialPos })
   const [currentRotate, setCurrentRotate] = useState(rotate);
+  const [position, setPosition] = useState(initialPos);
 
   const isDraggingRef = useRef(false);
 
-  const onDrag = () => {
+  // useEffect(() => {
+  //   console.log({ initialPos, position });
+  // }, [initialPos, position]);
+
+  const onDrag = (e: DraggableEvent, data: DraggableData) => {
+    console.log({ e, data });
     isDraggingRef.current = true;
+    setPosition({ x: data.x, y: data.y });
   };
 
   const onStop = () => {
@@ -24,8 +34,14 @@ export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
     isDraggingRef.current = false;
   };
 
+  // console.log({ position })
+
   return (
-    <Draggable onStop={onStop} onDrag={onDrag}>
+    <Draggable
+      position={position}
+      onStop={onStop}
+      onDrag={onDrag}
+    >
       {children}
     </Draggable>
   );

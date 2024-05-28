@@ -80,7 +80,7 @@ export const ModelView: React.FC<ModelViewProps> = ({
         camera.fov = fov;
         camera.updateProjectionMatrix();
 
-        console.log({ boundingBox, size, center, distance, fov, focusedAxe });
+        // console.log({ boundingBox, size, center, distance, fov, focusedAxe });
       }
     }
   }, [boundingBox, focusedAxe]);
