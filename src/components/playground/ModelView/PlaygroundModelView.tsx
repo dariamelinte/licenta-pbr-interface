@@ -7,6 +7,7 @@ import { ModelView } from "./ModelView";
 import { Piece } from "../Piece";
 
 import styles from './ModelView.module.css';
+import useStore from "@/stores";
 
 type PlaygroundModelViewProps = {
   initialPos: { x: number; y: number };
@@ -17,13 +18,14 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
   initialPos,
   objectModel,
 }) => {
+  const { scale } = useStore(state => state.playground)
   return (
     <Piece initialPos={initialPos}>
       <div
         className="relative border-4 border-blue-700"
         style={{
-          width: objectModelSizes[objectModel.size] + 15,
-          height: objectModelSizes[objectModel.size] + 15,
+          width: objectModelSizes[objectModel.size] * scale + 15,
+          height: objectModelSizes[objectModel.size] * scale + 15,
         }}
       >
         <button className={cx(styles.linkButton, "-top-3 -left-3")}></button>
@@ -38,8 +40,8 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         <ModelView
           model={objectModel.model}
           disableControls
-          width={objectModelSizes[objectModel.size]}
-          height={objectModelSizes[objectModel.size]}
+          width={objectModelSizes[objectModel.size] * scale}
+          height={objectModelSizes[objectModel.size] * scale}
         />
       </div>
       {/* <LinkContainer

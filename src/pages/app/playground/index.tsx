@@ -7,13 +7,14 @@ import { useEffect, useRef } from "react";
 import { CoordinatesButton } from "@/components/common/Buttons";
 import { toast } from "react-toastify";
 import { objectModelSizes } from "@/constants/constants";
+import { Form } from "@/components/common";
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { objectModels, loading, getObjectModels } = useStore(
     (state) => state.objectModel
   );
-  const { objectInstances, addObjectInstance } = useStore(
+  const { objectInstances, addObjectInstance, scale, setScale } = useStore(
     (state) => state.playground
   );
 
@@ -62,8 +63,8 @@ const Index = () => {
 
           console.log("Initial position for object", { id, initialPos });
           console.log({
-            width: objectModelSizes[objectModel.size],
-            height: objectModelSizes[objectModel.size],
+            width: objectModelSizes[objectModel.size] * scale,
+            height: objectModelSizes[objectModel.size] * scale,
           });
           return (
             <PlaygroundModelView
@@ -75,6 +76,16 @@ const Index = () => {
         })}
       </div>
       <div className="p-3 flex justify-end items-center">
+        <Form.Label text="Scale:" className="!m-0" />
+        <div className="ml-3 mr-5">
+          <Form.Range
+            min={0}
+            max={100}
+            label="Scale"
+            value={scale * 100}
+            onChange={(e) => setScale(Number(e.target.value) / 100)}
+          />
+        </div>
         <CoordinatesButton />
       </div>
     </AuthPage>

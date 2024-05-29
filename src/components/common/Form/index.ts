@@ -7,3 +7,4 @@ export * from './Label';
 export * from './Select';
 export * from './SelectWithDelete';
 export * from './Textarea';
+export * from './Range';

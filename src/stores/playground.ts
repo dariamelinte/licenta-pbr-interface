@@ -13,6 +13,7 @@ export const playgroundSlice: StateCreator<
     focusedAxe: "ox",
     objectInstances: {},
     cameraPerspective: getCameraPerspective("ox"),
+    scale: 1,
 
     setFocusedAxe: (focusedAxe) =>
       set({
@@ -27,6 +28,14 @@ export const playgroundSlice: StateCreator<
         playground: {
           ...get().playground,
           cameraPerspective,
+        },
+      }),
+
+    setScale: (scale) =>
+      set({
+        playground: {
+          ...get().playground,
+          scale,
         },
       }),
 
