@@ -14,9 +14,12 @@ const Index = () => {
   const { objectModels, loading, getObjectModels } = useStore(
     (state) => state.objectModel
   );
-  const { objectInstances, addObjectInstance, scale, setScale } = useStore(
-    (state) => state.playground
-  );
+  const {
+    objectInstances,
+    addObjectInstance,
+    scale,
+    setScale,
+  } = useStore((state) => state.playground);
 
   useEffect(() => {
     getObjectModels();
@@ -35,7 +38,7 @@ const Index = () => {
         />
       </div>
       <div
-        className="rounded-xl border-y-4 border-x-2 border-blue-900 bg-blue-800 mt-12 mx-3 h-[80vh] shadow overflow-hidden"
+        className="relative rounded-xl border-y-4 border-x-2 border-blue-900 bg-blue-800 mt-12 mx-3 h-[80vh] shadow overflow-hidden"
         ref={containerRef}
       >
         {Object.entries(objectInstances).map(([id, instance]) => {
@@ -61,14 +64,10 @@ const Index = () => {
             ),
           };
 
-          console.log("Initial position for object", { id, initialPos });
-          console.log({
-            width: objectModelSizes[objectModel.size] * scale,
-            height: objectModelSizes[objectModel.size] * scale,
-          });
           return (
             <PlaygroundModelView
               key={id}
+              objectInstanceId={id}
               initialPos={initialPos}
               objectModel={objectModel}
             />

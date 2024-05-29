@@ -3,3 +3,5 @@ export type CoordinatesObjectType<T> = {
     oy: T;
     oz: T;
 }
+
+export type PointType = { x: number; y: number }

@@ -2,6 +2,7 @@ import type { StateCreator } from "zustand";
 
 import { PlaygroundStoreType } from "@/types/store/playground";
 import { getCameraPerspective } from "@/constants/constants";
+import { ObjectInstanceApiType } from "@/types/common/objectInstance";
 
 export const playgroundSlice: StateCreator<
   PlaygroundStoreType,
@@ -49,9 +50,31 @@ export const playgroundSlice: StateCreator<
               _id: id,
               _id_object_model: objectModelId,
               rotation: [0, 0, 0],
+              position: {
+                ox: { x: 0, y: 0 },
+                oy: { x: 0, y: 0 },
+                oz: { x: 0, y: 0 },
+              },
             },
           },
         },
       }),
+
+    changeObjectInstancePosition: (id, position) => {
+      set({
+        playground: {
+          ...get().playground,
+          objectInstances: {
+            ...get().playground.objectInstances,
+            [id]: {
+              ...(get().playground.objectInstances[
+                id
+              ] as ObjectInstanceApiType),
+              position,
+            },
+          },
+        },
+      });
+    },
   },
 });

@@ -1,47 +1,48 @@
+import { PointType } from "@/types/common/playground";
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 
 type PieceProps = {
-  rotate?: number;
-  initialPos: {x: number; y: number};
+  initialPos: PointType;
+  pos?: PointType;
+  onStop?: (e: PointType) => void;
 };
 
 export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
-  rotate = 0,
   initialPos,
+  pos,
+  onStop,
   children,
 }) => {
-  // console.log({ initialPos })
-  const [currentRotate, setCurrentRotate] = useState(rotate);
   const [position, setPosition] = useState(initialPos);
 
   const isDraggingRef = useRef(false);
 
-  // useEffect(() => {
-  //   console.log({ initialPos, position });
-  // }, [initialPos, position]);
+  useEffect(() => {
+    if (
+      pos?.x &&
+      pos?.y &&
+      !isDraggingRef.current &&
+      !(pos.x === position.x && pos.y === position.y)
+    ) {
+      setPosition(pos);
+    }
+  }, [pos?.x, pos?.y]);
 
-  const onDrag = (e: DraggableEvent, data: DraggableData) => {
+  const handleDrag = (e: DraggableEvent, data: DraggableData) => {
     console.log({ e, data });
     isDraggingRef.current = true;
     setPosition({ x: data.x, y: data.y });
   };
 
-  const onStop = () => {
-    if (!isDraggingRef.current) {
-      setCurrentRotate(currentRotate + 90);
-    }
+  const handleStop = () => {
+    onStop?.(position);
+    
     isDraggingRef.current = false;
   };
 
-  // console.log({ position })
-
   return (
-    <Draggable
-      position={position}
-      onStop={onStop}
-      onDrag={onDrag}
-    >
+    <Draggable position={position} onStop={handleStop} onDrag={handleDrag}>
       {children}
     </Draggable>
   );
