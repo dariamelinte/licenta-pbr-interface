@@ -30,6 +30,8 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     [objectInstanceId, objectInstances]
   );
 
+  const objectSize = useMemo(() => objectModelSizes[objectModel.size] * scale, [objectModel.size, scale])
+
   useEffect(() => {
     changeObjectInstancePosition(objectInstanceId, {
       ox: initialPos,
@@ -38,16 +40,56 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     });
   }, [initialPos.x, initialPos.y]);
 
-  const handlePieceStop = (point: PointType) => {
+  const handlePieceStop = (oldPoint: PointType, newPoint: PointType) => {
     if (!objectInstance?.position) return;
 
-    changeObjectInstancePosition(objectInstanceId, {
-      ...objectInstance.position,
-      [focusedAxe]: point,
-    });
-  };
+    const delta = {
+      x: newPoint.x - oldPoint.x,
+      y: newPoint.y - oldPoint.y,
+    };
 
-  console.log({ objectInstance });
+    switch (focusedAxe) {
+      case "ox":
+        changeObjectInstancePosition(objectInstanceId, {
+          ox: newPoint,
+          oy: {
+            x: objectInstance.position.oy.x,
+            y: objectInstance.position.oy.x - delta.y,
+          },
+          oz: {
+            x: objectInstance.position.oz.x,
+            y: objectInstance.position.oz.y - delta.x
+          },
+        });
+        break;
+      case "oy":
+        changeObjectInstancePosition(objectInstanceId, {
+          ox: {
+            x: objectInstance.position.ox.x,
+            y: objectInstance.position.ox.y - delta.y,
+          },
+          oy: newPoint,
+          oz: {
+            x: objectInstance.position.oz.x + delta.x,
+            y: objectInstance.position.oz.y
+          },
+        });
+        break;
+      case "oz":
+        changeObjectInstancePosition(objectInstanceId, {
+          ox: {
+            x: objectInstance.position.ox.x - delta.y,
+            y: objectInstance.position.ox.y
+          },
+          oy: {
+            x: objectInstance.position.oy.x + delta.x,
+            y: objectInstance.position.oy.y
+          },
+          oz: newPoint,
+        });
+        break;
+    }
+  };
 
   return (
     <Piece
@@ -58,8 +100,8 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
       <div
         className="absolute border-4 border-blue-700"
         style={{
-          width: objectModelSizes[objectModel.size] * scale + 15,
-          height: objectModelSizes[objectModel.size] * scale + 15,
+          width: objectSize + 15,
+          height: objectSize + 15,
         }}
       >
         <div className="w-full h-full relative">
@@ -99,8 +141,8 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
           <ModelView
             model={objectModel.model}
             disableControls
-            width={objectModelSizes[objectModel.size] * scale}
-            height={objectModelSizes[objectModel.size] * scale}
+            width={objectSize}
+            height={objectSize}
           />
         </div>
       </div>

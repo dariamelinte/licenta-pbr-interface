@@ -5,7 +5,7 @@ import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 type PieceProps = {
   initialPos: PointType;
   pos?: PointType;
-  onStop?: (e: PointType) => void;
+  onStop?: (oldPoint: PointType, newPoint: PointType) => void;
 };
 
 export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
@@ -29,14 +29,15 @@ export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
     }
   }, [pos?.x, pos?.y]);
 
-  const handleDrag = (e: DraggableEvent, data: DraggableData) => {
-    console.log({ e, data });
+  const handleDrag = (_: DraggableEvent, data: DraggableData) => {
     isDraggingRef.current = true;
     setPosition({ x: data.x, y: data.y });
   };
 
   const handleStop = () => {
-    onStop?.(position);
+    if (pos) {
+      onStop?.(pos, position);
+    }
     
     isDraggingRef.current = false;
   };
