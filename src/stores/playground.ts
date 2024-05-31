@@ -1,8 +1,10 @@
 import type { StateCreator } from "zustand";
 
 import { PlaygroundStoreType } from "@/types/store/playground";
+import { INITIAL_LINKAGE } from "@/constants/initial-objects";
 import { getCameraPerspective } from "@/constants/constants";
 import { ObjectInstanceApiType } from "@/types/common/objectInstance";
+import { toast } from "react-toastify";
 
 export const playgroundSlice: StateCreator<
   PlaygroundStoreType,
@@ -15,6 +17,7 @@ export const playgroundSlice: StateCreator<
     objectInstances: {},
     cameraPerspective: getCameraPerspective("ox"),
     scale: 1,
+    linkages: [],
 
     setFocusedAxe: (focusedAxe) =>
       set({
@@ -59,6 +62,47 @@ export const playgroundSlice: StateCreator<
           },
         },
       }),
+
+    addConnectionPoint: (connectionPoint) => {
+      const linkages = [...get().playground.linkages];
+      const { first_connection, second_connection } =
+        linkages[linkages.length - 1] || {};
+
+      if ((first_connection && second_connection) || linkages.length === 0) {
+        console.log("first case")
+        set({
+          playground: {
+            ...get().playground,
+            linkages: [
+              ...linkages,
+              { ...INITIAL_LINKAGE, first_connection: connectionPoint },
+            ],
+          },
+        });
+        return;
+      }
+
+      linkages[linkages.length - 1] = {
+        first_connection,
+        second_connection: connectionPoint,
+        distance: [0, 0, 0], //TODO: calculate value
+        angle: [0, 0, 0], //TODO: calculate value
+      };
+
+      console.log({ linkages })
+
+      // it means only one connection point is added
+      if (first_connection?.instance === connectionPoint.instance) {
+        linkages.pop()
+        set({ playground: { ...get().playground, linkages } });
+        console.log("Cannot link an object to itself")
+        toast.error("Cannot link an object to itself");
+        return;
+      }
+
+      console.log("last case")
+      set({ playground: { ...get().playground, linkages } });
+    },
 
     changeObjectInstancePosition: (id, position) => {
       set({

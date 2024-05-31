@@ -1,6 +1,6 @@
 export type ConnectionPointType = {
     instance: string;
-    x: number;
-    y: number;
-    z: number;
+    ox: number;
+    oy: number;
+    oz: number;
 }

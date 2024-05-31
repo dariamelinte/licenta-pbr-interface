@@ -6,8 +6,6 @@ import useStore from "@/stores";
 export const CoordinatesButton: React.FC = () => {
   const { focusedAxe, setFocusedAxe } = useStore((state) => state.playground);
 
-  console.log({ focusedAxe, coordinatesAxes})
-
   return (
     <div className="rounded-xl border border-blue-200 bg-blue-100 shadow">
       {Object.keys(coordinatesAxes).map((axe) => {
