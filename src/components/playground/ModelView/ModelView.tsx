@@ -61,18 +61,18 @@ export const ModelView: React.FC<ModelViewProps> = ({
 
         // Calculate the distance and adjust the field of view
         const distance = scaleFactor * 1.5;
-        const fov = 2 * Math.atan(size.y / (2 * distance)) * (180 / Math.PI);
+        const fov = 3.5 * Math.atan(size.y / (2 * distance)) * (180 / Math.PI);
 
         // Set camera position based on the focused axis
         switch (focusedAxe) {
           case "ox":
-            camera.position.set(distance, center.y, center.z);
+            camera.position.set(-distance, center.y, center.z);
             break;
           case "oy":
-            camera.position.set(center.x, distance, center.z);
+            camera.position.set(center.x, center.y, -distance);
             break;
           case "oz":
-            camera.position.set(center.x, center.y, distance);
+            camera.position.set(center.x, distance, center.z);
             break;
         }
 

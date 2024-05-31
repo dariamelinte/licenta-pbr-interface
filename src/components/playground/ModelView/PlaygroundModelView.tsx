@@ -54,7 +54,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
           ox: newPoint,
           oy: {
             x: objectInstance.position.oy.x,
-            y: objectInstance.position.oy.x - delta.y,
+            y: objectInstance.position.oy.y - delta.y,
           },
           oz: {
             x: objectInstance.position.oz.x,
@@ -100,43 +100,43 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
       <div
         className="absolute border-4 border-blue-700"
         style={{
-          width: objectSize + 15,
-          height: objectSize + 15,
+          width: objectSize,
+          height: objectSize,
         }}
       >
         <div className="w-full h-full relative">
-          <button className={cx(styles.linkButton, "-top-3 -left-3")}></button>
+          <button className={cx(styles.linkButton, "-top-3 -left-3")}>A</button>
           <button
             className={cx(
               styles.linkButton,
               "-top-3 left-1/2 transform -translate-x-1/2"
             )}
-          ></button>
-          <button className={cx(styles.linkButton, "-top-3 -right-3")}></button>
+          >B</button>
+          <button className={cx(styles.linkButton, "-top-3 -right-3")}>C</button>
           <button
             className={cx(
               styles.linkButton,
               "top-1/2 -left-3 transform -translate-y-1/2"
             )}
-          ></button>
+          >D</button>
           <button
             className={cx(
               styles.linkButton,
               "top-1/2 -right-3 transform -translate-y-1/2"
             )}
-          ></button>
+          >E</button>
           <button
             className={cx(styles.linkButton, "-bottom-3 -left-3")}
-          ></button>
+          >F</button>
           <button
             className={cx(
               styles.linkButton,
               "-bottom-3 left-1/2 transform -translate-x-1/2"
             )}
-          ></button>
+          >G</button>
           <button
             className={cx(styles.linkButton, "-bottom-3 -right-3")}
-          ></button>
+          >H</button>
 
           <ModelView
             model={objectModel.model}

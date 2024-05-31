@@ -8,13 +8,14 @@ type ModelLoaderType = {
   url: string;
   extension: (typeof modelEntensions)[number];
   scale?: number[];
+  rotation?: number[];
 
   onBoundingBoxCalculated?: (boundingBox: THREE.Box3) => void;
 };
 
 export const ModelLoader: React.FC<ModelLoaderType> = ({
   url,
-  extension,
+  rotation,
   scale,
   onBoundingBoxCalculated,
 }) => {
@@ -27,5 +28,5 @@ export const ModelLoader: React.FC<ModelLoaderType> = ({
     }
   }, [fbx]);
 
-  return <primitive object={fbx} scale={scale} />;
+  return <primitive object={fbx} scale={scale} rotation={rotation} />;
 };

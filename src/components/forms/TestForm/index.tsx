@@ -3,10 +3,10 @@ import { Form, Formik } from "formik";
 import { testSchema } from "@/constants/validation-schemas";
 import useStore from "@/stores";
 import type { TestFormType } from "@/types/common/test";
+import { Board } from "@/components/playground";
 
 import { TestInformationForm } from "./TestInformationForm";
 import { TestPlaygroundForm } from "./TestPlaygroundForm";
-import { ObjectModelMenu } from "@/components/playground";
 
 type TestFormProps = {};
 
@@ -28,9 +28,9 @@ export const TestForm: React.FC<TestFormProps> = () => {
           <Form className="w-full">
             <TestInformationForm />
 
-            <div className="my-4">
-              <ObjectModelMenu
-                onAddObjectModel={(id) => {
+            <div className="my-4 relative">
+              <Board
+                onAddInstance={(id) => {
                   setFieldValue(`instances`, [
                     ...values.instances,
                     { object_model: id, rotation: [0, 0, 0] },
@@ -39,7 +39,6 @@ export const TestForm: React.FC<TestFormProps> = () => {
               />
             </div>
 
-            <TestPlaygroundForm />
           </Form>
         );
       }}

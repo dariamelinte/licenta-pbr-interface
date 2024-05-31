@@ -1,19 +1,17 @@
-import * as THREE from "three";
-
 import { CoordinatesObjectType } from "@/types/common/playground";
 
 export const modelEntensions = [".glb", ".gltf", ".fbx", ".obj", ".stl"];
 
 export const coordinatesAxes: CoordinatesObjectType<string> = {
   ox: "Side",
-  oy: "Top",
-  oz: "Front",
+  oz: "Top",
+  oy: "Front",
 };
 
 export const canvasCoordinatesAxes: CoordinatesObjectType<string> = {
   ox: "side",
-  oy: "top",
-  oz: "front",
+  oy: "front",
+  oz: "top",
 };
 
 export const getCameraPerspective = (
@@ -36,7 +34,7 @@ export const testStatuses = {
 };
 
 export const objectModelSizes = {
-  'small': 120,
-  'medium': 340,
-  'big': 560
+  'small': 60,
+  'medium': 180,
+  'big': 320
 };
