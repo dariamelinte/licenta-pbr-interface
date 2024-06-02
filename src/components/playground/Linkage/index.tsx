@@ -1,6 +1,6 @@
+import { axesPoints } from "@/constants/constants";
 import useStore from "@/stores";
 import { LinkageType } from "@/types/common/linkage";
-import { useEffect, useState } from "react";
 import Xarrow from "react-xarrows";
 
 type LinkageProps = {
@@ -12,26 +12,31 @@ export const Linkage: React.FC<LinkageProps> = ({
 }) => {
   const { focusedAxe } = useStore((state) => state.playground);
 
-  const [isFirstConn, setIsFirstConn] = useState(false);
-  const [isSecondConn, setIsSecondConn] = useState(false);
+  const handleShowArrow = () => {
+    const visiblePoints = axesPoints[focusedAxe];
 
-  useEffect(() => {
-    if (first_connection?.uuid && second_connection?.uuid) {
-      setIsFirstConn(!!document.getElementById(first_connection?.uuid));
-      setIsSecondConn(!!document.getElementById(second_connection?.uuid));
-    }
-  }, [focusedAxe, first_connection?.uuid, second_connection?.uuid]);
+    const first = visiblePoints.find(
+      (point) => point === first_connection?.boxPoint
+    );
+    const second = visiblePoints.find(
+      (point) => point === second_connection?.boxPoint
+    );
+
+    console.log({ first, second, first_connection, second_connection, focusedAxe })
+
+    return !!first && !!second;
+  };
 
   if (!first_connection?.uuid || !second_connection?.uuid) {
-    return null;
+    return <span />;
   }
 
   return (
     <Xarrow
-      start={first_connection?.uuid}
-      end={second_connection?.uuid}
+      start={first_connection.uuid}
+      end={second_connection.uuid}
       showHead={false}
-      showXarrow={isFirstConn && isSecondConn}
+      showXarrow={handleShowArrow()}
       color="#2b6cb0"
     />
   );

@@ -34,10 +34,8 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     focusedAxe,
     objectInstances,
     addConnectionPoint,
-    linkages,
   } = useStore((state) => state.playground);
   const [buttonIds, setButtonIds] = useState<string[]>([]);
-  const updateXarrow = useXarrow();
 
   const objectInstance = useMemo(
     () => objectInstances[objectInstanceId],
@@ -68,14 +66,12 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
       ids.push(`${objectInstanceId}-${boxPoints[i]?.[focusedAxe]}`);
     }
     setButtonIds(ids);
-    // updateXarrow();
   }, [
     objectInstanceId,
     focusedAxe,
-    // updateXarrow
   ]);
 
-  console.log(buttonIds)
+  // console.log(buttonIds)
 
   const handlePieceStop = (oldPoint: PointType, newPoint: PointType) => {
     if (!objectInstance?.position) return;
@@ -126,8 +122,6 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         });
         break;
     }
-
-    updateXarrow();
   };
 
   const handlePointClick = (index: number) => {
@@ -143,11 +137,11 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     const connectionPoint: ConnectionPointType = {
       instance: objectInstanceId,
       uuid: buttonIds[index] as string,
+      boxPoint,
       ...percentages,
     };
 
     addConnectionPoint(connectionPoint);
-    // updateXarrow()
   };
 
   return (

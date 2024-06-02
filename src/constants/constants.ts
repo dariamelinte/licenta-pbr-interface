@@ -67,4 +67,10 @@ export const pointPercentages: {[key: number]: CoordinatesObjectType<number>} = 
   18: {ox: 100, oy: 50, oz: 0},
   19: {ox: 100, oy: 50, oz: 100},
 
+};
+
+export const axesPoints: CoordinatesObjectType<number[]> = {
+  ox: [1, 2, 3, 4, 5, 6, 7, 8],
+  oy: [3, 4, 5, 11, 12, 13, 18, 19],
+  oz: [1, 2, 3, 9, 10, 11, 17, 18]
 }

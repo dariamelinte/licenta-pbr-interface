@@ -4,4 +4,5 @@ export type ConnectionPointType = {
     ox: number;
     oy: number;
     oz: number;
+    boxPoint: number;
 }
