@@ -24,6 +24,8 @@ export const playgroundSlice: StateCreator<
         playground: {
           ...get().playground,
           focusedAxe,
+          linkages: [...get().playground.linkages],
+          objectInstances: {...get().playground.objectInstances}
         },
       }),
 
@@ -69,7 +71,7 @@ export const playgroundSlice: StateCreator<
         linkages[linkages.length - 1] || {};
 
       if ((first_connection && second_connection) || linkages.length === 0) {
-        console.log("first case")
+        console.log("first case");
         set({
           playground: {
             ...get().playground,
@@ -89,18 +91,18 @@ export const playgroundSlice: StateCreator<
         angle: [0, 0, 0], //TODO: calculate value
       };
 
-      console.log({ linkages })
+      console.log({ linkages });
 
       // it means only one connection point is added
       if (first_connection?.instance === connectionPoint.instance) {
-        linkages.pop()
+        linkages.pop();
         set({ playground: { ...get().playground, linkages } });
-        console.log("Cannot link an object to itself")
+        console.log("Cannot link an object to itself");
         toast.error("Cannot link an object to itself");
         return;
       }
 
-      console.log("last case")
+      console.log("last case");
       set({ playground: { ...get().playground, linkages } });
     },
 

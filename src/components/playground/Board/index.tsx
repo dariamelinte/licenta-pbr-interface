@@ -1,10 +1,18 @@
-import { ObjectModelMenu, PlaygroundModelView } from "@/components/playground";
-import { objectModelSizes } from "@/constants/constants";
-import useStore from "@/stores";
+"use client";
+
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import Xarrow, { Xwrapper } from "react-xarrows";
+
 import { Form } from "@/components/common";
 import { CoordinatesButton } from "@/components/common/Buttons";
+import {
+  Linkage,
+  ObjectModelMenu,
+  PlaygroundModelView,
+} from "@/components/playground";
+import { objectModelSizes } from "@/constants/constants";
+import useStore from "@/stores";
 
 type BoardProps = {
   onAddInstance: (id: string) => void;
@@ -12,11 +20,12 @@ type BoardProps = {
 
 export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [gridSize, setGridSize] = useState(40); // Initial grid size
   const { objectModels } = useStore((state) => state.objectModel);
-  const { objectInstances, scale, setScale } = useStore(
+  const { objectInstances, scale, setScale, linkages, focusedAxe } = useStore(
     (state) => state.playground
   );
+
+  const [gridSize, setGridSize] = useState(40); // Initial grid size
 
   useEffect(() => {
     const updateGridSize = () => {
@@ -38,6 +47,9 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
   const handleChangeScale = (e: ChangeEvent<HTMLInputElement>) => {
     setScale(Number(e.target.value) / 100);
   };
+
+  console.log({ linkages, objectInstances });
+
   return (
     <>
       <div className="p-3 absolute t-1 l-1 z-50">
@@ -60,40 +72,48 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
             transform: "translate(-50%, -50%)",
           }}
         ></div>
-        {Object.entries(objectInstances).map(([id, instance]) => {
-          const objectModel = objectModels.find(
-            (objectModel) => objectModel._id === instance._id_object_model
-          );
-          if (!objectModel) {
-            toast.error("Could not find an object model");
-            return null;
-          }
+        <Xwrapper>
+          {Object.entries(objectInstances).map(([id, instance]) => {
+            const objectModel = objectModels.find(
+              (objectModel) => objectModel._id === instance._id_object_model
+            );
+            if (!objectModel) {
+              toast.error("Could not find an object model");
+              return null;
+            }
 
-          const rect = containerRef.current?.getBoundingClientRect();
-          const initialPos = {
-            x: Math.max(
-              ((rect?.left || 0) +
-                ((rect?.width || 0) - objectModelSizes[objectModel.size])) /
-                2,
-              0
-            ),
-            y: Math.max(
-              ((rect?.top || 0) +
-                ((rect?.height || 0) - objectModelSizes[objectModel.size])) /
-                2,
-              0
-            ),
-          };
+            const rect = containerRef.current?.getBoundingClientRect();
+            const initialPos = {
+              x: Math.max(
+                ((rect?.left || 0) +
+                  ((rect?.width || 0) - objectModelSizes[objectModel.size])) /
+                  2,
+                0
+              ),
+              y: Math.max(
+                ((rect?.top || 0) +
+                  ((rect?.height || 0) - objectModelSizes[objectModel.size])) /
+                  2,
+                0
+              ),
+            };
 
-          return (
-            <PlaygroundModelView
-              key={id}
-              objectInstanceId={id}
-              initialPos={initialPos}
-              objectModel={objectModel}
+            return (
+              <PlaygroundModelView
+                key={id}
+                objectInstanceId={id}
+                initialPos={initialPos}
+                objectModel={objectModel}
+              />
+            );
+          })}
+          {linkages.map((linkage, idx) => (
+            <Linkage
+              linkage={linkage}
+              key={`${linkage.first_connection?.uuid}-${linkage.second_connection?.uuid}-${focusedAxe}-${idx}`}
             />
-          );
-        })}
+          ))}
+        </Xwrapper>
       </div>
       <div className="p-3 flex justify-end items-center">
         <Form.Label text="Scale:" className="!m-0" />

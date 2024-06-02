@@ -32,6 +32,9 @@ export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
   const handleDrag = (_: DraggableEvent, data: DraggableData) => {
     isDraggingRef.current = true;
     setPosition({ x: data.x, y: data.y });
+    if (pos) {
+      onStop?.(pos, position);
+    }
   };
 
   const handleStop = () => {

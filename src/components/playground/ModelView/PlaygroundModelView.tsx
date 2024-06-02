@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   boxPoints,
@@ -15,6 +15,7 @@ import { ModelView } from "./ModelView";
 
 import styles from "./ModelView.module.css";
 import { ConnectionPointType } from "@/types/common/connectionPoint";
+import { useXarrow } from "react-xarrows";
 
 type PlaygroundModelViewProps = {
   objectInstanceId: string;
@@ -35,6 +36,8 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     addConnectionPoint,
     linkages,
   } = useStore((state) => state.playground);
+  const [buttonIds, setButtonIds] = useState<string[]>([]);
+  const updateXarrow = useXarrow();
 
   const objectInstance = useMemo(
     () => objectInstances[objectInstanceId],
@@ -52,7 +55,27 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
       oy: initialPos,
       oz: initialPos,
     });
-  }, [initialPos.x, initialPos.y]);
+  }, [
+    initialPos.x,
+    initialPos.y,
+    objectInstanceId,
+    changeObjectInstancePosition,
+  ]);
+
+  useEffect(() => {
+    const ids = [];
+    for (let i = 0; i < 8; i++) {
+      ids.push(`${objectInstanceId}-${boxPoints[i]?.[focusedAxe]}`);
+    }
+    setButtonIds(ids);
+    // updateXarrow();
+  }, [
+    objectInstanceId,
+    focusedAxe,
+    // updateXarrow
+  ]);
+
+  console.log(buttonIds)
 
   const handlePieceStop = (oldPoint: PointType, newPoint: PointType) => {
     if (!objectInstance?.position) return;
@@ -103,6 +126,8 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         });
         break;
     }
+
+    updateXarrow();
   };
 
   const handlePointClick = (index: number) => {
@@ -115,12 +140,15 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
 
     if (!percentages) return;
 
-    const connectionPoint: ConnectionPointType = { instance: objectInstanceId, ...percentages };
-    console.log(connectionPoint);
-    addConnectionPoint(connectionPoint);
-  };
+    const connectionPoint: ConnectionPointType = {
+      instance: objectInstanceId,
+      uuid: buttonIds[index] as string,
+      ...percentages,
+    };
 
-  console.log({ linkages, objectInstances });
+    addConnectionPoint(connectionPoint);
+    // updateXarrow()
+  };
 
   return (
     <Piece
@@ -138,6 +166,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         <div className="w-full h-full relative">
           <button
             className={cx(styles.linkButton, "-top-3 -left-3")}
+            id={buttonIds[0]}
             onClick={() => handlePointClick(0)}
           ></button>
           <button
@@ -145,10 +174,12 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
               styles.linkButton,
               "-top-3 left-1/2 transform -translate-x-1/2"
             )}
+            id={buttonIds[1]}
             onClick={() => handlePointClick(1)}
           ></button>
           <button
             className={cx(styles.linkButton, "-top-3 -right-3")}
+            id={buttonIds[2]}
             onClick={() => handlePointClick(2)}
           ></button>
           <button
@@ -156,6 +187,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
               styles.linkButton,
               "top-1/2 -left-3 transform -translate-y-1/2"
             )}
+            id={buttonIds[3]}
             onClick={() => handlePointClick(3)}
           ></button>
           <button
@@ -163,21 +195,25 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
               styles.linkButton,
               "top-1/2 -right-3 transform -translate-y-1/2"
             )}
+            id={buttonIds[4]}
             onClick={() => handlePointClick(4)}
           ></button>
           <button
             className={cx(styles.linkButton, "-bottom-3 -left-3")}
             onClick={() => handlePointClick(5)}
+            id={buttonIds[5]}
           ></button>
           <button
             className={cx(
               styles.linkButton,
               "-bottom-3 left-1/2 transform -translate-x-1/2"
             )}
+            id={buttonIds[6]}
             onClick={() => handlePointClick(6)}
           ></button>
           <button
             className={cx(styles.linkButton, "-bottom-3 -right-3")}
+            id={buttonIds[7]}
             onClick={() => handlePointClick(7)}
           ></button>
 
