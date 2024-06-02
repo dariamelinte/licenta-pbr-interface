@@ -66,12 +66,4 @@ export const INITIAL_TEST_FORM: TestFormType = {
   due_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).getTime(),
 
   group: '',
-  instances: [],
-  connection_points: [],
-  linkages: []
-};
-
-export const INITIAL_LINKAGE: LinkageType = {
-  distance: [0, 0, 0],
-  angle: [0, 0, 0]
 };

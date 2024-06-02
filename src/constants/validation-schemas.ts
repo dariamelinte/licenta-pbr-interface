@@ -78,9 +78,4 @@ export const testSchema = yup.object().shape({
   min_score: yup.number().required(),
   max_score: yup.number().required(),
   group: yup.string().required(),
-
-  instances: yup.array().of(yup.object().shape({
-    object_model: objectModelApiSchema,
-    rotation: yup.array().of(yup.number().required()),
-  }))
 });

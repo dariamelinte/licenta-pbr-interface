@@ -1,7 +1,6 @@
 import type { StateCreator } from "zustand";
 
 import { PlaygroundStoreType } from "@/types/store/playground";
-import { INITIAL_LINKAGE } from "@/constants/initial-objects";
 import { getCameraPerspective } from "@/constants/constants";
 import { ObjectInstanceApiType } from "@/types/common/objectInstance";
 import { toast } from "react-toastify";
@@ -54,7 +53,6 @@ export const playgroundSlice: StateCreator<
             [id]: {
               _id: id,
               _id_object_model: objectModelId,
-              rotation: [0, 0, 0],
               position: {
                 ox: { x: 0, y: 0 },
                 oy: { x: 0, y: 0 },
@@ -77,7 +75,7 @@ export const playgroundSlice: StateCreator<
             ...get().playground,
             linkages: [
               ...linkages,
-              { ...INITIAL_LINKAGE, first_connection: connectionPoint },
+              { first_connection: connectionPoint },
             ],
           },
         });
@@ -87,8 +85,6 @@ export const playgroundSlice: StateCreator<
       linkages[linkages.length - 1] = {
         first_connection,
         second_connection: connectionPoint,
-        distance: [0, 0, 0], //TODO: calculate value
-        angle: [0, 0, 0], //TODO: calculate value
       };
 
       console.log({ linkages });

@@ -21,20 +21,12 @@ export type TestInfoType = {
 
 export type TestType = OidType & TestInfoType & {
     group: OidType & { name: string; };
-    instances: string[];
 };
 
 export type TestFormType = TestInfoType & {
     group: string;
-    instances: ObjectInstanceType[];
-    connection_points: ConnectionPointType[];
-    linkages: LinkageType[];
 }
 
 export type CompleteTestType = TestInfoType & {
     group: CompleteGroupType[];
-    
-    instances: CompleteObjectInstanceType[];
-    connection_points: ConnectionPointType[];
-    linkages: LinkageType[];
 }
