@@ -45,7 +45,7 @@ export const ObjectModelMenu: React.FC<ObjectModelMenuType> = ({
   }
 
   return (
-    <Disclosure defaultOpen>
+    <Disclosure>
       {({ open }) => (
         <>
           <Disclosure.Button className={styles.menuButton}>

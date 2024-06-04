@@ -21,9 +21,14 @@ type BoardProps = {
 export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { objectModels } = useStore((state) => state.objectModel);
-  const { objectInstances, scale, setScale, linkages, focusedAxe } = useStore(
-    (state) => state.playground
-  );
+  const {
+    instances,
+    scale,
+    setScale,
+    linkages,
+    focusedAxe,
+    resetPlayground,
+  } = useStore((state) => state.playground);
 
   const [gridSize, setGridSize] = useState(40); // Initial grid size
 
@@ -32,7 +37,7 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLinks(true);
-    }, 3000);
+    }, 700);
 
     return () => clearTimeout(timer);
   }, []);
@@ -54,11 +59,13 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
     };
   }, []);
 
+  useEffect(() => {
+    () => resetPlayground();
+  }, [resetPlayground]);
+
   const handleChangeScale = (e: ChangeEvent<HTMLInputElement>) => {
     setScale(Number(e.target.value) / 100);
   };
-
-  // console.log({ linkages, objectInstances });
 
   return (
     <Xwrapper>
@@ -82,9 +89,9 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
             transform: "translate(-50%, -50%)",
           }}
         ></div>
-        {Object.entries(objectInstances).map(([id, instance]) => {
+        {Object.entries(instances).map(([id, instance]) => {
           const objectModel = objectModels.find(
-            (objectModel) => objectModel._id === instance._id_object_model
+            (objectModel) => objectModel._id === instance.object_model
           );
           if (!objectModel) {
             toast.error("Could not find an object model");
@@ -93,13 +100,13 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
 
           const rect = containerRef.current?.getBoundingClientRect();
           const initialPos = {
-            x: Math.max(
+            x: instance.position[focusedAxe].x || Math.max(
               ((rect?.left || 0) +
                 ((rect?.width || 0) - objectModelSizes[objectModel.size])) /
                 2,
               0
             ),
-            y: Math.max(
+            y: instance.position[focusedAxe].y || Math.max(
               ((rect?.top || 0) +
                 ((rect?.height || 0) - objectModelSizes[objectModel.size])) /
                 2,

@@ -4,18 +4,21 @@ import { v4 as uuidv4 } from "uuid";
 
 import { testSchema } from "@/constants/validation-schemas";
 import useStore from "@/stores";
-import type { TestFormType } from "@/types/common/test";
+import type { TestInfoType } from "@/types/common/test";
 import { Board } from "@/components/playground";
 import { CheckCircle, PencilSquare } from "@/components/icons";
 import { Button, Dialog } from "@/components/common";
+import { INITIAL_TEST_FORM } from "@/constants/initial-objects";
 
-type TestFormProps = {};
+type TestFormProps = {
+  initialTest?: TestInfoType;
+  onSubmit: (values: TestInfoType) => void;
+};
 
-export const TestForm: React.FC<TestFormProps> = () => {
-  const { wipTest, setWipTest } = useStore((state) => state.test);
+export const TestForm: React.FC<TestFormProps> = ({ onSubmit, initialTest }) => {
   const { open, setOpen } = useStore((state) => state.dialog);
   const { loading, getObjectModels } = useStore((state) => state.objectModel);
-  const { addObjectInstance, objectInstances, linkages, scale } = useStore((state) => state.playground);
+  const { addObjectInstance } = useStore((state) => state.playground);
 
   useEffect(() => {
     getObjectModels();
@@ -27,13 +30,10 @@ export const TestForm: React.FC<TestFormProps> = () => {
   }
 
   return (
-    <Formik<TestFormType>
-      initialValues={wipTest}
+    <Formik<TestInfoType>
+      initialValues={initialTest || INITIAL_TEST_FORM}
       validationSchema={testSchema}
-      onSubmit={(values) => {
-        // setWipTest(values);
-        console.log({ values, objectInstances, linkages, scale });
-      }}
+      onSubmit={onSubmit}
     >
       <Form className="w-full">
         <div className="px-3 pt-3 flex items-center">
@@ -45,14 +45,14 @@ export const TestForm: React.FC<TestFormProps> = () => {
             }}
             className="w-full !flex items-center justify-center mr-4"
           >
-            <p className="pl-2"> Complete test information</p>
+            <p className="pl-2">Test information</p>
           </Button>
           <Button
             icon={<CheckCircle />}
             type="submit"
             className="w-full !flex items-center justify-center"
           >
-            <p className="pl-2"> Save test</p>
+            <p className="pl-2">Submit test</p>
           </Button>
         </div>
 

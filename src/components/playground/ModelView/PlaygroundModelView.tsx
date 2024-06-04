@@ -32,14 +32,14 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     scale,
     changeObjectInstancePosition,
     focusedAxe,
-    objectInstances,
+    instances,
     addConnectionPoint,
   } = useStore((state) => state.playground);
   const [buttonIds, setButtonIds] = useState<string[]>([]);
 
   const objectInstance = useMemo(
-    () => objectInstances[objectInstanceId],
-    [objectInstanceId, objectInstances]
+    () => instances[objectInstanceId],
+    [objectInstanceId, instances]
   );
 
   const objectSize = useMemo(
@@ -70,8 +70,6 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     objectInstanceId,
     focusedAxe,
   ]);
-
-  // console.log(buttonIds)
 
   const handlePieceStop = (oldPoint: PointType, newPoint: PointType) => {
     if (!objectInstance?.position) return;

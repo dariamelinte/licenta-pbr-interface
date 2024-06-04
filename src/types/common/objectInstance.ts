@@ -1,13 +1,10 @@
-import { ObjectModelApiType, OidType } from "./api";
+import { ObjectModelApiType } from "./api";
 import { CoordinatesObjectType, PointType } from "./playground";
 
-export type ObjectInstanceApiType = OidType & {
-  _id_object_model: string;
-  position: CoordinatesObjectType<PointType>;
-};
-
 export type ObjectInstanceType = {
+  uuid: string;
   object_model: string;
+  position: CoordinatesObjectType<PointType>;
 };
 
 export type CompleteObjectInstanceType = {

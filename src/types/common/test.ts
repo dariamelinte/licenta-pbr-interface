@@ -1,8 +1,5 @@
-import { OidType } from "./api";
-import { ConnectionPointType } from "./connectionPoint";
-import { CompleteGroupType } from "./group";
 import { LinkageType } from "./linkage";
-import { CompleteObjectInstanceType, ObjectInstanceType } from "./objectInstance";
+import { ObjectInstanceType } from "./objectInstance";
 
 export type StatusTestType = 'wip' | 'posted';
 
@@ -15,18 +12,15 @@ export type TestInfoType = {
     min_score: number;
     max_score: number;
 
-    start_date: number;
-    due_date: number;
-}
-
-export type TestType = OidType & TestInfoType & {
-    group: OidType & { name: string; };
-};
-
-export type TestFormType = TestInfoType & {
+    start_date: string;
+    due_date: string;
     group: string;
 }
 
-export type CompleteTestType = TestInfoType & {
-    group: CompleteGroupType[];
+export type TestBoardType = {
+    instances: { [key: string]: ObjectInstanceType };
+    scale: number;
+    linkages: LinkageType[];
 }
+
+export type TestType = TestInfoType & TestBoardType;

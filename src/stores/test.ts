@@ -4,7 +4,6 @@ import type { StateCreator } from "zustand";
 import { ERROR_MESSAGE } from "@/constants/messages";
 import * as service from "@/services/api/test";
 import { TestStoreType } from "@/types/store/test";
-import { INITIAL_TEST_FORM } from "@/constants/initial-objects";
 
 export const testSlice: StateCreator<TestStoreType, [], [], TestStoreType> = (
   set,
@@ -13,8 +12,6 @@ export const testSlice: StateCreator<TestStoreType, [], [], TestStoreType> = (
   test: {
     tests: [],
     loading: false,
-
-    wipTest: INITIAL_TEST_FORM,
 
     setLoading: (loading) =>
       set({
@@ -29,14 +26,6 @@ export const testSlice: StateCreator<TestStoreType, [], [], TestStoreType> = (
         test: {
           ...get().test,
           tests,
-        },
-      }),
-
-    setWipTest: (wipTest) =>
-      set({
-        test: {
-          ...get().test,
-          wipTest,
         },
       }),
 
@@ -67,6 +56,9 @@ export const testSlice: StateCreator<TestStoreType, [], [], TestStoreType> = (
     },
 
     getTestById: async (accessToken, id) => {
+      const test = get().test.tests.find(({ _id }) => _id === id);
+      if (test) return test;
+
       try {
         get().test.setLoading(true);
         const {

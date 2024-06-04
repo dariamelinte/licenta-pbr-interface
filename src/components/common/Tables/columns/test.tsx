@@ -18,14 +18,6 @@ export const testColumns = ({
   onView,
 }: TestColumnsProps) => {
   return [
-    columnHelper.accessor("group", {
-      header: "Group",
-      cell: async (info) => info.getValue().name,
-    }),
-    columnHelper.accessor("status", {
-      header: "Status",
-      cell: (info) => testStatuses[info.getValue()],
-    }),
     columnHelper.accessor("name", {
       header: "Name",
       cell: (info) => info.getValue(),
@@ -42,11 +34,15 @@ export const testColumns = ({
       header: "Max. score",
       cell: (info) => info.getValue(),
     }),
+    columnHelper.accessor("status", {
+      header: "Status",
+      cell: (info) => testStatuses[info.getValue()],
+    }),
     columnHelper.accessor("due_date", {
       header: "Due date",
       cell: (info) => {
         const date = new Date();
-        date.setTime(info.getValue() * 1000);
+        date.setTime(Number(info.getValue()));
         return date.toUTCString();
       },
     }),

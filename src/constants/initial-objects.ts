@@ -6,7 +6,7 @@ import type {
 import type { CategoryType } from "@/types/common/category";
 import type { GroupFormType, JoinGroupFormType } from "@/types/common/group";
 import { LinkageType } from "@/types/common/linkage";
-import { ObjectInstanceApiType } from "@/types/common/objectInstance";
+import { ObjectInstanceType } from "@/types/common/objectInstance";
 import type { ObjectModelInputType } from "@/types/common/objectModel";
 import { TestFormType } from "@/types/common/test";
 import type { ProfileType } from "@/types/common/user";

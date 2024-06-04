@@ -3,18 +3,17 @@ import type { AxiosPromise } from 'axios';
 import { httpService } from '@/services';
 import type {
   AddApiType,
-  CompleteTestApiType,
   DeleteApiType,
   GetAllApiType,
   GetByApiType,
   TestApiType,
   UpdateApiType,
 } from '@/types/common/api';
-import { TestFormType, TestType } from '@/types/common/test';
+import { TestType } from '@/types/common/test';
 
 export const createTest = async (
   accessToken: string,
-  test: TestFormType,
+  test: TestType,
 ): AxiosPromise<AddApiType<TestApiType>> => {
   return httpService.post('/tests', test, {
     headers: {
@@ -36,7 +35,7 @@ export const getTests = async (
 export const getTestById = async (
   accessToken: string,
   id: string,
-): AxiosPromise<GetByApiType<CompleteTestApiType>> => {
+): AxiosPromise<GetByApiType<TestApiType>> => {
   return httpService.get(`/tests/id/${id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -47,7 +46,7 @@ export const getTestById = async (
 export const updateTest = async (
   accessToken: string,
   id: string,
-  test: Partial<TestType>,
+  test: Partial<TestApiType>,
 ): AxiosPromise<UpdateApiType<TestApiType>> => {
   return httpService.patch(`/tests/id/${id}`, test, {
     headers: {

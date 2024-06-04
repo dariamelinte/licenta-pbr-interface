@@ -2,7 +2,7 @@ import type { StateCreator } from "zustand";
 
 import { PlaygroundStoreType } from "@/types/store/playground";
 import { getCameraPerspective } from "@/constants/constants";
-import { ObjectInstanceApiType } from "@/types/common/objectInstance";
+import { ObjectInstanceType } from "@/types/common/objectInstance";
 import { toast } from "react-toastify";
 
 export const playgroundSlice: StateCreator<
@@ -13,7 +13,7 @@ export const playgroundSlice: StateCreator<
 > = (set, get) => ({
   playground: {
     focusedAxe: "ox",
-    objectInstances: {},
+    instances: {},
     cameraPerspective: getCameraPerspective("ox"),
     scale: 1,
     linkages: [],
@@ -24,7 +24,7 @@ export const playgroundSlice: StateCreator<
           ...get().playground,
           focusedAxe,
           linkages: [...get().playground.linkages],
-          objectInstances: {...get().playground.objectInstances}
+          instances: { ...get().playground.instances },
         },
       }),
 
@@ -48,11 +48,11 @@ export const playgroundSlice: StateCreator<
       set({
         playground: {
           ...get().playground,
-          objectInstances: {
-            ...get().playground.objectInstances,
+          instances: {
+            ...get().playground.instances,
             [id]: {
-              _id: id,
-              _id_object_model: objectModelId,
+              uuid: id,
+              object_model: objectModelId,
               position: {
                 ox: { x: 0, y: 0 },
                 oy: { x: 0, y: 0 },
@@ -69,14 +69,10 @@ export const playgroundSlice: StateCreator<
         linkages[linkages.length - 1] || {};
 
       if ((first_connection && second_connection) || linkages.length === 0) {
-        console.log("first case");
         set({
           playground: {
             ...get().playground,
-            linkages: [
-              ...linkages,
-              { first_connection: connectionPoint },
-            ],
+            linkages: [...linkages, { first_connection: connectionPoint }],
           },
         });
         return;
@@ -87,18 +83,14 @@ export const playgroundSlice: StateCreator<
         second_connection: connectionPoint,
       };
 
-      console.log({ linkages });
-
       // it means only one connection point is added
       if (first_connection?.instance === connectionPoint.instance) {
         linkages.pop();
         set({ playground: { ...get().playground, linkages } });
-        console.log("Cannot link an object to itself");
         toast.error("Cannot link an object to itself");
         return;
       }
 
-      console.log("last case");
       set({ playground: { ...get().playground, linkages } });
     },
 
@@ -106,17 +98,52 @@ export const playgroundSlice: StateCreator<
       set({
         playground: {
           ...get().playground,
-          objectInstances: {
-            ...get().playground.objectInstances,
+          instances: {
+            ...get().playground.instances,
             [id]: {
-              ...(get().playground.objectInstances[
-                id
-              ] as ObjectInstanceApiType),
+              ...(get().playground.instances[id] as ObjectInstanceType),
               position,
             },
           },
         },
       });
     },
+
+    removeLinkage: (first, second) => {
+      const linkages = [...get().playground.linkages];
+
+      const updatedLinkages = linkages.filter(
+        ({ first_connection: f, second_connection: s }) =>
+          (f?.instance === first && s?.instance === second) ||
+          (f?.instance === second && s?.instance === second)
+      );
+
+      set({
+        playground: {
+          ...get().playground,
+          linkages: updatedLinkages,
+        },
+      });
+    },
+
+    resetPlayground: () =>
+      set({
+        playground: {
+          ...get().playground,
+          focusedAxe: "ox",
+          instances: {},
+          cameraPerspective: getCameraPerspective("ox"),
+          scale: 1,
+          linkages: [],
+        },
+      }),
+
+    loadPlayground: (board) =>
+      set({
+        playground: {
+          ...get().playground,
+          ...board,
+        },
+      }),
   },
 });

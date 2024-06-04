@@ -10,7 +10,7 @@ type LinkageProps = {
 export const Linkage: React.FC<LinkageProps> = ({
   linkage: { first_connection, second_connection },
 }) => {
-  const { focusedAxe } = useStore((state) => state.playground);
+  const { focusedAxe, removeLinkage } = useStore((state) => state.playground);
 
   const handleShowArrow = () => {
     const visiblePoints = axesPoints[focusedAxe];
@@ -22,9 +22,14 @@ export const Linkage: React.FC<LinkageProps> = ({
       (point) => point === second_connection?.boxPoint
     );
 
-    console.log({ first, second, first_connection, second_connection, focusedAxe })
-
     return !!first && !!second;
+  };
+
+  const handleClickArrow = () => {
+    removeLinkage(
+      first_connection?.instance as string,
+      second_connection?.instance as string
+    );
   };
 
   if (!first_connection?.uuid || !second_connection?.uuid) {
@@ -33,11 +38,15 @@ export const Linkage: React.FC<LinkageProps> = ({
 
   return (
     <Xarrow
-      start={first_connection.uuid}
-      end={second_connection.uuid}
+      start={`${first_connection.instance}-${first_connection.boxPoint}`}
+      end={`${second_connection.instance}-${second_connection.boxPoint}`}
       showHead={false}
       showXarrow={handleShowArrow()}
       color="#2b6cb0"
+      passProps={{
+        cursor: "pointer",
+        onClick: handleClickArrow,
+      }}
     />
   );
 };

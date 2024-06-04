@@ -15,7 +15,7 @@ export const TestInformation: React.FC<TestInformationProps> = () => {
     <CustomDialog>
       <Dialog.Panel className={styles.panel}>
         <Dialog.Title as="h3" className={styles.title}>
-          Complete test information
+          Test information
         </Dialog.Title>
 
         <TestInformationForm />
