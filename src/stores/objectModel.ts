@@ -53,7 +53,7 @@ export const objectModelSlice: StateCreator<
         get().objectModel.setLoading(false);
       }
     },
-    
+
     getObjectModelsByCategory: async (category: string) => {
       try {
         get().objectModel.setLoading(true);
@@ -73,7 +73,6 @@ export const objectModelSlice: StateCreator<
         return null;
       }
     },
-
 
     deleteObjectModel: async (token: string, id: string) => {
       try {

@@ -9,7 +9,7 @@ import type {
   TestApiType,
   UpdateApiType,
 } from '@/types/common/api';
-import { TestType } from '@/types/common/test';
+import type { TestType } from '@/types/common/test';
 
 export const createTest = async (
   accessToken: string,

@@ -1,5 +1,5 @@
-import { ObjectModelApiType } from "./api";
-import { CoordinatesObjectType, PointType } from "./playground";
+import type { ObjectModelApiType } from './api';
+import type { CoordinatesObjectType, PointType } from './playground';
 
 export type ObjectInstanceType = {
   uuid: string;

@@ -1,8 +1,9 @@
-import { VerticalMenuPage } from "@/layouts";
-import { TestForm } from "@/components/forms";
-import useStore from "@/stores";
-import { toast } from "react-toastify";
-import { TestInfoType } from "@/types/common/test";
+import { toast } from 'react-toastify';
+
+import { TestForm } from '@/components/forms';
+import { VerticalMenuPage } from '@/layouts';
+import useStore from '@/stores';
+import type { TestInfoType } from '@/types/common/test';
 
 const Index = () => {
   const { token } = useStore((state) => state.auth);
@@ -11,20 +12,20 @@ const Index = () => {
 
   const handleSubmit = (values: TestInfoType) => {
     if (!(Object.keys(instances).length && linkages.length)) {
-      toast.error('You need to create a board in order to create a test!')
+      toast.error('You need to create a board in order to create a test!');
       return;
     }
 
-    createTest((token as string), {
+    createTest(token as string, {
       ...values,
-      instances: instances,
+      instances,
       linkages,
-      scale
-    })
-  }
+      scale,
+    });
+  };
 
   return (
-    <VerticalMenuPage className="max-w-[100vw] max-h-[100vh] overflow-hidden">
+    <VerticalMenuPage className="max-h-screen max-w-[100vw] overflow-hidden">
       <TestForm onSubmit={handleSubmit} />
     </VerticalMenuPage>
   );

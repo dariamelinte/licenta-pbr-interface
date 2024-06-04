@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import * as THREE from "three";
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
 
-import { ModelLoader } from "../ModelLoader";
-import useStore from "@/stores";
+import useStore from '@/stores';
+
+import { ModelLoader } from '../ModelLoader';
 
 type ModelViewProps = {
   model: string;
@@ -34,7 +35,7 @@ export const ModelView: React.FC<ModelViewProps> = ({
     for (let i = 0; i < len; i++) {
       bytes[i] = binaryString.charCodeAt(i);
     }
-    const blob = new Blob([bytes], { type: "application/octet-stream" });
+    const blob = new Blob([bytes], { type: 'application/octet-stream' });
     const url = URL.createObjectURL(blob);
     setModelUrl(url);
 
@@ -65,13 +66,13 @@ export const ModelView: React.FC<ModelViewProps> = ({
 
         // Set camera position based on the focused axis
         switch (focusedAxe) {
-          case "ox":
+          case 'ox':
             camera.position.set(-distance, center.y, center.z);
             break;
-          case "oy":
+          case 'oy':
             camera.position.set(center.x, center.y, -distance);
             break;
-          case "oz":
+          case 'oz':
             camera.position.set(center.x, distance, center.z);
             break;
         }
@@ -84,7 +85,9 @@ export const ModelView: React.FC<ModelViewProps> = ({
   }, [boundingBox, focusedAxe]);
 
   return (
-    <Canvas style={{ width: width || '100%', height: height || '100%', padding: 15 }}>
+    <Canvas
+      style={{ width: width || '100%', height: height || '100%', padding: 15 }}
+    >
       <ambientLight intensity={2} />
       <pointLight position={[10, 10, 10]} intensity={4} />
       <directionalLight position={[-5, 5, 5]} intensity={4} />
@@ -104,10 +107,7 @@ export const ModelView: React.FC<ModelViewProps> = ({
         enablePan={!disableControls}
         enabled={!disableControls}
       />
-      <PerspectiveCamera
-        makeDefault
-        ref={cameraRef}
-      />
+      <PerspectiveCamera makeDefault ref={cameraRef} />
     </Canvas>
   );
 };

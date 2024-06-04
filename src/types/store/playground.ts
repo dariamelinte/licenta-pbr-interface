@@ -1,9 +1,12 @@
-import { coordinatesAxes } from "@/constants/constants";
-import { ObjectInstanceType } from "@/types/common/objectInstance";
-import { CoordinatesObjectType, PointType } from "@/types/common/playground";
-import { ConnectionPointType } from "@/types/common/connectionPoint";
-import { LinkageType } from "@/types/common/linkage";
-import { TestBoardType } from "@/types/common/test";
+import type { coordinatesAxes } from '@/constants/constants';
+import type { ConnectionPointType } from '@/types/common/connectionPoint';
+import type { LinkageType } from '@/types/common/linkage';
+import type { ObjectInstanceType } from '@/types/common/objectInstance';
+import type {
+  CoordinatesObjectType,
+  PointType,
+} from '@/types/common/playground';
+import type { TestBoardType } from '@/types/common/test';
 
 export type PlaygroundStoreType = {
   playground: {
@@ -18,7 +21,10 @@ export type PlaygroundStoreType = {
     setCameraPerspective: (cameraPerspective: number[]) => void;
     addObjectInstance: (id: string, objectModelId: string) => void;
     addConnectionPoint: (connectionPoint: ConnectionPointType) => void;
-    changeObjectInstancePosition: (id: string, position: CoordinatesObjectType<PointType>) => void;
+    changeObjectInstancePosition: (
+      id: string,
+      position: CoordinatesObjectType<PointType>,
+    ) => void;
     removeLinkage: (first: string, second: string) => void;
     resetPlayground: () => void;
     loadPlayground: (board: TestBoardType) => void;

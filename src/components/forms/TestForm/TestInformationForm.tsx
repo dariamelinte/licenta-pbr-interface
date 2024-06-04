@@ -1,12 +1,12 @@
-import cx from "classnames";
+import cx from 'classnames';
+import { useEffect, useMemo } from 'react';
 
-import { Form as CommonForm } from "@/components/common";
-import { testStatuses } from "@/constants/constants";
-import { testLabels } from "@/constants/labels";
+import { Form as CommonForm } from '@/components/common';
+import { testStatuses } from '@/constants/constants';
+import { testLabels } from '@/constants/labels';
+import useStore from '@/stores';
 
-import styles from "../Form.module.css";
-import useStore from "@/stores";
-import { useEffect, useMemo } from "react";
+import styles from '../Form.module.css';
 
 type TestFormProps = {};
 
@@ -19,7 +19,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
       { value: undefined, name: testLabels.group },
       ...groups.map((group) => ({ value: group._id, name: group.name })),
     ],
-    [groups]
+    [groups],
   );
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
           name="max_score"
           label={testLabels.max_score}
           placeholder={testLabels.max_score}
-          className={cx(styles.field, "ml-3 md:0")}
+          className={cx(styles.field, 'ml-3 md:0')}
           type="number"
         />
       </div>
@@ -89,7 +89,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
           name="start_date"
           label={testLabels.start_date}
           placeholder={testLabels.start_date}
-          className={cx(styles.field, "mr-3 md:0")}
+          className={cx(styles.field, 'mr-3 md:0')}
           type="date"
         />
         <CommonForm.InputField

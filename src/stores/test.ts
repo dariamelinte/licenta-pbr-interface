@@ -1,13 +1,13 @@
-import { toast } from "react-toastify";
-import type { StateCreator } from "zustand";
+import { toast } from 'react-toastify';
+import type { StateCreator } from 'zustand';
 
-import { ERROR_MESSAGE } from "@/constants/messages";
-import * as service from "@/services/api/test";
-import { TestStoreType } from "@/types/store/test";
+import { ERROR_MESSAGE } from '@/constants/messages';
+import * as service from '@/services/api/test';
+import type { TestStoreType } from '@/types/store/test';
 
 export const testSlice: StateCreator<TestStoreType, [], [], TestStoreType> = (
   set,
-  get
+  get,
 ) => ({
   test: {
     tests: [],
@@ -123,7 +123,7 @@ export const testSlice: StateCreator<TestStoreType, [], [], TestStoreType> = (
         const { data } = await service.updateTest(
           accessToken,
           _id as string,
-          rest
+          rest,
         );
         if (!data.success) throw Error(data.error);
 

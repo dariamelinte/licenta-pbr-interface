@@ -1,12 +1,13 @@
-import { VerticalMenuPage } from "@/layouts";
-import { TestForm } from "@/components/forms";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
-import useStore from "@/stores";
-import { Loading } from "@/components/common";
-import { toast } from "react-toastify";
-import { TestInfoType } from "@/types/common/test";
-import { timestampToDate } from "@/utils/timestampToDate";
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { Loading } from '@/components/common';
+import { TestForm } from '@/components/forms';
+import { VerticalMenuPage } from '@/layouts';
+import useStore from '@/stores';
+import type { TestInfoType } from '@/types/common/test';
+import { timestampToDate } from '@/utils/timestampToDate';
 
 const Index = () => {
   const router = useRouter();
@@ -15,13 +16,13 @@ const Index = () => {
   const { token, user } = useStore((state) => state.auth);
   const { getTestById, loading, updateTest } = useStore((state) => state.test);
   const { instances, linkages, scale, loadPlayground } = useStore(
-    (state) => state.playground
+    (state) => state.playground,
   );
 
   const handleTest = useCallback(async () => {
     const result = await getTestById(
       token as string,
-      router.query.id as string
+      router.query.id as string,
     );
 
     if (!result) return;
@@ -35,7 +36,7 @@ const Index = () => {
       due_date: timestampToDate(Number(due_date)),
     });
     loadPlayground({ linkages, instances, scale });
-  }, [getTestById, token, router.query.id, setTest]);
+  }, [getTestById, token, router.query.id, setTest, loadPlayground]);
 
   useEffect(() => {
     handleTest();
@@ -51,16 +52,16 @@ const Index = () => {
 
   const handleSubmit = (values: TestInfoType) => {
     if (!(Object.keys(instances).length && linkages.length)) {
-      toast.error("You need to have a board in order to update a test!");
+      toast.error('You need to have a board in order to update a test!');
       return;
     }
 
-    if (user.role === "student") {
+    if (user.role === 'student') {
       // TODO: call for submitting the results
     } else {
-      updateTest((token as string), {
+      updateTest(token as string, {
         ...values,
-        instances: instances,
+        instances,
         linkages,
         scale,
       });
@@ -68,7 +69,7 @@ const Index = () => {
   };
 
   return (
-    <VerticalMenuPage className="max-w-[100vw] max-h-[100vh] overflow-hidden">
+    <VerticalMenuPage className="max-h-screen max-w-[100vw] overflow-hidden">
       <TestForm onSubmit={handleSubmit} initialTest={test} />
     </VerticalMenuPage>
   );

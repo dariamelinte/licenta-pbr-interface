@@ -1,5 +1,5 @@
+import type { TestApiType } from '@/types/common/api';
 import type { TestType } from '@/types/common/test';
-import { TestApiType } from '@/types/common/api';
 
 export type TestStoreType = {
   test: {

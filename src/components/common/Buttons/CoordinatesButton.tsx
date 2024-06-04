@@ -1,7 +1,7 @@
-import cx from "classnames";
+import cx from 'classnames';
 
-import { coordinatesAxes } from "@/constants/constants";
-import useStore from "@/stores";
+import { coordinatesAxes } from '@/constants/constants';
+import useStore from '@/stores';
 
 export const CoordinatesButton: React.FC = () => {
   const { focusedAxe, setFocusedAxe } = useStore((state) => state.playground);
@@ -12,13 +12,13 @@ export const CoordinatesButton: React.FC = () => {
         return (
           <button
             className={cx(
-              "text-base font-medium text-blue-800 hover:bg-opacity-75 focus:outline-none px-3 py-1",
+              'text-base font-medium text-blue-800 hover:bg-opacity-75 focus:outline-none px-3 py-1',
               {
-                "border-x-2 border-blue-200": axe === "oz",
-                "bg-blue-200": focusedAxe === axe,
-                "rounded-l-xl": axe === "ox",
-                "rounded-r-xl": axe === "oy",
-              }
+                'border-x-2 border-blue-200': axe === 'oz',
+                'bg-blue-200': focusedAxe === axe,
+                'rounded-l-xl': axe === 'ox',
+                'rounded-r-xl': axe === 'oy',
+              },
             )}
             onClick={() => {
               setFocusedAxe(axe as keyof typeof coordinatesAxes);

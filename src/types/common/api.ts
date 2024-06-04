@@ -1,7 +1,7 @@
 import type { CategoryType } from './category';
 import type { CompleteGroupType, GroupType } from './group';
 import type { ObjectModelInputType } from './objectModel';
-import { TestType } from './test';
+import type { TestType } from './test';
 
 export type OidType = { _id: string };
 

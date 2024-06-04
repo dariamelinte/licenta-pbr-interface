@@ -1,14 +1,11 @@
 import { Dialog } from '@headlessui/react';
 
 import { TestInformationForm } from '@/components/forms/TestForm/TestInformationForm';
-import { TestInfoType } from '@/types/common/test';
 
 import { CustomDialog } from '../Dialog';
-
 import styles from './TestInformation.module.css';
 
-type TestInformationProps = {
-};
+type TestInformationProps = {};
 
 export const TestInformation: React.FC<TestInformationProps> = () => {
   return (

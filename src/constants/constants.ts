@@ -1,17 +1,17 @@
-import { CoordinatesObjectType } from "@/types/common/playground";
+import type { CoordinatesObjectType } from '@/types/common/playground';
 
-export const modelEntensions = [".glb", ".gltf", ".fbx", ".obj", ".stl"];
+export const modelEntensions = ['.glb', '.gltf', '.fbx', '.obj', '.stl'];
 
 export const coordinatesAxes: CoordinatesObjectType<string> = {
-  ox: "Side",
-  oz: "Top",
-  oy: "Front",
+  ox: 'Side',
+  oz: 'Top',
+  oy: 'Front',
 };
 
 export const canvasCoordinatesAxes: CoordinatesObjectType<string> = {
-  ox: "side",
-  oy: "front",
-  oz: "top",
+  ox: 'side',
+  oy: 'front',
+  oz: 'top',
 };
 
 export const getCameraPerspective = (axe: keyof CoordinatesObjectType<any>) => {
@@ -27,8 +27,8 @@ export const getCameraPerspective = (axe: keyof CoordinatesObjectType<any>) => {
 };
 
 export const testStatuses = {
-  wip: "Work in progress",
-  posted: "Posted",
+  wip: 'Work in progress',
+  posted: 'Posted',
 };
 
 export const objectModelSizes = {
@@ -48,29 +48,30 @@ export const boxPoints: CoordinatesObjectType<number>[] = [
   { ox: 5, oy: 13, oz: 1 },
 ];
 
-export const pointPercentages: {[key: number]: CoordinatesObjectType<number>} = {
-  1: {ox: 0, oy: 0, oz: 0},
-  2: {ox: 50, oy: 0, oz: 0},
-  3: {ox: 100, oy: 0, oz: 0},
-  4: {ox: 100, oy: 0, oz: 50},
-  5: {ox: 100, oy: 0, oz: 100},
-  6: {ox: 50, oy: 0, oz: 100},
-  7: {ox: 0, oy: 0, oz: 100},
-  8: {ox: 0, oy: 0, oz: 50},
-  9: {ox: 0, oy: 100, oz: 0},
-  10: {ox: 0, oy: 100, oz: 0},
-  11: {ox: 100, oy: 100, oz: 0},
-  12: {ox: 100, oy: 100, oz: 50},
-  13: {ox: 100, oy: 100, oz: 100},
+export const pointPercentages: {
+  [key: number]: CoordinatesObjectType<number>;
+} = {
+  1: { ox: 0, oy: 0, oz: 0 },
+  2: { ox: 50, oy: 0, oz: 0 },
+  3: { ox: 100, oy: 0, oz: 0 },
+  4: { ox: 100, oy: 0, oz: 50 },
+  5: { ox: 100, oy: 0, oz: 100 },
+  6: { ox: 50, oy: 0, oz: 100 },
+  7: { ox: 0, oy: 0, oz: 100 },
+  8: { ox: 0, oy: 0, oz: 50 },
+  9: { ox: 0, oy: 100, oz: 0 },
+  10: { ox: 0, oy: 100, oz: 0 },
+  11: { ox: 100, oy: 100, oz: 0 },
+  12: { ox: 100, oy: 100, oz: 50 },
+  13: { ox: 100, oy: 100, oz: 100 },
 
-  17: {ox: 0, oy: 50, oz: 0},
-  18: {ox: 100, oy: 50, oz: 0},
-  19: {ox: 100, oy: 50, oz: 100},
-
+  17: { ox: 0, oy: 50, oz: 0 },
+  18: { ox: 100, oy: 50, oz: 0 },
+  19: { ox: 100, oy: 50, oz: 100 },
 };
 
 export const axesPoints: CoordinatesObjectType<number[]> = {
   ox: [1, 2, 3, 4, 5, 6, 7, 8],
   oy: [3, 4, 5, 11, 12, 13, 18, 19],
-  oz: [1, 2, 3, 9, 10, 11, 17, 18]
-}
+  oz: [1, 2, 3, 9, 10, 11, 17, 18],
+};

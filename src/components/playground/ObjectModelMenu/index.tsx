@@ -1,14 +1,14 @@
-import { Disclosure, Transition } from "@headlessui/react";
-import { useEffect, useMemo, useState } from "react";
-import cx from "classnames";
+import { Disclosure, Transition } from '@headlessui/react';
+import cx from 'classnames';
+import { useEffect, useMemo, useState } from 'react';
 
-import { Form, Loading } from "@/components/common";
-import useStore from "@/stores";
-import { ChevronDown } from "@/components/icons";
-import { objectModelLabels } from "@/constants/labels";
-import { AddModelView } from "@/components/playground";
+import { Form, Loading } from '@/components/common';
+import { ChevronDown } from '@/components/icons';
+import { AddModelView } from '@/components/playground';
+import { objectModelLabels } from '@/constants/labels';
+import useStore from '@/stores';
 
-import styles from "./ObjectModelMenu.module.css";
+import styles from './ObjectModelMenu.module.css';
 
 type ObjectModelMenuType = {
   onAddObjectModel: (objectModelId: string) => void;
@@ -29,7 +29,7 @@ export const ObjectModelMenu: React.FC<ObjectModelMenuType> = ({
       { value: undefined, name: objectModelLabels.category },
       ...categories.map(({ _id, name }) => ({ value: _id, name })),
     ],
-    [categories]
+    [categories],
   );
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export const ObjectModelMenu: React.FC<ObjectModelMenuType> = ({
               <p>3D Models</p>
               <ChevronDown
                 className={cx(styles.chevron, {
-                  "rotate-180 transform": open,
+                  'rotate-180 transform': open,
                 })}
               />
             </div>
@@ -77,7 +77,7 @@ export const ObjectModelMenu: React.FC<ObjectModelMenuType> = ({
 
                     if (e.target.value) {
                       const result = await getObjectModelsByCategory(
-                        e.target.value
+                        e.target.value,
                       );
 
                       setModels(result || objectModels);
@@ -98,7 +98,7 @@ export const ObjectModelMenu: React.FC<ObjectModelMenuType> = ({
                     </div>
                   ))
                 ) : (
-                  <div className="w-full text-center text-sm py-1">
+                  <div className="w-full py-1 text-center text-sm">
                     No results
                   </div>
                 )}

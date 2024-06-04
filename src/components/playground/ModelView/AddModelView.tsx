@@ -1,16 +1,19 @@
-import { ObjectModelApiType } from "@/types/common/api";
-import { Button } from "@/components/common";
-import { Plus } from "@/components/icons";
+import { Button } from '@/components/common';
+import { Plus } from '@/components/icons';
+import type { ObjectModelApiType } from '@/types/common/api';
 
-import { ModelView } from "./ModelView";
-import styles from "./ModelView.module.css";
+import { ModelView } from './ModelView';
+import styles from './ModelView.module.css';
 
 type AddModelViewProps = {
   objectModel: ObjectModelApiType;
   addObjectInstance: (objectModelId: string) => void;
 };
 
-export const AddModelView: React.FC<AddModelViewProps> = ({ objectModel, addObjectInstance }) => {
+export const AddModelView: React.FC<AddModelViewProps> = ({
+  objectModel,
+  addObjectInstance,
+}) => {
   return (
     <>
       <div className={styles.info}>
@@ -22,7 +25,10 @@ export const AddModelView: React.FC<AddModelViewProps> = ({ objectModel, addObje
         />
       </div>
       <div className="max-h-[300px]">
-        <ModelView model={objectModel.model} defaultScale={[0.08, 0.08, 0.08]} />
+        <ModelView
+          model={objectModel.model}
+          defaultScale={[0.08, 0.08, 0.08]}
+        />
       </div>
     </>
   );

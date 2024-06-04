@@ -1,7 +1,8 @@
-import { axesPoints } from "@/constants/constants";
-import useStore from "@/stores";
-import { LinkageType } from "@/types/common/linkage";
-import Xarrow from "react-xarrows";
+import Xarrow from 'react-xarrows';
+
+import { axesPoints } from '@/constants/constants';
+import useStore from '@/stores';
+import type { LinkageType } from '@/types/common/linkage';
 
 type LinkageProps = {
   linkage: LinkageType;
@@ -16,10 +17,10 @@ export const Linkage: React.FC<LinkageProps> = ({
     const visiblePoints = axesPoints[focusedAxe];
 
     const first = visiblePoints.find(
-      (point) => point === first_connection?.boxPoint
+      (point) => point === first_connection?.boxPoint,
     );
     const second = visiblePoints.find(
-      (point) => point === second_connection?.boxPoint
+      (point) => point === second_connection?.boxPoint,
     );
 
     return !!first && !!second;
@@ -28,7 +29,7 @@ export const Linkage: React.FC<LinkageProps> = ({
   const handleClickArrow = () => {
     removeLinkage(
       first_connection?.instance as string,
-      second_connection?.instance as string
+      second_connection?.instance as string,
     );
   };
 
@@ -44,7 +45,7 @@ export const Linkage: React.FC<LinkageProps> = ({
       showXarrow={handleShowArrow()}
       color="#2b6cb0"
       passProps={{
-        cursor: "pointer",
+        cursor: 'pointer',
         onClick: handleClickArrow,
       }}
     />

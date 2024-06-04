@@ -1,4 +1,4 @@
-import { modelEntensions } from "./constants";
+import { modelEntensions } from './constants';
 
 export const categoryLabels = {
   name: 'Name',
@@ -8,8 +8,8 @@ export const objectModelLabels = {
   name: 'Name',
   description: 'Description',
   category: 'Category',
-  model: `Upload model (${modelEntensions.join(", ")})`,
-  size: 'Size'
+  model: `Upload model (${modelEntensions.join(', ')})`,
+  size: 'Size',
 };
 
 export const authLabels = {
@@ -40,5 +40,5 @@ export const testLabels = {
   start_date: 'Start date',
   due_date: 'Due date',
   group: 'Group',
-  instances: 'Instances'
-}
+  instances: 'Instances',
+};

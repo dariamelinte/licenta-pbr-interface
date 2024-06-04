@@ -1,21 +1,22 @@
-import cx from "classnames";
-import { useEffect, useMemo, useState } from "react";
+import cx from 'classnames';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   boxPoints,
   objectModelSizes,
   pointPercentages,
-} from "@/constants/constants";
-import { ObjectModelApiType } from "@/types/common/api";
-import useStore from "@/stores";
-import { CoordinatesObjectType, PointType } from "@/types/common/playground";
+} from '@/constants/constants';
+import useStore from '@/stores';
+import type { ObjectModelApiType } from '@/types/common/api';
+import type { ConnectionPointType } from '@/types/common/connectionPoint';
+import type {
+  CoordinatesObjectType,
+  PointType,
+} from '@/types/common/playground';
 
-import { Piece } from "../Piece";
-import { ModelView } from "./ModelView";
-
-import styles from "./ModelView.module.css";
-import { ConnectionPointType } from "@/types/common/connectionPoint";
-import { useXarrow } from "react-xarrows";
+import { Piece } from '../Piece';
+import { ModelView } from './ModelView';
+import styles from './ModelView.module.css';
 
 type PlaygroundModelViewProps = {
   objectInstanceId: string;
@@ -39,12 +40,12 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
 
   const objectInstance = useMemo(
     () => instances[objectInstanceId],
-    [objectInstanceId, instances]
+    [objectInstanceId, instances],
   );
 
   const objectSize = useMemo(
     () => objectModelSizes[objectModel.size] * scale,
-    [objectModel.size, scale]
+    [objectModel.size, scale],
   );
 
   useEffect(() => {
@@ -66,10 +67,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
       ids.push(`${objectInstanceId}-${boxPoints[i]?.[focusedAxe]}`);
     }
     setButtonIds(ids);
-  }, [
-    objectInstanceId,
-    focusedAxe,
-  ]);
+  }, [objectInstanceId, focusedAxe]);
 
   const handlePieceStop = (oldPoint: PointType, newPoint: PointType) => {
     if (!objectInstance?.position) return;
@@ -80,7 +78,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     };
 
     switch (focusedAxe) {
-      case "ox":
+      case 'ox':
         changeObjectInstancePosition(objectInstanceId, {
           ox: newPoint,
           oy: {
@@ -93,7 +91,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
           },
         });
         break;
-      case "oy":
+      case 'oy':
         changeObjectInstancePosition(objectInstanceId, {
           ox: {
             x: objectInstance.position.ox.x,
@@ -106,7 +104,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
           },
         });
         break;
-      case "oz":
+      case 'oz':
         changeObjectInstancePosition(objectInstanceId, {
           ox: {
             x: objectInstance.position.ox.x - delta.y,
@@ -155,59 +153,59 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
           height: objectSize,
         }}
       >
-        <div className="w-full h-full relative">
+        <div className="relative size-full">
           <button
-            className={cx(styles.linkButton, "-top-3 -left-3")}
+            className={cx(styles.linkButton, '-top-3 -left-3')}
             id={buttonIds[0]}
             onClick={() => handlePointClick(0)}
-          ></button>
+          />
           <button
             className={cx(
               styles.linkButton,
-              "-top-3 left-1/2 transform -translate-x-1/2"
+              '-top-3 left-1/2 transform -translate-x-1/2',
             )}
             id={buttonIds[1]}
             onClick={() => handlePointClick(1)}
-          ></button>
+          />
           <button
-            className={cx(styles.linkButton, "-top-3 -right-3")}
+            className={cx(styles.linkButton, '-top-3 -right-3')}
             id={buttonIds[2]}
             onClick={() => handlePointClick(2)}
-          ></button>
+          />
           <button
             className={cx(
               styles.linkButton,
-              "top-1/2 -left-3 transform -translate-y-1/2"
+              'top-1/2 -left-3 transform -translate-y-1/2',
             )}
             id={buttonIds[3]}
             onClick={() => handlePointClick(3)}
-          ></button>
+          />
           <button
             className={cx(
               styles.linkButton,
-              "top-1/2 -right-3 transform -translate-y-1/2"
+              'top-1/2 -right-3 transform -translate-y-1/2',
             )}
             id={buttonIds[4]}
             onClick={() => handlePointClick(4)}
-          ></button>
+          />
           <button
-            className={cx(styles.linkButton, "-bottom-3 -left-3")}
+            className={cx(styles.linkButton, '-bottom-3 -left-3')}
             onClick={() => handlePointClick(5)}
             id={buttonIds[5]}
-          ></button>
+          />
           <button
             className={cx(
               styles.linkButton,
-              "-bottom-3 left-1/2 transform -translate-x-1/2"
+              '-bottom-3 left-1/2 transform -translate-x-1/2',
             )}
             id={buttonIds[6]}
             onClick={() => handlePointClick(6)}
-          ></button>
+          />
           <button
-            className={cx(styles.linkButton, "-bottom-3 -right-3")}
+            className={cx(styles.linkButton, '-bottom-3 -right-3')}
             id={buttonIds[7]}
             onClick={() => handlePointClick(7)}
-          ></button>
+          />
 
           <ModelView
             model={objectModel.model}

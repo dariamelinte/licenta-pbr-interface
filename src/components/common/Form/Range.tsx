@@ -1,6 +1,7 @@
-import { Input, InputFieldProps } from "./Input";
+import type { InputFieldProps } from './Input';
+import { Input } from './Input';
 
-type RangeProps = Omit<InputFieldProps, "placeholder" | "name"> & {
+type RangeProps = Omit<InputFieldProps, 'placeholder' | 'name'> & {
   min: number;
   max: number;
 };
@@ -8,7 +9,7 @@ type RangeProps = Omit<InputFieldProps, "placeholder" | "name"> & {
 export const Range: React.FC<RangeProps> = ({ min, max, ...rest }) => {
   return (
     <Input
-      className="w-full h-2 bg-blue-400 rounded-lg appearance-none cursor-pointer !p-0"
+      className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-blue-400 !p-0"
       type="range"
       min={min}
       max={max}

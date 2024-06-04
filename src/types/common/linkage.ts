@@ -1,6 +1,6 @@
-import { ConnectionPointType } from "./connectionPoint";
+import type { ConnectionPointType } from './connectionPoint';
 
 export type LinkageType = {
-    first_connection?: ConnectionPointType;
-    second_connection?: ConnectionPointType;
+  first_connection?: ConnectionPointType;
+  second_connection?: ConnectionPointType;
 };
