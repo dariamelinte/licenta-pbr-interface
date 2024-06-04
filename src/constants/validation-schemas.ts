@@ -27,6 +27,7 @@ export const objectModelSchema = yup.object().shape({
   description: yup.string(),
   category: yup.string().required(),
   model: yup.mixed().nullable(),
+  size: yup.string().required(),
 });
 
 export const registerSchema = yup.object().shape({
@@ -67,4 +68,14 @@ export const groupSchema = yup.object().shape({
 
 export const joinGroupSchema = yup.object().shape({
   code: yup.string().required(),
+});
+
+export const testSchema = yup.object().shape({
+  status: yup.string().required(),
+
+  name: yup.string().required(),
+  description: yup.string(),
+  min_score: yup.number().required(),
+  max_score: yup.number().required(),
+  group: yup.string().required(),
 });

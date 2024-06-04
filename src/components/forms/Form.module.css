@@ -7,3 +7,16 @@
 .field, .button {
     @apply flex-1 w-full my-2;
 }
+
+.icon {
+    @apply h-[18px] text-blue-700;
+}
+
+.disclosureButton {
+    @apply flex w-full items-center justify-between;
+    @apply py-1 px-3 bg-slate-100 rounded-xl shadow;
+}
+
+.disclosurePanel {
+    @apply my-1 w-full;
+}

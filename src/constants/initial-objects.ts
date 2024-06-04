@@ -6,6 +6,7 @@ import type {
 import type { CategoryType } from '@/types/common/category';
 import type { GroupFormType, JoinGroupFormType } from '@/types/common/group';
 import type { ObjectModelInputType } from '@/types/common/objectModel';
+import type { TestFormType } from '@/types/common/test';
 import type { ProfileType } from '@/types/common/user';
 
 export const INITIAL_CATEGORY: CategoryType = {
@@ -16,6 +17,7 @@ export const INITIAL_OBJECT_MODEL: ObjectModelInputType = {
   name: '',
   category: '',
   model: null,
+  size: 'big',
 };
 
 export const INITIAL_LOGIN_FORM: LoginFormType = {
@@ -48,4 +50,18 @@ export const INITIAL_GROUP = (code: string): GroupFormType => ({
 
 export const INITIAL_JOIN_GROUP: JoinGroupFormType = {
   code: '',
+};
+
+export const INITIAL_TEST_FORM: TestFormType = {
+  name: '',
+  description: '',
+  status: 'wip',
+
+  min_score: 50,
+  max_score: 100,
+
+  start_date: new Date().getTime(),
+  due_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).getTime(),
+
+  group: '',
 };

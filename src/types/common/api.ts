@@ -1,6 +1,7 @@
 import type { CategoryType } from './category';
 import type { CompleteGroupType, GroupType } from './group';
 import type { ObjectModelInputType } from './objectModel';
+import type { TestType } from './test';
 
 export type OidType = { _id: string };
 
@@ -26,10 +27,7 @@ export type CategoryApiType = CategoryType & OidType;
 
 // object model
 export type ModelType = {
-  model: {
-    object_id: string;
-    url: string;
-  };
+  model: string;
 };
 
 export type ObjectModelApiType = Omit<
@@ -57,3 +55,6 @@ export type LoginApiType = ApiResponseType & {
 export type GroupApiType = GroupType & OidType;
 
 export type CompleteGroupApiType = CompleteGroupType & OidType;
+
+// test
+export type TestApiType = TestType & OidType;

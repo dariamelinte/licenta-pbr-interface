@@ -4,6 +4,7 @@ export * from './FileUpload';
 export * from './Input';
 export * from './InputWithDelete';
 export * from './Label';
+export * from './Range';
 export * from './Select';
 export * from './SelectWithDelete';
 export * from './Textarea';

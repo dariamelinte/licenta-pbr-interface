@@ -16,5 +16,9 @@ export type ObjectModelStoreType = {
       objectModel: ObjectModelInputType,
     ) => void;
     updateObjectModel: (token: string, objectModel: ObjectModelApiType) => void;
+
+    getObjectModelsByCategory: (
+      category: string,
+    ) => Promise<ObjectModelApiType[] | null>;
   };
 };

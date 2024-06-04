@@ -17,7 +17,6 @@ export const createObjectModel = async (
   accessToken: string,
   objectModel: CreateObjectModelApiType,
 ): AxiosPromise<AddApiType<ObjectModelApiType>> => {
-  console.log(111, { objectModel });
   return httpService.post('/object-models', objectModel, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -29,6 +28,12 @@ export const getObjectModels = async (): AxiosPromise<
   GetAllApiType<ObjectModelApiType>
 > => {
   return httpService.get(`/object-models`);
+};
+
+export const getObjectModelsByCategory = async (
+  category: string,
+): AxiosPromise<GetAllApiType<ObjectModelApiType>> => {
+  return httpService.get(`/object-models/category/${category}`);
 };
 
 export const getObjectModelById = async (

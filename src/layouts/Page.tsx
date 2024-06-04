@@ -2,6 +2,7 @@ import cx from 'classnames';
 import Head from 'next/head';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 
 const TITLE = 'CSP Interface';
 
@@ -44,7 +45,10 @@ export function Page({
         <meta key="title" property="og:title" content="My page title" />
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
-      <PageMeta className={className}>{content}</PageMeta>
+      <PageMeta className={className}>
+        {content}
+        <ToastContainer />
+      </PageMeta>
     </>
   );
 }

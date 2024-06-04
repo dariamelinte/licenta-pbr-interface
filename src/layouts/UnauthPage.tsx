@@ -32,7 +32,7 @@ export function UnauthPage({
       setToken(cookieToken);
       router.push('/app');
     }
-  }, [token, router, setToken, expiration_time]);
+  }, [token, router, setToken]);
 
   useEffect(() => {
     handleAuthUser();

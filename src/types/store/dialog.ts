@@ -12,6 +12,7 @@ export type OpenType =
   | 'object-model'
   | 'add-group'
   | 'join-group'
+  | 'test-information'
   | null;
 
 export type DialogStoreType = {

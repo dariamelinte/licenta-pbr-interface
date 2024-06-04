@@ -27,14 +27,16 @@ export const objectModelColumns = ({
         return '-';
       }
 
-      return description?.length > 50
-        ? `${description.substring(0, 50)}...`
-        : description;
+      return description;
     },
   }),
   columnHelper.accessor('category.name', {
     header: 'Category',
     cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('size', {
+    header: 'Size',
+    cell: (info) => <p className="capitalize">{info.getValue()}</p>,
   }),
   columnHelper.accessor('_id', {
     header: '',

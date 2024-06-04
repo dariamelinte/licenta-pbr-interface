@@ -3,12 +3,14 @@ import { Form, Formik } from 'formik';
 import { useEffect, useMemo } from 'react';
 
 import { Form as CommonForm } from '@/components/common';
+import { modelEntensions } from '@/constants/constants';
 import { INITIAL_OBJECT_MODEL } from '@/constants/initial-objects';
 import { objectModelLabels } from '@/constants/labels';
 import { objectModelSchema } from '@/constants/validation-schemas';
 import useStore from '@/stores';
 import type { ObjectModelApiType } from '@/types/common/api';
 import type { ObjectModelInputType } from '@/types/common/objectModel';
+import arrayToOptions from '@/utils/arrayToOptions';
 
 import styles from './Form.module.css';
 
@@ -62,6 +64,15 @@ export const ObjectModelForm: React.FC<ObjectModelProps> = ({
               options={optionsCategories}
             />
           </div>
+          <div className={styles.row}>
+            <CommonForm.SelectField
+              name="size"
+              label={objectModelLabels.size}
+              placeholder={objectModelLabels.size}
+              className={styles.field}
+              options={arrayToOptions(['small', 'medium', 'big'])}
+            />
+          </div>
           <div className={cx(styles.row, 'mb-3')}>
             <CommonForm.TextAreaField
               name="description"
@@ -75,7 +86,7 @@ export const ObjectModelForm: React.FC<ObjectModelProps> = ({
             <CommonForm.Label text={objectModelLabels.model} />
             <CommonForm.Input
               type="file"
-              accept=".glb, .gltf"
+              accept={modelEntensions.join(', ')}
               className="flex-1"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const file = e.currentTarget.files && e.currentTarget.files[0];

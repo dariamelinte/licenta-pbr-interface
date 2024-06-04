@@ -7,7 +7,7 @@ import type { ButtonProps } from './Button';
 import { Button } from './Button';
 
 type ClipboardButtonProps = ButtonProps & {
-  clipboardText?: string;
+  clipboardText: string;
 };
 
 export const ClipboardButton: React.FC<ClipboardButtonProps> = ({

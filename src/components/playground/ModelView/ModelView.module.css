@@ -1,0 +1,19 @@
+.title {
+    @apply font-semibold text-xs;
+}
+
+.info {
+    @apply py-1 flex justify-between items-center;
+}
+
+.icon {
+    @apply h-5 w-5;
+}
+
+.button {
+    @apply !px-1 !py-0.5;
+}
+
+.linkButton {
+    @apply absolute w-4 h-4 bg-blue-700 rounded-full hover:bg-blue-600;
+}

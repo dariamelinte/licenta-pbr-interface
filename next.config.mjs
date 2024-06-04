@@ -26,5 +26,6 @@ export default bundleAnalyzer({
   env: {
     API_URL: process.env.API_URL,
     SECRET_TOKEN: process.env.SECRET_TOKEN,
+    SPACES_SECRET_KEY: process.env.SPACES_SECRET_KEY,
   },
 });

@@ -7,6 +7,8 @@ import { categorySlice } from './category';
 import { dialogSlice } from './dialog';
 import { groupSlice } from './group';
 import { objectModelSlice } from './objectModel';
+import { playgroundSlice } from './playground';
+import { testSlice } from './test';
 
 const useStore = create<StoreType>((...a) => ({
   ...dialogSlice(...a),
@@ -14,6 +16,8 @@ const useStore = create<StoreType>((...a) => ({
   ...objectModelSlice(...a),
   ...authSlice(...a),
   ...groupSlice(...a),
+  ...playgroundSlice(...a),
+  ...testSlice(...a),
 }));
 
 export default useStore;
