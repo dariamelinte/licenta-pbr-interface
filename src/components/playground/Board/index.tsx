@@ -7,6 +7,7 @@ import { Xwrapper } from 'react-xarrows';
 
 import { Form } from '@/components/common';
 import { CoordinatesButton } from '@/components/common/Buttons';
+import { ArrowPath } from '@/components/icons';
 import {
   Linkage,
   ObjectModelMenu,
@@ -14,14 +15,18 @@ import {
 } from '@/components/playground';
 import { objectModelSizes } from '@/constants/constants';
 import useStore from '@/stores';
-import { ArrowPath } from '@/components/icons';
 
 type BoardProps = {
   shouldResetBoard?: boolean;
+  disabled?: boolean;
   onAddInstance: (id: string) => void;
 };
 
-export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard }) => {
+export const Board: React.FC<BoardProps> = ({
+  onAddInstance,
+  shouldResetBoard,
+  disabled,
+}) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { objectModels } = useStore((state) => state.objectModel);
   const { instances, scale, setScale, linkages, focusedAxe, resetPlayground } =
@@ -30,7 +35,7 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
   const [gridSize, setGridSize] = useState(40); // Initial grid size
 
   const [showLinks, setShowLinks] = useState(false);
-  
+
   useEffect(() => {
     if (shouldResetBoard) {
       resetPlayground();
@@ -69,9 +74,11 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
 
   return (
     <Xwrapper>
-      <div className="t-1 l-1 absolute z-50 p-3">
-        <ObjectModelMenu onAddObjectModel={onAddInstance} />
-      </div>
+      {!disabled ? (
+        <div className="t-1 l-1 absolute z-50 p-3">
+          <ObjectModelMenu onAddObjectModel={onAddInstance} />
+        </div>
+      ) : null}
       <div
         className="relative mx-3 mt-12 h-[80vh] overflow-hidden rounded-xl border-x-2 border-y-4 border-blue-900 bg-blue-800 shadow"
         ref={containerRef}
@@ -124,22 +131,25 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
               objectInstanceId={id}
               initialPos={initialPos}
               objectModel={objectModel}
+              disabled={disabled}
             />
           );
         })}
         {showLinks
           ? linkages.map((linkage, idx) => (
               <Linkage
+                disabled={disabled}
                 linkage={linkage}
                 key={`${linkage.first_connection?.uuid}-${linkage.second_connection?.uuid}-${focusedAxe}-${idx}`}
               />
             ))
           : null}
         <button
-          className="absolute top-0 right-0 m-3 py-1 px-2 bg-blue-200 text-blue-600 rounded-xl"
+          className="absolute right-0 top-0 m-3 rounded-xl bg-blue-200 px-2 py-1 text-blue-600"
           onClick={resetPlayground}
+          disabled={disabled}
         >
-          <ArrowPath className='h-4 w-4' />
+          <ArrowPath className="size-4" />
         </button>
       </div>
       <div className="flex items-center justify-end p-3">
@@ -151,6 +161,7 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
             label="Scale"
             value={scale * 100}
             onChange={handleChangeScale}
+            disabled={disabled}
           />
         </div>
         <CoordinatesButton />

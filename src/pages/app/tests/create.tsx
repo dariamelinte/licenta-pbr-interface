@@ -1,10 +1,10 @@
-import { toast } from "react-toastify";
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
-import { TestForm } from "@/components/forms";
-import { VerticalMenuPage } from "@/layouts";
-import useStore from "@/stores";
-import type { TestType } from "@/types/common/test";
-import { useRouter } from "next/router";
+import { TestForm } from '@/components/forms';
+import { VerticalMenuPage } from '@/layouts';
+import useStore from '@/stores';
+import type { TestType } from '@/types/common/test';
 
 const Index = () => {
   const router = useRouter();
@@ -15,7 +15,7 @@ const Index = () => {
 
   const handleSubmit = async (values: TestType) => {
     if (!(Object.keys(instances).length && linkages.length)) {
-      toast.error("You need to create a board in order to create a test!");
+      toast.error('You need to create a board in order to create a test!');
       return;
     }
 
@@ -29,7 +29,7 @@ const Index = () => {
       scale,
       test: test._id,
       submission_time: new Date(),
-      status: 'submitted'
+      status: 'submitted',
     });
 
     router.push(`/app/tests/${test._id}`);

@@ -1,9 +1,9 @@
-import { toast } from "react-toastify";
-import type { StateCreator } from "zustand";
+import { toast } from 'react-toastify';
+import type { StateCreator } from 'zustand';
 
-import { ERROR_MESSAGE } from "@/constants/messages";
-import * as service from "@/services/api/result";
-import type { ResultStoreType } from "@/types/store/result";
+import { ERROR_MESSAGE } from '@/constants/messages';
+import * as service from '@/services/api/result';
+import type { ResultStoreType } from '@/types/store/result';
 
 export const resultSlice: StateCreator<
   ResultStoreType,
@@ -32,10 +32,6 @@ export const resultSlice: StateCreator<
       }),
 
     getResults: async (accessToken) => {
-      if (get().result.results.length) {
-        return;
-      }
-
       try {
         get().result.setLoading(true);
         const { data } = await service.getResults(accessToken);
@@ -58,9 +54,6 @@ export const resultSlice: StateCreator<
     },
 
     getResultById: async (accessToken, id) => {
-      const result = get().result.results.find(({ _id }) => _id === id);
-      if (result) return result;
-
       try {
         get().result.setLoading(true);
         const {
@@ -89,14 +82,19 @@ export const resultSlice: StateCreator<
 
         if (!success) throw Error(error);
 
+        set({
+          result: {
+            ...get().result,
+            results: data,
+          },
+        });
+
         toast.info(message);
 
         get().result.setLoading(false);
-        return data;
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
         get().result.setLoading(false);
-        return null;
       }
     },
 
@@ -107,7 +105,7 @@ export const resultSlice: StateCreator<
         if (!data.success) throw Error(data.error);
 
         const updatedResults = get().result.results.filter(
-          ({ _id }) => _id !== id
+          ({ _id }) => _id !== id,
         );
 
         set({
@@ -149,14 +147,14 @@ export const resultSlice: StateCreator<
         const { data } = await service.updateResult(
           accessToken,
           _id as string,
-          rest
+          rest,
         );
         if (!data.success) throw Error(data.error);
 
         const { results } = get().result;
 
         const updatedResultIndex = results.findIndex(
-          (result) => result._id === _id
+          (result) => result._id === _id,
         );
 
         results[updatedResultIndex] = data.data;
@@ -170,8 +168,10 @@ export const resultSlice: StateCreator<
         }
 
         toast.info(data.message);
+        return data.data;
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
+        return null;
       }
     },
 

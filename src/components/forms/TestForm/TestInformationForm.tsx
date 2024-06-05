@@ -14,7 +14,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
   const { token, user } = useStore((state) => state.auth);
   const { groups, getGroups } = useStore((state) => state.group);
 
-  const isStudent = useMemo(() => user.role === "student", [user.role])
+  const isStudent = useMemo(() => user.role === 'student', [user.role]);
   const groupOptions = useMemo(
     () => [
       { value: undefined, name: testLabels.group },

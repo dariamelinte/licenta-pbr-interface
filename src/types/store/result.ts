@@ -18,15 +18,18 @@ export type ResultStoreType = {
       accessToken: string,
       test: string,
       own?: boolean,
-    ) => Promise<ResultApiType[] | null>;
+    ) => Promise<void>;
     deleteResult: (accessToken: string, id: string) => void;
 
-    createResult: (accessToken: string, result: ResultType) => Promise<ResultApiType | null>;
+    createResult: (
+      accessToken: string,
+      result: ResultType,
+    ) => Promise<ResultApiType | null>;
     updateResult: (
       accessToken: string,
       result: Partial<ResultApiType>,
       onSuccess?: () => void,
-    ) => void;
+    ) => Promise<ResultApiType | null>;
 
     solveResult: (accessToken: string, result: Partial<ResultApiType>) => void;
     saveResult: (accessToken: string, result: Partial<ResultApiType>) => void;

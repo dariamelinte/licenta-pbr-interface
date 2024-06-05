@@ -31,6 +31,7 @@ const Index = () => {
         setOnConfirm(() => deleteTest(token as string, id));
       },
       onView: (id: string) => router.push(`/app/tests/${id}`),
+      onViewMultiple: (id: string) => router.push(`/app/tests/${id}/results`),
     };
   }, [user.role, setOpen, setOnConfirm, updateTest, router, deleteTest, token]);
 
@@ -58,7 +59,11 @@ const Index = () => {
             ...columnProps,
           })
         }
-        onAddData={() => router.push(`/app/tests/create`)}
+        onAddData={
+          user.role === 'student'
+            ? undefined
+            : () => router.push(`/app/tests/create`)
+        }
       />
       {open === 'confirm-delete' && (
         <Dialog.Confirmation {...(confirm.delete as ConfirmDialogType)} />
