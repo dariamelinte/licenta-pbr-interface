@@ -1,6 +1,6 @@
 import type { CoordinatesObjectType } from '@/types/common/playground';
 
-export const modelEntensions = ['.glb', '.gltf', '.fbx', '.obj', '.stl'];
+export const modelEntensions = ['.fbx'];
 
 export const coordinatesAxes: CoordinatesObjectType<string> = {
   ox: 'Side',
