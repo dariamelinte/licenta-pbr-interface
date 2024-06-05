@@ -6,10 +6,12 @@ import type { LinkageType } from '@/types/common/linkage';
 
 type LinkageProps = {
   linkage: LinkageType;
+  disabled?: boolean;
 };
 
 export const Linkage: React.FC<LinkageProps> = ({
   linkage: { first_connection, second_connection },
+  disabled
 }) => {
   const { focusedAxe, removeLinkage } = useStore((state) => state.playground);
 
@@ -27,6 +29,8 @@ export const Linkage: React.FC<LinkageProps> = ({
   };
 
   const handleClickArrow = () => {
+    if (disabled) return;
+
     removeLinkage(
       first_connection?.instance as string,
       second_connection?.instance as string,

@@ -9,11 +9,14 @@ import useStore from "@/stores";
 import type { TestType } from "@/types/common/test";
 import { timestampToDate } from "@/utils/timestampToDate";
 import { ResultApiType, TestApiType } from "@/types/common/api";
+import { ERROR_MESSAGE } from "@/constants/messages";
+import { ResultType } from "@/types/common/result";
 
 const Index = () => {
   const router = useRouter();
   const [test, setTest] = useState<TestApiType | null>(null);
-  const [result, setResult] = useState<ResultApiType | null>(null);
+  const [result, setResult] = useState<Partial<ResultApiType> | null>(null);
+  const [isFirst, setIsFirst] = useState(true);
 
   const { token, user } = useStore((state) => state.auth);
   const {
@@ -25,6 +28,7 @@ const Index = () => {
     getResultsByTest,
     loading: loadingR,
     updateResult,
+    createResult,
   } = useStore((state) => state.result);
   const { instances, linkages, scale, loadPlayground } = useStore(
     (state) => state.playground
@@ -39,34 +43,43 @@ const Index = () => {
 
     const results = await getResultsByTest(token as string, test._id, true);
 
-    if (!results?.[0]) return;
+    if (results?.[0]) {
+      loadPlayground({
+        linkages: results[0].linkages,
+        instances: results[0].instances,
+        scale: results[0].scale,
+      });
+      setResult(results[0]);
+      setIsFirst(false);
+    } else {
+      setResult({ linkages, instances, scale, test: test._id });
+    }
 
     const { start_date, due_date, ...restTest } = test;
-    const { linkages, instances, scale, ...restResult } = results[0];
 
     setTest({
       ...restTest,
       start_date: timestampToDate(Number(start_date)),
       due_date: timestampToDate(Number(due_date)),
     });
-    loadPlayground({ linkages, instances, scale });
-    setResult({ ...restResult, linkages, instances, scale });
   }, [getTestById, token, router.query.id, setTest, loadPlayground]);
 
   useEffect(() => {
     handleTest();
   }, [handleTest]);
 
-  const handleSubmit = (values: TestType) => {
+  const handleSubmit = async (values: TestType) => {
     if (!(Object.keys(instances).length && linkages.length)) {
       toast.error("You need to have a board in order to update a test!");
       return;
     }
 
-    if (isStudent) {
-      // TODO: call for submitting the results
-      console.log({ values, instances, linkages, scale });
-    } else {
+    if (!test?._id) {
+      toast.error(ERROR_MESSAGE.default);
+      return;
+    }
+
+    if (!isStudent) {
       updateTest(token as string, values);
       updateResult(token as string, {
         ...result,
@@ -76,16 +89,60 @@ const Index = () => {
         submission_time: new Date(),
       });
     }
+
+    const payload: ResultType = {
+      ...result,
+      test: test?._id,
+      instances,
+      linkages,
+      scale,
+      status: "submitted",
+      submission_time: new Date(),
+    };
+
+    if (isFirst) {
+      const result = await createResult(token as string, payload);
+      if (result) {
+        setIsFirst(false);
+        setResult(result);
+      }
+    } else {
+      const result = await updateResult(token as string, payload);
+      if (result) setResult(result);
+    }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (!test?._id) {
+      toast.error(ERROR_MESSAGE.default);
+      return;
+    }
+
     if (!(Object.keys(instances).length && linkages.length)) {
       toast.error("You need to have a board in order to update a test!");
       return;
     }
 
-    console.log("save");
-    console.log({ instances, linkages, scale });
+    const payload: ResultType = {
+      ...result,
+      test: test?._id,
+      instances,
+      linkages,
+      scale,
+      status: "saved",
+      submission_time: new Date(),
+    };
+
+    if (isFirst) {
+      const result = await createResult(token as string, payload);
+      if (result) {
+        setIsFirst(false);
+        setResult(result);
+      }
+    } else {
+      const result = await updateResult(token as string, payload);
+      if (result) setResult(result);
+    }
   };
 
   if (!test || loadingT || loadingR) {
@@ -102,6 +159,11 @@ const Index = () => {
         onSubmit={handleSubmit}
         initialTest={test}
         onSave={isStudent ? handleSave : undefined}
+        disabled={
+          user.role === "student" &&
+          (result?.status === "submitted" ||
+            new Date() > new Date(test.due_date))
+        }
       />
     </VerticalMenuPage>
   );

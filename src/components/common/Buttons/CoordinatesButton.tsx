@@ -11,6 +11,7 @@ export const CoordinatesButton: React.FC = () => {
       {Object.keys(coordinatesAxes).map((axe) => {
         return (
           <button
+            key={axe}
             className={cx(
               'text-base font-medium text-blue-800 hover:bg-opacity-75 focus:outline-none px-3 py-1',
               {

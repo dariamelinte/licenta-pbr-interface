@@ -1,19 +1,21 @@
-import type { PropsWithChildren } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import type { DraggableData, DraggableEvent } from 'react-draggable';
-import Draggable from 'react-draggable';
+import type { PropsWithChildren } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { DraggableData, DraggableEvent } from "react-draggable";
+import Draggable from "react-draggable";
 
-import type { PointType } from '@/types/common/playground';
+import type { PointType } from "@/types/common/playground";
 
 type PieceProps = {
   initialPos: PointType;
   pos?: PointType;
+  disabled?: boolean;
   onStop?: (oldPoint: PointType, newPoint: PointType) => void;
 };
 
 export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
   initialPos,
   pos,
+  disabled,
   onStop,
   children,
 }) => {
@@ -49,7 +51,12 @@ export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
   };
 
   return (
-    <Draggable position={position} onStop={handleStop} onDrag={handleDrag}>
+    <Draggable
+      disabled={disabled}
+      position={position}
+      onStop={handleStop}
+      onDrag={handleDrag}
+    >
       {children}
     </Draggable>
   );

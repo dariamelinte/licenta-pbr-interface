@@ -26,7 +26,7 @@ export type ResultStoreType = {
       accessToken: string,
       result: Partial<ResultApiType>,
       onSuccess?: () => void,
-    ) => void;
+    ) => Promise<ResultApiType | null>;
 
     solveResult: (accessToken: string, result: Partial<ResultApiType>) => void;
     saveResult: (accessToken: string, result: Partial<ResultApiType>) => void;

@@ -1,27 +1,32 @@
-'use client';
+"use client";
 
-import type { ChangeEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
-import { Xwrapper } from 'react-xarrows';
+import type { ChangeEvent } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { Xwrapper } from "react-xarrows";
 
-import { Form } from '@/components/common';
-import { CoordinatesButton } from '@/components/common/Buttons';
+import { Form } from "@/components/common";
+import { CoordinatesButton } from "@/components/common/Buttons";
 import {
   Linkage,
   ObjectModelMenu,
   PlaygroundModelView,
-} from '@/components/playground';
-import { objectModelSizes } from '@/constants/constants';
-import useStore from '@/stores';
-import { ArrowPath } from '@/components/icons';
+} from "@/components/playground";
+import { objectModelSizes } from "@/constants/constants";
+import useStore from "@/stores";
+import { ArrowPath } from "@/components/icons";
 
 type BoardProps = {
   shouldResetBoard?: boolean;
+  disabled?: boolean;
   onAddInstance: (id: string) => void;
 };
 
-export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard }) => {
+export const Board: React.FC<BoardProps> = ({
+  onAddInstance,
+  shouldResetBoard,
+  disabled,
+}) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { objectModels } = useStore((state) => state.objectModel);
   const { instances, scale, setScale, linkages, focusedAxe, resetPlayground } =
@@ -30,7 +35,7 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
   const [gridSize, setGridSize] = useState(40); // Initial grid size
 
   const [showLinks, setShowLinks] = useState(false);
-  
+
   useEffect(() => {
     if (shouldResetBoard) {
       resetPlayground();
@@ -56,10 +61,10 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
 
     // Update grid size on initial render and when window resizes
     updateGridSize();
-    window.addEventListener('resize', updateGridSize);
+    window.addEventListener("resize", updateGridSize);
 
     return () => {
-      window.removeEventListener('resize', updateGridSize);
+      window.removeEventListener("resize", updateGridSize);
     };
   }, []);
 
@@ -84,17 +89,17 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
         <div
           className="absolute size-2 rounded-full bg-red-500"
           style={{
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
           }}
         />
         {Object.entries(instances).map(([id, instance]) => {
           const objectModel = objectModels.find(
-            (objectModel) => objectModel._id === instance.object_model,
+            (objectModel) => objectModel._id === instance.object_model
           );
           if (!objectModel) {
-            toast.error('Could not find an object model');
+            toast.error("Could not find an object model");
             return null;
           }
 
@@ -106,7 +111,7 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
                 ((rect?.left || 0) +
                   ((rect?.width || 0) - objectModelSizes[objectModel.size])) /
                   2,
-                0,
+                0
               ),
             y:
               instance.position[focusedAxe].y ||
@@ -114,7 +119,7 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
                 ((rect?.top || 0) +
                   ((rect?.height || 0) - objectModelSizes[objectModel.size])) /
                   2,
-                0,
+                0
               ),
           };
 
@@ -124,12 +129,14 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
               objectInstanceId={id}
               initialPos={initialPos}
               objectModel={objectModel}
+              disabled={disabled}
             />
           );
         })}
         {showLinks
           ? linkages.map((linkage, idx) => (
               <Linkage
+                disabled={disabled}
                 linkage={linkage}
                 key={`${linkage.first_connection?.uuid}-${linkage.second_connection?.uuid}-${focusedAxe}-${idx}`}
               />
@@ -138,8 +145,9 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
         <button
           className="absolute top-0 right-0 m-3 py-1 px-2 bg-blue-200 text-blue-600 rounded-xl"
           onClick={resetPlayground}
+          disabled={disabled}
         >
-          <ArrowPath className='h-4 w-4' />
+          <ArrowPath className="h-4 w-4" />
         </button>
       </div>
       <div className="flex items-center justify-end p-3">
@@ -151,6 +159,7 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard })
             label="Scale"
             value={scale * 100}
             onChange={handleChangeScale}
+            disabled={disabled}
           />
         </div>
         <CoordinatesButton />

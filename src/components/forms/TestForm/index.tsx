@@ -13,6 +13,7 @@ import type { TestType } from "@/types/common/test";
 type TestFormProps = {
   initialTest?: TestType;
   shouldResetBoard?: boolean;
+  disabled?: boolean;
   onSubmit: (values: TestType) => void;
   onSave?: () => void;
 };
@@ -22,6 +23,7 @@ export const TestForm: React.FC<TestFormProps> = ({
   onSave,
   initialTest,
   shouldResetBoard,
+  disabled
 }) => {
   const { open, setOpen } = useStore((state) => state.dialog);
   const { loading, getObjectModels } = useStore((state) => state.objectModel);
@@ -37,49 +39,55 @@ export const TestForm: React.FC<TestFormProps> = ({
   }
 
   return (
-    <Formik<TestType>
-      initialValues={initialTest || INITIAL_TEST_FORM}
-      validationSchema={testSchema}
-      onSubmit={onSubmit}
-    >
-      <Form className="w-full">
-        <div className="flex items-center px-3 pt-3">
-          <Button
-            icon={<PencilSquare />}
-            theme="base"
-            onClick={() => {
-              setOpen("test-information");
-            }}
-            className="mr-4 !flex w-full items-center justify-center"
-          >
-            <p className="pl-2">Test information</p>
-          </Button>
-          {onSave ? (
+    <div className="w-full">
+      <Formik<TestType>
+        initialValues={initialTest || INITIAL_TEST_FORM}
+        validationSchema={testSchema}
+        onSubmit={onSubmit}
+      >
+        <Form className="w-full">
+          <div className="flex items-center px-3 pt-3">
+            <Button
+              icon={<PencilSquare />}
+              theme="base"
+              onClick={() => {
+                setOpen("test-information");
+              }}
+              className="mr-4 !flex w-full items-center justify-center"
+            >
+              <p className="pl-2">Test information</p>
+            </Button>
+            {onSave ? (
+              <Button
+                icon={<CheckCircle />}
+                theme="secondary"
+                className="mr-4 !flex w-full items-center justify-center"
+                onClick={onSave}
+                disabled={disabled}
+              >
+                <p className="pl-2">
+                  Save test (you can work on it afterwards)
+                </p>
+              </Button>
+            ) : null}
             <Button
               icon={<CheckCircle />}
-              theme="secondary"
-              className="mr-4 !flex w-full items-center justify-center"
-              onClick={onSave}
+              type="submit"
+              className="!flex w-full items-center justify-center"
+              disabled={disabled}
             >
-              <p className="pl-2">Save test (you can work on it afterwards)</p>
+              <p className="pl-2">Submit test</p>
             </Button>
-          ) : null}
-          <Button
-            icon={<CheckCircle />}
-            type="submit"
-            className="!flex w-full items-center justify-center"
-          >
-            <p className="pl-2">Submit test</p>
-          </Button>
-        </div>
+          </div>
 
-        <Board
-          onAddInstance={(id) => addObjectInstance(uuidv4(), id)}
-          shouldResetBoard={shouldResetBoard}
-        />
-
-        {open === "test-information" && <Dialog.TestInformation />}
-      </Form>
-    </Formik>
+          {open === "test-information" && <Dialog.TestInformation />}
+        </Form>
+      </Formik>
+      <Board
+        onAddInstance={(id) => addObjectInstance(uuidv4(), id)}
+        shouldResetBoard={shouldResetBoard}
+        disabled={disabled}
+      />
+    </div>
   );
 };

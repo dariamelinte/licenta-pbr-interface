@@ -22,12 +22,14 @@ type PlaygroundModelViewProps = {
   objectInstanceId: string;
   initialPos: { x: number; y: number };
   objectModel: ObjectModelApiType;
+  disabled?: boolean;
 };
 
 export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
   objectInstanceId,
   initialPos,
   objectModel,
+  disabled
 }) => {
   const {
     scale,
@@ -145,6 +147,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
       pos={objectInstance?.position[focusedAxe]}
       initialPos={initialPos}
       onStop={handlePieceStop}
+      disabled={disabled}
     >
       <div
         className="absolute border-4 border-blue-700"
@@ -158,6 +161,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
             className={cx(styles.linkButton, '-top-3 -left-3')}
             id={buttonIds[0]}
             onClick={() => handlePointClick(0)}
+            disabled={disabled}
           />
           <button
             className={cx(
@@ -166,11 +170,13 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
             )}
             id={buttonIds[1]}
             onClick={() => handlePointClick(1)}
+            disabled={disabled}
           />
           <button
             className={cx(styles.linkButton, '-top-3 -right-3')}
             id={buttonIds[2]}
             onClick={() => handlePointClick(2)}
+            disabled={disabled}
           />
           <button
             className={cx(
@@ -179,6 +185,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
             )}
             id={buttonIds[3]}
             onClick={() => handlePointClick(3)}
+            disabled={disabled}
           />
           <button
             className={cx(
@@ -187,10 +194,12 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
             )}
             id={buttonIds[4]}
             onClick={() => handlePointClick(4)}
+            disabled={disabled}
           />
           <button
             className={cx(styles.linkButton, '-bottom-3 -left-3')}
             onClick={() => handlePointClick(5)}
+            disabled={disabled}
             id={buttonIds[5]}
           />
           <button
@@ -200,11 +209,13 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
             )}
             id={buttonIds[6]}
             onClick={() => handlePointClick(6)}
+            disabled={disabled}
           />
           <button
             className={cx(styles.linkButton, '-bottom-3 -right-3')}
             id={buttonIds[7]}
             onClick={() => handlePointClick(7)}
+            disabled={disabled}
           />
 
           <ModelView

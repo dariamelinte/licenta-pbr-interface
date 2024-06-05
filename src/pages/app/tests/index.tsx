@@ -58,7 +58,7 @@ const Index = () => {
             ...columnProps,
           })
         }
-        onAddData={() => router.push(`/app/tests/create`)}
+        onAddData={user.role === "student" ? undefined : () => router.push(`/app/tests/create`)}
       />
       {open === 'confirm-delete' && (
         <Dialog.Confirmation {...(confirm.delete as ConfirmDialogType)} />
