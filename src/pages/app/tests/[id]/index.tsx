@@ -25,6 +25,7 @@ const Index = () => {
     updateTest,
   } = useStore((state) => state.test);
   const {
+    results,
     getResultsByTest,
     loading: loadingR,
     updateResult,
@@ -41,9 +42,9 @@ const Index = () => {
 
     if (!test) return;
 
-    const results = await getResultsByTest(token as string, test._id, true);
+    await getResultsByTest(token as string, test._id, true);
 
-    if (results?.[0]) {
+    if (results[0]) {
       loadPlayground({
         linkages: results[0].linkages,
         instances: results[0].instances,

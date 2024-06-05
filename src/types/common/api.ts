@@ -3,6 +3,7 @@ import type { CompleteGroupType, GroupType } from './group';
 import type { ObjectModelInputType } from './objectModel';
 import { ResultType } from './result';
 import type { TestType } from './test';
+import { ProfileType } from './user';
 
 export type OidType = { _id: string };
 
@@ -61,4 +62,6 @@ export type CompleteGroupApiType = CompleteGroupType & OidType;
 export type TestApiType = TestType & OidType;
 
 // resukt
-export type ResultApiType = ResultType & OidType;
+export type ResultApiType = ResultType & OidType & {
+  user: string;
+};

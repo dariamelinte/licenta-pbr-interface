@@ -31,6 +31,7 @@ const Index = () => {
         setOnConfirm(() => deleteTest(token as string, id));
       },
       onView: (id: string) => router.push(`/app/tests/${id}`),
+      onViewMultiple: (id: string) => router.push(`/app/tests/${id}/results`),
     };
   }, [user.role, setOpen, setOnConfirm, updateTest, router, deleteTest, token]);
 

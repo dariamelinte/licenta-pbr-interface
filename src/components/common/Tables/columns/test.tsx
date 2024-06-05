@@ -1,5 +1,5 @@
 import type { ColumnHelper } from "@tanstack/react-table";
-import cx from 'classnames';
+import cx from "classnames";
 
 import { Options } from "@/components/common";
 import { testStatuses } from "@/constants/constants";
@@ -9,13 +9,13 @@ type TestColumnsProps = {
   columnHelper: ColumnHelper<TestApiType>;
   onDelete?: (id: string) => void;
   onView?: (id: string) => void;
-  onEdit?: (test: TestApiType) => void;
+  onViewMultiple?: (id: string) => void;
 };
 
 export const testColumns = ({
   columnHelper,
   onDelete,
-  onEdit,
+  onViewMultiple,
   onView,
 }: TestColumnsProps) => {
   return [
@@ -26,7 +26,12 @@ export const testColumns = ({
 
         const isDue = date < new Date();
         return (
-          <p className={cx("font-semibold", isDue ? "text-red-700" : "text-blue-700")}>
+          <p
+            className={cx(
+              "font-semibold",
+              isDue ? "text-red-700" : "text-blue-700"
+            )}
+          >
             {date.toUTCString()}
           </p>
         );
@@ -56,7 +61,9 @@ export const testColumns = ({
       header: "",
       cell: (info) => (
         <Options
-          onEdit={onEdit ? () => onEdit(info.row.original) : undefined}
+          onViewMultiple={
+            onViewMultiple ? () => onViewMultiple(info.getValue()) : undefined
+          }
           onDelete={onDelete ? () => onDelete?.(info.getValue()) : undefined}
           onView={onView ? () => onView(info.getValue()) : undefined}
         />

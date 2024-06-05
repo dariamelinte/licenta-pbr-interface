@@ -74,9 +74,11 @@ export const Board: React.FC<BoardProps> = ({
 
   return (
     <Xwrapper>
-      <div className="t-1 l-1 absolute z-50 p-3">
-        <ObjectModelMenu onAddObjectModel={onAddInstance} />
-      </div>
+      {!disabled ? (
+        <div className="t-1 l-1 absolute z-50 p-3">
+          <ObjectModelMenu onAddObjectModel={onAddInstance} />
+        </div>
+      ) : null}
       <div
         className="relative mx-3 mt-12 h-[80vh] overflow-hidden rounded-xl border-x-2 border-y-4 border-blue-900 bg-blue-800 shadow"
         ref={containerRef}

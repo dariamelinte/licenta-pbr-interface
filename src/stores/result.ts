@@ -32,10 +32,6 @@ export const resultSlice: StateCreator<
       }),
 
     getResults: async (accessToken) => {
-      if (get().result.results.length) {
-        return;
-      }
-
       try {
         get().result.setLoading(true);
         const { data } = await service.getResults(accessToken);
@@ -58,9 +54,6 @@ export const resultSlice: StateCreator<
     },
 
     getResultById: async (accessToken, id) => {
-      const result = get().result.results.find(({ _id }) => _id === id);
-      if (result) return result;
-
       try {
         get().result.setLoading(true);
         const {
@@ -88,15 +81,20 @@ export const resultSlice: StateCreator<
         } = await service.getResultsByTest(accessToken, test, own);
 
         if (!success) throw Error(error);
+        
+        set({
+          result: {
+            ...get().result,
+            results: data,
+          },
+        });
 
         toast.info(message);
 
         get().result.setLoading(false);
-        return data;
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
         get().result.setLoading(false);
-        return null;
       }
     },
 

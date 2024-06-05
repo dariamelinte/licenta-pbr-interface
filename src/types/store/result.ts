@@ -18,7 +18,7 @@ export type ResultStoreType = {
       accessToken: string,
       test: string,
       own?: boolean,
-    ) => Promise<ResultApiType[] | null>;
+    ) => Promise<void>;
     deleteResult: (accessToken: string, id: string) => void;
 
     createResult: (accessToken: string, result: ResultType) => Promise<ResultApiType | null>;

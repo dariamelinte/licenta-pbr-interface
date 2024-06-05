@@ -1,6 +1,8 @@
 export { default as AcademicCap } from "./AcademicCap";
 export { default as ArrowPath } from "./ArrowPath";
 export { default as BookOpen } from "./BookOpen";
+export { default as ChartBar } from "./ChartBar";
+export { default as ChartPie } from "./ChartPie";
 export { default as CheckCircle } from "./CheckCircle";
 export { default as Check } from "./Check";
 export { default as ChevronDoubleLeft } from "./ChevronDoubleLeft";
@@ -9,6 +11,7 @@ export { default as ChevronDown } from "./ChevronDown";
 export { default as ChevronLeft } from "./ChevronLeft";
 export { default as ChevronRight } from "./ChevronRight";
 export { default as ClipboardDocument } from "./ClipboardDocument";
+export { default as Clock } from "./Clock";
 export { default as Folder } from "./Folder";
 export { default as MagnifyingGlass } from "./MagnifyingGlass";
 export { default as PencilSquare } from "./PencilSquare";
