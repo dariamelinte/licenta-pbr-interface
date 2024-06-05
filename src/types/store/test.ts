@@ -16,7 +16,7 @@ export type TestStoreType = {
     ) => Promise<TestApiType | null>;
     deleteTest: (accessToken: string, id: string) => void;
 
-    createTest: (accessToken: string, test: TestType) => void;
+    createTest: (accessToken: string, test: TestType) => Promise<TestApiType | null>;
     updateTest: (
       accessToken: string,
       test: Partial<TestApiType>,

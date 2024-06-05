@@ -1,6 +1,5 @@
-import type { SVGProps } from 'react';
-import * as React from 'react';
-
+import * as React from "react";
+import type { SVGProps } from "react";
 const SvgUserGroup = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +7,7 @@ const SvgUserGroup = (props: SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-6"
+    className="w-6 h-6"
     {...props}
   >
     <path

@@ -11,9 +11,10 @@ import styles from '../Form.module.css';
 type TestFormProps = {};
 
 export const TestInformationForm: React.FC<TestFormProps> = () => {
-  const { token } = useStore((state) => state.auth);
+  const { token, user } = useStore((state) => state.auth);
   const { groups, getGroups } = useStore((state) => state.group);
 
+  const isStudent = useMemo(() => user.role === "student", [user.role])
   const groupOptions = useMemo(
     () => [
       { value: undefined, name: testLabels.group },
@@ -36,6 +37,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
           label={testLabels.name}
           placeholder={testLabels.name}
           className={styles.field}
+          disabled={isStudent}
         />
       </div>
       <div className={styles.row}>
@@ -48,6 +50,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
           label={testLabels.status}
           placeholder={testLabels.status}
           className={styles.field}
+          disabled={isStudent}
         />
       </div>
       <div className={styles.row}>
@@ -57,6 +60,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
           label={testLabels.group}
           placeholder={testLabels.group}
           className={styles.field}
+          disabled={isStudent}
         />
       </div>
       <div className={styles.row}>
@@ -66,6 +70,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
           placeholder={testLabels.description}
           className={styles.field}
           rows={10}
+          disabled={isStudent}
         />
       </div>
       <div className={styles.row}>
@@ -75,6 +80,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
           placeholder={testLabels.min_score}
           className={styles.field}
           type="number"
+          disabled={isStudent}
         />
         <CommonForm.InputField
           name="max_score"
@@ -82,6 +88,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
           placeholder={testLabels.max_score}
           className={cx(styles.field, 'ml-3 md:0')}
           type="number"
+          disabled={isStudent}
         />
       </div>
       <div className={styles.row}>
@@ -91,6 +98,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
           placeholder={testLabels.start_date}
           className={cx(styles.field, 'mr-3 md:0')}
           type="date"
+          disabled={isStudent}
         />
         <CommonForm.InputField
           name="due_date"
@@ -98,6 +106,7 @@ export const TestInformationForm: React.FC<TestFormProps> = () => {
           placeholder={testLabels.due_date}
           className={styles.field}
           type="date"
+          disabled={isStudent}
         />
       </div>
     </>

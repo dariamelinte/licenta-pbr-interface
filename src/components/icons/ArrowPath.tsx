@@ -1,20 +1,20 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const SvgXCircle = (props: SVGProps<SVGSVGElement>) => (
+const SvgArrowPath = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="w-6 h-6"
+    className="size-6"
     {...props}
   >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
     />
   </svg>
 );
-export default SvgXCircle;
+export default SvgArrowPath;

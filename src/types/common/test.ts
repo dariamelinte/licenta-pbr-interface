@@ -1,9 +1,6 @@
-import type { LinkageType } from './linkage';
-import type { ObjectInstanceType } from './objectInstance';
-
 export type StatusTestType = 'wip' | 'posted';
 
-export type TestInfoType = {
+export type TestType = {
   status: StatusTestType;
 
   name: string;
@@ -17,10 +14,3 @@ export type TestInfoType = {
   group: string;
 };
 
-export type TestBoardType = {
-  instances: { [key: string]: ObjectInstanceType };
-  scale: number;
-  linkages: LinkageType[];
-};
-
-export type TestType = TestInfoType & TestBoardType;

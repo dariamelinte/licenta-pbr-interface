@@ -1,6 +1,7 @@
 import type { CategoryType } from './category';
 import type { CompleteGroupType, GroupType } from './group';
 import type { ObjectModelInputType } from './objectModel';
+import { ResultType } from './result';
 import type { TestType } from './test';
 
 export type OidType = { _id: string };
@@ -58,3 +59,6 @@ export type CompleteGroupApiType = CompleteGroupType & OidType;
 
 // test
 export type TestApiType = TestType & OidType;
+
+// resukt
+export type ResultApiType = ResultType & OidType;

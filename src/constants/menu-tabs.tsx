@@ -45,6 +45,16 @@ export const tabs: { [key in UserRoleType]: MenuTab[] } = {
       url: '/app/groups',
       icon: <UserGroup />,
     },
+    {
+      text: 'Tests',
+      url: '/app/tests',
+      icon: <BookOpen />,
+    },
+    {
+      text: 'Playground',
+      url: '/app/playground',
+      icon: <PuzzlePiece />,
+    },
   ],
   professor: [
     {

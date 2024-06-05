@@ -9,6 +9,7 @@ import { groupSlice } from './group';
 import { objectModelSlice } from './objectModel';
 import { playgroundSlice } from './playground';
 import { testSlice } from './test';
+import { resultSlice } from './result';
 
 const useStore = create<StoreType>((...a) => ({
   ...dialogSlice(...a),
@@ -18,6 +19,7 @@ const useStore = create<StoreType>((...a) => ({
   ...groupSlice(...a),
   ...playgroundSlice(...a),
   ...testSlice(...a),
+  ...resultSlice(...a),
 }));
 
 export default useStore;

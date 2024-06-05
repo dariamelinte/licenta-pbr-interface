@@ -1,23 +1,27 @@
-import { Form, Formik } from 'formik';
-import { useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { Form, Formik } from "formik";
+import { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-import { Button, Dialog } from '@/components/common';
-import { CheckCircle, PencilSquare } from '@/components/icons';
-import { Board } from '@/components/playground';
-import { INITIAL_TEST_FORM } from '@/constants/initial-objects';
-import { testSchema } from '@/constants/validation-schemas';
-import useStore from '@/stores';
-import type { TestInfoType } from '@/types/common/test';
+import { Button, Dialog } from "@/components/common";
+import { CheckCircle, PencilSquare } from "@/components/icons";
+import { Board } from "@/components/playground";
+import { INITIAL_TEST_FORM } from "@/constants/initial-objects";
+import { testSchema } from "@/constants/validation-schemas";
+import useStore from "@/stores";
+import type { TestType } from "@/types/common/test";
 
 type TestFormProps = {
-  initialTest?: TestInfoType;
-  onSubmit: (values: TestInfoType) => void;
+  initialTest?: TestType;
+  shouldResetBoard?: boolean;
+  onSubmit: (values: TestType) => void;
+  onSave?: () => void;
 };
 
 export const TestForm: React.FC<TestFormProps> = ({
   onSubmit,
+  onSave,
   initialTest,
+  shouldResetBoard,
 }) => {
   const { open, setOpen } = useStore((state) => state.dialog);
   const { loading, getObjectModels } = useStore((state) => state.objectModel);
@@ -33,7 +37,7 @@ export const TestForm: React.FC<TestFormProps> = ({
   }
 
   return (
-    <Formik<TestInfoType>
+    <Formik<TestType>
       initialValues={initialTest || INITIAL_TEST_FORM}
       validationSchema={testSchema}
       onSubmit={onSubmit}
@@ -44,12 +48,22 @@ export const TestForm: React.FC<TestFormProps> = ({
             icon={<PencilSquare />}
             theme="base"
             onClick={() => {
-              setOpen('test-information');
+              setOpen("test-information");
             }}
             className="mr-4 !flex w-full items-center justify-center"
           >
             <p className="pl-2">Test information</p>
           </Button>
+          {onSave ? (
+            <Button
+              icon={<CheckCircle />}
+              theme="secondary"
+              className="mr-4 !flex w-full items-center justify-center"
+              onClick={onSave}
+            >
+              <p className="pl-2">Save test (you can work on it afterwards)</p>
+            </Button>
+          ) : null}
           <Button
             icon={<CheckCircle />}
             type="submit"
@@ -59,9 +73,12 @@ export const TestForm: React.FC<TestFormProps> = ({
           </Button>
         </div>
 
-        <Board onAddInstance={(id) => addObjectInstance(uuidv4(), id)} />
+        <Board
+          onAddInstance={(id) => addObjectInstance(uuidv4(), id)}
+          shouldResetBoard={shouldResetBoard}
+        />
 
-        {open === 'test-information' && <Dialog.TestInformation />}
+        {open === "test-information" && <Dialog.TestInformation />}
       </Form>
     </Formik>
   );

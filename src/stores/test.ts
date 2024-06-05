@@ -113,8 +113,10 @@ export const testSlice: StateCreator<TestStoreType, [], [], TestStoreType> = (
         });
 
         toast.info(data.message);
+        return data.data;
       } catch (error: any) {
         toast.error(error || ERROR_MESSAGE.default);
+        return null;
       }
     },
 

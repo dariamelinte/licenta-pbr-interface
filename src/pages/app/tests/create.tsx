@@ -1,32 +1,43 @@
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import { TestForm } from '@/components/forms';
-import { VerticalMenuPage } from '@/layouts';
-import useStore from '@/stores';
-import type { TestInfoType } from '@/types/common/test';
+import { TestForm } from "@/components/forms";
+import { VerticalMenuPage } from "@/layouts";
+import useStore from "@/stores";
+import type { TestType } from "@/types/common/test";
+import { useRouter } from "next/router";
 
 const Index = () => {
+  const router = useRouter();
   const { token } = useStore((state) => state.auth);
   const { createTest } = useStore((state) => state.test);
+  const { createResult } = useStore((state) => state.result);
   const { instances, linkages, scale } = useStore((state) => state.playground);
 
-  const handleSubmit = (values: TestInfoType) => {
+  const handleSubmit = async (values: TestType) => {
     if (!(Object.keys(instances).length && linkages.length)) {
-      toast.error('You need to create a board in order to create a test!');
+      toast.error("You need to create a board in order to create a test!");
       return;
     }
 
-    createTest(token as string, {
-      ...values,
+    const test = await createTest(token as string, values);
+
+    if (!test) return;
+
+    await createResult(token as string, {
       instances,
       linkages,
       scale,
+      test: test._id,
+      submission_time: new Date(),
+      status: 'submitted'
     });
+
+    router.push(`/app/tests/${test._id}`);
   };
 
   return (
     <VerticalMenuPage className="max-h-screen max-w-[100vw] overflow-hidden">
-      <TestForm onSubmit={handleSubmit} />
+      <TestForm onSubmit={handleSubmit} shouldResetBoard />
     </VerticalMenuPage>
   );
 };

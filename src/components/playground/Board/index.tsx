@@ -14,12 +14,14 @@ import {
 } from '@/components/playground';
 import { objectModelSizes } from '@/constants/constants';
 import useStore from '@/stores';
+import { ArrowPath } from '@/components/icons';
 
 type BoardProps = {
+  shouldResetBoard?: boolean;
   onAddInstance: (id: string) => void;
 };
 
-export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
+export const Board: React.FC<BoardProps> = ({ onAddInstance, shouldResetBoard }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { objectModels } = useStore((state) => state.objectModel);
   const { instances, scale, setScale, linkages, focusedAxe, resetPlayground } =
@@ -28,6 +30,13 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
   const [gridSize, setGridSize] = useState(40); // Initial grid size
 
   const [showLinks, setShowLinks] = useState(false);
+  
+  useEffect(() => {
+    if (shouldResetBoard) {
+      resetPlayground();
+    }
+    () => resetPlayground();
+  }, [resetPlayground, shouldResetBoard]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -53,10 +62,6 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
       window.removeEventListener('resize', updateGridSize);
     };
   }, []);
-
-  useEffect(() => {
-    () => resetPlayground();
-  }, [resetPlayground]);
 
   const handleChangeScale = (e: ChangeEvent<HTMLInputElement>) => {
     setScale(Number(e.target.value) / 100);
@@ -130,6 +135,12 @@ export const Board: React.FC<BoardProps> = ({ onAddInstance }) => {
               />
             ))
           : null}
+        <button
+          className="absolute top-0 right-0 m-3 py-1 px-2 bg-blue-200 text-blue-600 rounded-xl"
+          onClick={resetPlayground}
+        >
+          <ArrowPath className='h-4 w-4' />
+        </button>
       </div>
       <div className="flex items-center justify-end p-3">
         <Form.Label text="Scale:" className="!m-0" />
