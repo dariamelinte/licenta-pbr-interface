@@ -1,27 +1,21 @@
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
 
-import { Dialog, Loading, Table } from "@/components/common";
-import { testColumns } from "@/components/common/Tables/columns/test";
-import { confirm } from "@/constants/confirm-dialog";
-import { VerticalMenuPage } from "@/layouts";
-import useStore from "@/stores";
-import type {
-  CompleteGroupApiType,
-  ResultApiType,
-  TestApiType,
-} from "@/types/common/api";
-import { AcademicCap, ChartPie, Clock, Phone, User } from "@/components/icons";
-import { timestampToDate } from "@/utils/timestampToDate";
-import { UserResultType } from "@/types/common/result";
-import { resultColumns } from "@/components/common/Tables";
+import { Loading, Table } from '@/components/common';
+import { resultColumns } from '@/components/common/Tables';
+import { ChartPie, Clock } from '@/components/icons';
+import { VerticalMenuPage } from '@/layouts';
+import useStore from '@/stores';
+import type { TestApiType } from '@/types/common/api';
+import type { UserResultType } from '@/types/common/result';
+import { timestampToDate } from '@/utils/timestampToDate';
 
 const Index = () => {
   const router = useRouter();
   const [test, setTest] = useState<TestApiType | null>(null);
   const [userResults, setUserResults] = useState<UserResultType[]>([]);
 
-  const { token, user } = useStore((state) => state.auth);
+  const { token } = useStore((state) => state.auth);
   const { loading: loadingT, getTestById } = useStore((state) => state.test);
   const {
     results,
@@ -38,7 +32,7 @@ const Index = () => {
   const handleUserResults = useCallback(async () => {
     const foundGroup = await getGroupById(
       token as string,
-      test?.group as string
+      test?.group as string,
     );
 
     if (!foundGroup) return;
@@ -54,7 +48,7 @@ const Index = () => {
           score: result?.score || 0,
           result: result?._id,
         };
-      }
+      },
     );
 
     setUserResults(foundUserResults);
@@ -70,7 +64,7 @@ const Index = () => {
 
   useEffect(() => {
     getResultsByTest(token as string, router.query.id as string);
-  }, [handleTest]);
+  }, [getResultsByTest, router.query.id]);
 
   if (loadingT || loadingR || loadingG) {
     return (
@@ -86,7 +80,7 @@ const Index = () => {
         <div className="card text-blue-900">
           <p className="title">{test?.name}</p>
           <div className="w-full pt-4">
-            <p className="py-4 text-xl text-blue-900 whitespace-pre-line">
+            <p className="whitespace-pre-line py-4 text-xl text-blue-900">
               {test?.description}
             </p>
             <p className="pb-2 text-xl font-semibold text-blue-900">

@@ -1,5 +1,5 @@
-import { LinkageType } from "./linkage";
-import { ObjectInstanceType } from "./objectInstance";
+import type { LinkageType } from './linkage';
+import type { ObjectInstanceType } from './objectInstance';
 
 export type CoordinatesObjectType<T> = {
   ox: T;

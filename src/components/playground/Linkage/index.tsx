@@ -11,7 +11,7 @@ type LinkageProps = {
 
 export const Linkage: React.FC<LinkageProps> = ({
   linkage: { first_connection, second_connection },
-  disabled
+  disabled,
 }) => {
   const { focusedAxe, removeLinkage } = useStore((state) => state.playground);
 

@@ -29,7 +29,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
   objectInstanceId,
   initialPos,
   objectModel,
-  disabled
+  disabled,
 }) => {
   const {
     scale,

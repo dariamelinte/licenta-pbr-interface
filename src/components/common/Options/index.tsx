@@ -1,5 +1,10 @@
 import { Button } from '@/components/common/Buttons';
-import { ChartBar, PencilSquare, Trash, ViewfinderCircle } from '@/components/icons';
+import {
+  ChartBar,
+  PencilSquare,
+  Trash,
+  ViewfinderCircle,
+} from '@/components/icons';
 
 import styles from './Options.module.css';
 

@@ -1,9 +1,9 @@
-import type { PropsWithChildren } from "react";
-import { useEffect, useRef, useState } from "react";
-import type { DraggableData, DraggableEvent } from "react-draggable";
-import Draggable from "react-draggable";
+import type { PropsWithChildren } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { DraggableData, DraggableEvent } from 'react-draggable';
+import Draggable from 'react-draggable';
 
-import type { PointType } from "@/types/common/playground";
+import type { PointType } from '@/types/common/playground';
 
 type PieceProps = {
   initialPos: PointType;

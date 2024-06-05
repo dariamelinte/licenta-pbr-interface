@@ -1,6 +1,6 @@
-import type { AxiosPromise } from "axios";
+import type { AxiosPromise } from 'axios';
 
-import { httpService } from "@/services";
+import { httpService } from '@/services';
 import type {
   AddApiType,
   DeleteApiType,
@@ -8,14 +8,14 @@ import type {
   GetByApiType,
   ResultApiType,
   UpdateApiType,
-} from "@/types/common/api";
-import type { ResultType } from "@/types/common/result";
+} from '@/types/common/api';
+import type { ResultType } from '@/types/common/result';
 
 export const createResult = async (
   accessToken: string,
-  result: ResultType
+  result: ResultType,
 ): AxiosPromise<AddApiType<ResultApiType>> => {
-  return httpService.post("/results", result, {
+  return httpService.post('/results', result, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -23,9 +23,9 @@ export const createResult = async (
 };
 
 export const getResults = async (
-  accessToken: string
+  accessToken: string,
 ): AxiosPromise<GetAllApiType<ResultApiType>> => {
-  return httpService.get("/results", {
+  return httpService.get('/results', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -34,7 +34,7 @@ export const getResults = async (
 
 export const getResultById = async (
   accessToken: string,
-  id: string
+  id: string,
 ): AxiosPromise<GetByApiType<ResultApiType>> => {
   return httpService.get(`/results/id/${id}`, {
     headers: {
@@ -46,9 +46,9 @@ export const getResultById = async (
 export const getResultsByTest = async (
   accessToken: string,
   test: string,
-  own?: boolean
+  own?: boolean,
 ): AxiosPromise<GetByApiType<ResultApiType[]>> => {
-  return httpService.get(`/results/test/${test}?${own ? "own=true" : ""}`, {
+  return httpService.get(`/results/test/${test}?${own ? 'own=true' : ''}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -58,7 +58,7 @@ export const getResultsByTest = async (
 export const updateResult = async (
   accessToken: string,
   id: string,
-  result: Partial<ResultApiType>
+  result: Partial<ResultApiType>,
 ): AxiosPromise<UpdateApiType<ResultApiType>> => {
   return httpService.patch(`/results/id/${id}`, result, {
     headers: {
@@ -69,7 +69,7 @@ export const updateResult = async (
 
 export const deleteResult = async (
   accessToken: string,
-  id: string
+  id: string,
 ): AxiosPromise<DeleteApiType> => {
   return httpService.delete(`/results/id/${id}`, {
     headers: {

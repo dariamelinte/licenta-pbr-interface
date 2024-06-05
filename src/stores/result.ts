@@ -1,9 +1,9 @@
-import { toast } from "react-toastify";
-import type { StateCreator } from "zustand";
+import { toast } from 'react-toastify';
+import type { StateCreator } from 'zustand';
 
-import { ERROR_MESSAGE } from "@/constants/messages";
-import * as service from "@/services/api/result";
-import type { ResultStoreType } from "@/types/store/result";
+import { ERROR_MESSAGE } from '@/constants/messages';
+import * as service from '@/services/api/result';
+import type { ResultStoreType } from '@/types/store/result';
 
 export const resultSlice: StateCreator<
   ResultStoreType,
@@ -81,7 +81,7 @@ export const resultSlice: StateCreator<
         } = await service.getResultsByTest(accessToken, test, own);
 
         if (!success) throw Error(error);
-        
+
         set({
           result: {
             ...get().result,
@@ -105,7 +105,7 @@ export const resultSlice: StateCreator<
         if (!data.success) throw Error(data.error);
 
         const updatedResults = get().result.results.filter(
-          ({ _id }) => _id !== id
+          ({ _id }) => _id !== id,
         );
 
         set({
@@ -147,14 +147,14 @@ export const resultSlice: StateCreator<
         const { data } = await service.updateResult(
           accessToken,
           _id as string,
-          rest
+          rest,
         );
         if (!data.success) throw Error(data.error);
 
         const { results } = get().result;
 
         const updatedResultIndex = results.findIndex(
-          (result) => result._id === _id
+          (result) => result._id === _id,
         );
 
         results[updatedResultIndex] = data.data;

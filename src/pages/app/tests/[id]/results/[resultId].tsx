@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
-import { useCallback, useEffect } from "react";
+import { useRouter } from 'next/router';
+import { useCallback, useEffect } from 'react';
 
-import { Loading } from "@/components/common";
-import { VerticalMenuPage } from "@/layouts";
-import useStore from "@/stores";
-import { Board } from "@/components/playground";
+import { Loading } from '@/components/common';
+import { Board } from '@/components/playground';
+import { VerticalMenuPage } from '@/layouts';
+import useStore from '@/stores';
 
 const Index = () => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const Index = () => {
 
   useEffect(() => {
     if (router.query.resultId) {
-        handleResult();
+      handleResult();
     }
   }, [handleResult, router.query.resultId]);
 
