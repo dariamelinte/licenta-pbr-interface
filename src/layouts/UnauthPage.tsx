@@ -1,11 +1,12 @@
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
-import type { PropsWithChildren } from 'react';
-import React, { useCallback, useEffect } from 'react';
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import type { PropsWithChildren } from "react";
+import React, { useCallback, useEffect } from "react";
 
-import useStore from '@/stores';
+import useStore from "@/stores";
 
-import { Page, type PageProps } from './Page';
+import { Page, type PageProps } from "./Page";
+import { parseJwt } from "@/utils/parseJwt";
 
 export function UnauthPage({
   children,
@@ -15,22 +16,22 @@ export function UnauthPage({
   const { token, expiration_time, setToken } = useStore((state) => state.auth);
 
   const handleAuthUser = useCallback(() => {
-    // const isAboutToExpire = (Date.now() + 10 * 60 * 1000) >= (expiration_time || 0) * 1000
-
-    // if (isAboutToExpire) {
-    //   return;
-    // }
+    const cookieToken = Cookies.get(process.env.SECRET_TOKEN);
+    let valid = false;
 
     if (token) {
-      router.push('/app');
-      return;
+      valid = Date.now() + 10 * 60 >= (expiration_time || 0);
+    } else if (cookieToken) {
+      const { expiration_time: exp } = parseJwt(cookieToken);
+      valid = Date.now() + 10 * 60 >= (exp || 0);
     }
 
-    const cookieToken = Cookies.get(process.env.SECRET_TOKEN);
+    if (valid) {
+      router.push("/app");
 
-    if (cookieToken) {
-      setToken(cookieToken);
-      router.push('/app');
+      if (!token) {
+        setToken(cookieToken);
+      }
     }
   }, [token, router, setToken]);
 
