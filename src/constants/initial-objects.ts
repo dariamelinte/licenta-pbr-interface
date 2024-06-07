@@ -6,7 +6,7 @@ import type {
 import type { CategoryType } from '@/types/common/category';
 import type { GroupFormType, JoinGroupFormType } from '@/types/common/group';
 import type { ObjectModelInputType } from '@/types/common/objectModel';
-import type { TestFormType } from '@/types/common/test';
+import type { TestType } from '@/types/common/test';
 import type { ProfileType } from '@/types/common/user';
 
 export const INITIAL_CATEGORY: CategoryType = {
@@ -52,7 +52,7 @@ export const INITIAL_JOIN_GROUP: JoinGroupFormType = {
   code: '',
 };
 
-export const INITIAL_TEST_FORM: TestFormType = {
+export const INITIAL_TEST_FORM: TestType = {
   name: '',
   description: '',
   status: 'wip',

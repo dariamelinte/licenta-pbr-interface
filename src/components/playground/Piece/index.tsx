@@ -1,9 +1,9 @@
-import type { PropsWithChildren } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import type { DraggableData, DraggableEvent } from 'react-draggable';
-import Draggable from 'react-draggable';
+import type { PropsWithChildren } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { DraggableData, DraggableEvent } from "react-draggable";
+import Draggable from "react-draggable";
 
-import type { PointType } from '@/types/common/playground';
+import type { PointType } from "@/types/common/playground";
 
 type PieceProps = {
   initialPos: PointType;
@@ -14,7 +14,6 @@ type PieceProps = {
 
 export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
   initialPos,
-  pos,
   disabled,
   onStop,
   children,
@@ -25,27 +24,24 @@ export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
 
   useEffect(() => {
     if (
-      pos?.x &&
-      pos?.y &&
+      initialPos?.x &&
+      initialPos?.y &&
       !isDraggingRef.current &&
-      !(pos.x === position.x && pos.y === position.y)
+      !(initialPos.x === position.x && initialPos.y === position.y)
     ) {
-      setPosition(pos);
+      setPosition(initialPos);
     }
-  }, [pos?.x, pos?.y, position.x, position.y]);
+  }, [initialPos?.x, initialPos?.y, position.x, position.y]);
 
   const handleDrag = (_: DraggableEvent, data: DraggableData) => {
     isDraggingRef.current = true;
+    onStop?.(position, { x: data.x, y: data.y });
     setPosition({ x: data.x, y: data.y });
-    if (pos) {
-      onStop?.(pos, position);
-    }
   };
 
-  const handleStop = () => {
-    if (pos) {
-      onStop?.(pos, position);
-    }
+  const handleStop = (_: DraggableEvent, data: DraggableData) => {
+    onStop?.(position, { x: data.x, y: data.y });
+    setPosition({ x: data.x, y: data.y });
 
     isDraggingRef.current = false;
   };

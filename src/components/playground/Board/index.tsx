@@ -1,25 +1,26 @@
-'use client';
+"use client";
 
-import type { ChangeEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
-import { Xwrapper } from 'react-xarrows';
+import type { ChangeEvent } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { Xwrapper } from "react-xarrows";
 
-import { Form } from '@/components/common';
-import { CoordinatesButton } from '@/components/common/Buttons';
-import { ArrowPath } from '@/components/icons';
+import { Form } from "@/components/common";
+import { CoordinatesButton } from "@/components/common/Buttons";
+import { ArrowPath } from "@/components/icons";
 import {
   Linkage,
   ObjectModelMenu,
   PlaygroundModelView,
-} from '@/components/playground';
-import { objectModelSizes } from '@/constants/constants';
-import useStore from '@/stores';
+} from "@/components/playground";
+import { objectModelSizes } from "@/constants/constants";
+import useStore from "@/stores";
+import { PointType } from "@/types/common/playground";
 
 type BoardProps = {
   shouldResetBoard?: boolean;
   disabled?: boolean;
-  onAddInstance: (id: string) => void;
+  onAddInstance: (id: string, position: PointType) => void;
 };
 
 export const Board: React.FC<BoardProps> = ({
@@ -61,10 +62,10 @@ export const Board: React.FC<BoardProps> = ({
 
     // Update grid size on initial render and when window resizes
     updateGridSize();
-    window.addEventListener('resize', updateGridSize);
+    window.addEventListener("resize", updateGridSize);
 
     return () => {
-      window.removeEventListener('resize', updateGridSize);
+      window.removeEventListener("resize", updateGridSize);
     };
   }, []);
 
@@ -72,11 +73,33 @@ export const Board: React.FC<BoardProps> = ({
     setScale(Number(e.target.value) / 100);
   };
 
+  const handleAddInstance = (id: string) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    const objectModel = objectModels.find(
+      (objectModel) => objectModel._id === id
+    );
+
+    if (!objectModel || !rect) return;
+
+    const position: PointType = {
+      x: Math.max(
+        (rect.left + (rect.width - objectModelSizes[objectModel.size])) / 2,
+        0
+      ),
+      y: Math.max(
+        (rect.top + (rect.height - objectModelSizes[objectModel.size])) / 2,
+        0
+      ),
+    };
+
+    onAddInstance(id, position);
+  };
+
   return (
     <Xwrapper>
       {!disabled ? (
         <div className="t-1 l-1 absolute z-50 p-3">
-          <ObjectModelMenu onAddObjectModel={onAddInstance} />
+          <ObjectModelMenu onAddObjectModel={handleAddInstance} />
         </div>
       ) : null}
       <div
@@ -91,45 +114,25 @@ export const Board: React.FC<BoardProps> = ({
         <div
           className="absolute size-2 rounded-full bg-red-500"
           style={{
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
           }}
         />
         {Object.entries(instances).map(([id, instance]) => {
           const objectModel = objectModels.find(
-            (objectModel) => objectModel._id === instance.object_model,
+            (objectModel) => objectModel._id === instance.object_model
           );
+
           if (!objectModel) {
-            toast.error('Could not find an object model');
+            toast.error("Could not find an object model");
             return null;
           }
-
-          const rect = containerRef.current?.getBoundingClientRect();
-          const initialPos = {
-            x:
-              instance.position[focusedAxe].x ||
-              Math.max(
-                ((rect?.left || 0) +
-                  ((rect?.width || 0) - objectModelSizes[objectModel.size])) /
-                  2,
-                0,
-              ),
-            y:
-              instance.position[focusedAxe].y ||
-              Math.max(
-                ((rect?.top || 0) +
-                  ((rect?.height || 0) - objectModelSizes[objectModel.size])) /
-                  2,
-                0,
-              ),
-          };
-
+  
           return (
             <PlaygroundModelView
               key={id}
               objectInstanceId={id}
-              initialPos={initialPos}
               objectModel={objectModel}
               disabled={disabled}
             />

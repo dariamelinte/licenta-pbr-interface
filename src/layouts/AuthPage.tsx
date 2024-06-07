@@ -1,13 +1,13 @@
-import Cookies from "js-cookie";
-import { useRouter } from "next/router";
-import type { PropsWithChildren } from "react";
-import React, { useCallback, useEffect } from "react";
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+import type { PropsWithChildren } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
-import { Navbar } from "@/components/common";
-import useStore from "@/stores";
+import { Navbar } from '@/components/common';
+import useStore from '@/stores';
+import { parseJwt } from '@/utils/parseJwt';
 
-import { Page, type PageProps } from "./Page";
-import { parseJwt } from "@/utils/parseJwt";
+import { Page, type PageProps } from './Page';
 
 export function AuthPage({
   children,
@@ -17,7 +17,7 @@ export function AuthPage({
   const { token, expiration_time, setToken } = useStore((state) => state.auth);
 
   const handleAuthUser = useCallback(() => {
-    const cookieToken = Cookies.get(process.env.SECRET_TOKEN);
+    const cookieToken = Cookies.get(process.env.SECRET_TOKEN || '');
     let valid = false;
 
     if (token) {
@@ -28,11 +28,11 @@ export function AuthPage({
     }
 
     if (!valid) {
-      router.push("/");
+      router.push('/');
       return;
     }
 
-    if (!token) {
+    if (!token && cookieToken) {
       setToken(cookieToken);
     }
   }, [token, router, setToken, expiration_time]);

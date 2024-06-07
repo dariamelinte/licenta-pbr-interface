@@ -3,10 +3,10 @@ import type { ConnectionPointType } from '@/types/common/connectionPoint';
 import type { LinkageType } from '@/types/common/linkage';
 import type { ObjectInstanceType } from '@/types/common/objectInstance';
 import type {
+  BoardType,
   CoordinatesObjectType,
   PointType,
 } from '@/types/common/playground';
-import type { TestBoardType } from '@/types/common/test';
 
 export type PlaygroundStoreType = {
   playground: {
@@ -19,7 +19,7 @@ export type PlaygroundStoreType = {
     setScale: (scale: number) => void;
     setFocusedAxe: (focusedAxe: keyof typeof coordinatesAxes) => void;
     setCameraPerspective: (cameraPerspective: number[]) => void;
-    addObjectInstance: (id: string, objectModelId: string) => void;
+    addObjectInstance: (id: string, objectModelId: string, position: PointType) => void;
     addConnectionPoint: (connectionPoint: ConnectionPointType) => void;
     changeObjectInstancePosition: (
       id: string,
@@ -27,6 +27,6 @@ export type PlaygroundStoreType = {
     ) => void;
     removeLinkage: (first: string, second: string) => void;
     resetPlayground: () => void;
-    loadPlayground: (board: TestBoardType) => void;
+    loadPlayground: (board: BoardType) => void;
   };
 };

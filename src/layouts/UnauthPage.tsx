@@ -1,12 +1,12 @@
-import Cookies from "js-cookie";
-import { useRouter } from "next/router";
-import type { PropsWithChildren } from "react";
-import React, { useCallback, useEffect } from "react";
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+import type { PropsWithChildren } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
-import useStore from "@/stores";
+import useStore from '@/stores';
+import { parseJwt } from '@/utils/parseJwt';
 
-import { Page, type PageProps } from "./Page";
-import { parseJwt } from "@/utils/parseJwt";
+import { Page, type PageProps } from './Page';
 
 export function UnauthPage({
   children,
@@ -16,7 +16,7 @@ export function UnauthPage({
   const { token, expiration_time, setToken } = useStore((state) => state.auth);
 
   const handleAuthUser = useCallback(() => {
-    const cookieToken = Cookies.get(process.env.SECRET_TOKEN);
+    const cookieToken = Cookies.get(process.env.SECRET_TOKEN || '');
     let valid = false;
 
     if (token) {
@@ -27,9 +27,9 @@ export function UnauthPage({
     }
 
     if (valid) {
-      router.push("/app");
+      router.push('/app');
 
-      if (!token) {
+      if (!token && cookieToken) {
         setToken(cookieToken);
       }
     }

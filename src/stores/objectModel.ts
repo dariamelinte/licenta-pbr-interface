@@ -127,18 +127,18 @@ export const objectModelSlice: StateCreator<
       }
     },
 
-    updateObjectModel: async (
-      token: string,
-      objectModel: ObjectModelApiType,
-    ) => {
-      try {
-        // const { data } = await service.updateObjectModel(_id, objectModel);
-        // if (!data.success) throw Error(data.error);
-        // TODO
-        // toast.info(data.message);
-      } catch (error: any) {
-        toast.error(error || ERROR_MESSAGE.default);
-      }
-    },
+    updateObjectModel: async () =>
+      // token: string,
+      // objectModel: ObjectModelApiType,
+      {
+        try {
+          // const { data } = await service.updateObjectModel(_id, objectModel);
+          // if (!data.success) throw Error(data.error);
+          // TODO
+          // toast.info(data.message);
+        } catch (error: any) {
+          toast.error(error || ERROR_MESSAGE.default);
+        }
+      },
   },
 });

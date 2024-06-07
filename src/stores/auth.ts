@@ -74,7 +74,7 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
         if (!data.success) throw Error(data.error);
 
         get().auth.setToken(data.data.token);
-        Cookies.set(process.env.SECRET_TOKEN, data.data.token);
+        Cookies.set(process.env.SECRET_TOKEN || '', data.data.token);
 
         toast.info(data.message);
         onSuccess();
@@ -100,6 +100,8 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
     },
 
     signOut: async () => {
+      if (!process.env.SECRET_TOKEN) return;
+
       get().auth.setLoading(true);
 
       try {

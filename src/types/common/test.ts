@@ -9,7 +9,7 @@ export type TestType = {
   min_score: number;
   max_score: number;
 
-  start_date: string;
-  due_date: string;
+  start_date: any;
+  due_date: any;
   group: string;
 };

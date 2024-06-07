@@ -20,14 +20,12 @@ import styles from './ModelView.module.css';
 
 type PlaygroundModelViewProps = {
   objectInstanceId: string;
-  initialPos: { x: number; y: number };
   objectModel: ObjectModelApiType;
   disabled?: boolean;
 };
 
 export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
   objectInstanceId,
-  initialPos,
   objectModel,
   disabled,
 }) => {
@@ -51,19 +49,6 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
   );
 
   useEffect(() => {
-    changeObjectInstancePosition(objectInstanceId, {
-      ox: initialPos,
-      oy: initialPos,
-      oz: initialPos,
-    });
-  }, [
-    initialPos.x,
-    initialPos.y,
-    objectInstanceId,
-    changeObjectInstancePosition,
-  ]);
-
-  useEffect(() => {
     const ids = [];
     for (let i = 0; i < 8; i++) {
       ids.push(`${objectInstanceId}-${boxPoints[i]?.[focusedAxe]}`);
@@ -78,6 +63,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
       x: newPoint.x - oldPoint.x,
       y: newPoint.y - oldPoint.y,
     };
+    console.log({ delta, oldPoint, newPoint })
 
     switch (focusedAxe) {
       case 'ox':
@@ -142,10 +128,11 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     addConnectionPoint(connectionPoint);
   };
 
+  if (!objectInstance) return null;
+
   return (
     <Piece
-      pos={objectInstance?.position[focusedAxe]}
-      initialPos={initialPos}
+      initialPos={objectInstance.position[focusedAxe]}
       onStop={handlePieceStop}
       disabled={disabled}
     >

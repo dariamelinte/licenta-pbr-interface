@@ -7,11 +7,13 @@ import useStore from '@/stores';
 
 const Index = () => {
   const { loading, getObjectModels } = useStore((state) => state.objectModel);
-  const { addObjectInstance } = useStore((state) => state.playground);
+  const { addObjectInstance, instances, linkages } = useStore((state) => state.playground);
 
   useEffect(() => {
     getObjectModels();
   }, [getObjectModels]);
+
+  console.log({ instances, linkages})
 
   if (loading) {
     // TODO: Loading
@@ -20,7 +22,7 @@ const Index = () => {
 
   return (
     <AuthPage className="max-w-[100vw] overflow-hidden">
-      <Board onAddInstance={(id) => addObjectInstance(uuidv4(), id)} />
+      <Board onAddInstance={(id, position) => addObjectInstance(uuidv4(), id, position)} />
     </AuthPage>
   );
 };

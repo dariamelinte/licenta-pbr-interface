@@ -84,7 +84,7 @@ export const TestForm: React.FC<TestFormProps> = ({
         </Form>
       </Formik>
       <Board
-        onAddInstance={(id) => addObjectInstance(uuidv4(), id)}
+        onAddInstance={(id, position) => addObjectInstance(uuidv4(), id, position)}
         shouldResetBoard={shouldResetBoard}
         disabled={disabled}
       />
