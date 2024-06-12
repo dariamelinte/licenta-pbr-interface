@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Button, Dialog } from '@/components/common';
@@ -25,9 +25,9 @@ export const TestForm: React.FC<TestFormProps> = ({
   shouldResetBoard,
   disabled,
 }) => {
-  const { open, setOpen } = useStore((state) => state.dialog);
-  const { loading, getObjectModels } = useStore((state) => state.objectModel);
-  const { addObjectInstance } = useStore((state) => state.playground);
+  const { open, setOpen } = useStore(useCallback((state) => state.dialog, []));
+  const { loading, getObjectModels } = useStore(useCallback((state) => state.objectModel, []));
+  const { addObjectInstance } = useStore(useCallback((state) => state.playground, []));
 
   useEffect(() => {
     getObjectModels();

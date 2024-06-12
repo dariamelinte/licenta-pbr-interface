@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Dialog, Loading, Table } from '@/components/common';
 import { groupColumns } from '@/components/common/Tables';
@@ -14,8 +14,8 @@ const Index = () => {
   const router = useRouter();
   const [group, setGroup] = useState<GroupFormType | null>(null);
 
-  const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
-  const { token, user } = useStore((state) => state.auth);
+  const { open, setOpen, setOnConfirm } = useStore(useCallback((state) => state.dialog, []));
+  const { token, user } = useStore(useCallback((state) => state.auth, []));
   const {
     groups,
     loading,
@@ -24,7 +24,7 @@ const Index = () => {
     createGroup,
     updateGroup,
     joinGroup,
-  } = useStore((state) => state.group);
+  } = useStore(useCallback((state) => state.group, []));
 
   const columnProps = useMemo(() => {
     if (user.role === 'student') {

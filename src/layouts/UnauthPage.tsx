@@ -13,7 +13,7 @@ export function UnauthPage({
   ...pageProps
 }: PropsWithChildren<PageProps>) {
   const router = useRouter();
-  const { token, expiration_time, setToken } = useStore((state) => state.auth);
+  const { token, expiration_time, setToken } = useStore(useCallback((state) => state.auth, []));
 
   const handleAuthUser = useCallback(() => {
     const cookieToken = Cookies.get(process.env.SECRET_TOKEN || '');

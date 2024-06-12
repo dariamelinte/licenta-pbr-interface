@@ -9,9 +9,9 @@ import useStore from '@/stores';
 const Index = () => {
   const router = useRouter();
 
-  const { token } = useStore((state) => state.auth);
-  const { getResultById, loading } = useStore((state) => state.result);
-  const { loadPlayground } = useStore((state) => state.playground);
+  const { token } = useStore(useCallback((state) => state.auth, []));
+  const { getResultById, loading, setResultId } = useStore(useCallback((state) => state.result, []));;
+  const { loadPlayground } = useStore(useCallback((state) => state.playground, []));
 
   const handleResult = useCallback(async () => {
     const { resultId } = router.query;
@@ -27,6 +27,7 @@ const Index = () => {
 
   useEffect(() => {
     if (router.query.resultId) {
+      setResultId(router.query.resultId as string);
       handleResult();
     }
   }, [handleResult, router.query.resultId]);

@@ -1,6 +1,6 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 import useStore from '@/stores';
@@ -25,7 +25,7 @@ export const ModelView: React.FC<ModelViewProps> = ({
   const [modelUrl, setModelUrl] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<THREE.Box3 | null>(null);
   const [scale, setScale] = useState<number[]>(defaultScale || [1, 1, 1]);
-  const { focusedAxe } = useStore((state) => state.playground);
+  const { focusedAxe } = useStore(useCallback((state) => state.playground, []));
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
 
   useEffect(() => {

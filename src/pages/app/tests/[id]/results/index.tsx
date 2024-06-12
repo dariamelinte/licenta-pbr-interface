@@ -15,14 +15,14 @@ const Index = () => {
   const [test, setTest] = useState<TestApiType | null>(null);
   const [userResults, setUserResults] = useState<UserResultType[]>([]);
 
-  const { token } = useStore((state) => state.auth);
-  const { loading: loadingT, getTestById } = useStore((state) => state.test);
+  const { token } = useStore(useCallback((state) => state.auth, []));
+  const { loading: loadingT, getTestById } = useStore(useCallback((state) => state.test, []));
   const {
     results,
     loading: loadingR,
     getResultsByTest,
-  } = useStore((state) => state.result);
-  const { loading: loadingG, getGroupById } = useStore((state) => state.group);
+  } = useStore(useCallback((state) => state.result, []));;
+  const { loading: loadingG, getGroupById } = useStore(useCallback((state) => state.group, []));
 
   const handleTest = useCallback(async () => {
     const res = await getTestById(token as string, router.query.id as string);

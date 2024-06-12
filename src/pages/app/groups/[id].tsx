@@ -16,11 +16,11 @@ const Index = () => {
   const router = useRouter();
   const [group, setGroup] = useState<CompleteGroupApiType | null>(null);
 
-  const { token, credential, user } = useStore((state) => state.auth);
+  const { token, credential, user } = useStore(useCallback((state) => state.auth, []));
   const { getGroupById, loading, updateGroup, groups, setGroups } = useStore(
-    (state) => state.group,
+    useCallback((state) => state.group, []),
   );
-  const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
+  const { open, setOpen, setOnConfirm } = useStore(useCallback((state) => state.dialog, []));
 
   const handleGroup = useCallback(async () => {
     const foundGroup = await getGroupById(

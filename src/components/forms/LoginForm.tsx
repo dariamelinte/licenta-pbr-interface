@@ -7,10 +7,11 @@ import { authLabels } from '@/constants/labels';
 import { loginSchema } from '@/constants/validation-schemas';
 import useStore from '@/stores';
 import type { LoginFormType } from '@/types/common/auth';
+import { useCallback } from 'react';
 
 export const LoginForm = () => {
   const router = useRouter();
-  const { login, loading } = useStore((state) => state.auth);
+  const { login, loading } = useStore(useCallback((state) => state.auth, []));
 
   return (
     <Formik<LoginFormType>

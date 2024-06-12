@@ -6,9 +6,10 @@ import { authLabels } from '@/constants/labels';
 import { forgotPasswordSchema } from '@/constants/validation-schemas';
 import useStore from '@/stores';
 import type { ForgotPasswordFormType } from '@/types/common/auth';
+import { useCallback } from 'react';
 
 export const ForgotPasswordForm = () => {
-  const { forgotPassword, loading } = useStore((state) => state.auth);
+  const { forgotPassword, loading } = useStore(useCallback((state) => state.auth, []));
 
   return (
     <Formik<ForgotPasswordFormType>

@@ -12,9 +12,9 @@ export const playgroundSlice: StateCreator<
   PlaygroundStoreType
 > = (set, get) => ({
   playground: {
-    focusedAxe: "ox",
+    focusedAxe: "oz",
     instances: {},
-    cameraPerspective: getCameraPerspective("ox"),
+    cameraPerspective: getCameraPerspective("oz"),
     scale: 1,
     linkages: [],
 
@@ -130,9 +130,9 @@ export const playgroundSlice: StateCreator<
       set({
         playground: {
           ...get().playground,
-          focusedAxe: "ox",
+          focusedAxe: "oz",
           instances: {},
-          cameraPerspective: getCameraPerspective("ox"),
+          cameraPerspective: getCameraPerspective("oz"),
           scale: 1,
           linkages: [],
         },

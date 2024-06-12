@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Dialog, Loading, Table } from '@/components/common';
 import { objectModelColumns } from '@/components/common/Tables';
@@ -13,15 +13,15 @@ const Index = () => {
     null,
   );
 
-  const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
-  const { token } = useStore((state) => state.auth);
+  const { open, setOpen, setOnConfirm } = useStore(useCallback((state) => state.dialog, []));
+  const { token } = useStore(useCallback((state) => state.auth, []));
   const {
     objectModels,
     loading,
     getObjectModels,
     deleteObjectModel,
     createObjectModel,
-  } = useStore((state) => state.objectModel);
+  } = useStore(useCallback((state) => state.objectModel, []));
 
   useEffect(() => {
     getObjectModels();

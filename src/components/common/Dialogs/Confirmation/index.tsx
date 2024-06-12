@@ -7,13 +7,14 @@ import type { ConfirmDialogType } from '@/types/store/dialog';
 
 import { CustomDialog } from '../Dialog';
 import styles from './Confirmation.module.css';
+import { useCallback } from 'react';
 
 export const Confirmation: React.FC<ConfirmDialogType> = ({
   title,
   content,
   action,
 }) => {
-  const { setOpen, onConfirm } = useStore((state) => state.dialog);
+  const { setOpen, onConfirm } = useStore(useCallback((state) => state.dialog, []));
 
   return (
     <CustomDialog>

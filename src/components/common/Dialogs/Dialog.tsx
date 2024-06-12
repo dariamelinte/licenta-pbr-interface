@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import type { PropsWithChildren } from 'react';
-import { Fragment } from 'react';
+import { Fragment, useCallback } from 'react';
 
 import useStore from '@/stores';
 
@@ -9,7 +9,7 @@ type CustomDialogProps = {};
 export const CustomDialog = ({
   children,
 }: PropsWithChildren<CustomDialogProps>) => {
-  const { open, setOpen } = useStore((state) => state.dialog);
+  const { open, setOpen } = useStore(useCallback((state) => state.dialog, []));
 
   return (
     <Transition appear show={!!open} as={Fragment}>

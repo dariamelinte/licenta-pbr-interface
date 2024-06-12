@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { Form as CommonForm } from '@/components/common';
 import { testStatuses } from '@/constants/constants';
@@ -11,8 +11,8 @@ import styles from '../Form.module.css';
 type TestFormProps = {};
 
 export const TestInformationForm: React.FC<TestFormProps> = () => {
-  const { token, user } = useStore((state) => state.auth);
-  const { groups, getGroups } = useStore((state) => state.group);
+  const { token, user } = useStore(useCallback((state) => state.auth, []));
+  const { groups, getGroups } = useStore(useCallback((state) => state.group, []));
 
   const isStudent = useMemo(() => user.role === 'student', [user.role]);
   const groupOptions = useMemo(

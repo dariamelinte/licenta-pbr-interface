@@ -77,3 +77,27 @@ export const deleteResult = async (
     },
   });
 };
+
+export const deleteResultInstance = async (
+  accessToken: string,
+  id: string,
+  instance: string,
+): AxiosPromise<DeleteApiType> => {
+  return httpService.delete(`/results/id/${id}/instance/${instance}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
+export const deleteResultLinkage = async (
+  accessToken: string,
+  id: string,
+  linkage: string,
+): AxiosPromise<DeleteApiType> => {
+  return httpService.delete(`/results/id/${id}/linkage/${linkage}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};

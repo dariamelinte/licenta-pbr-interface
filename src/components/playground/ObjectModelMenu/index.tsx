@@ -1,6 +1,6 @@
 import { Disclosure, Transition } from '@headlessui/react';
 import cx from 'classnames';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Form, Loading } from '@/components/common';
 import { ChevronDown } from '@/components/icons';
@@ -18,8 +18,8 @@ export const ObjectModelMenu: React.FC<ObjectModelMenuType> = ({
   onAddObjectModel,
 }) => {
   const { objectModels, loading, getObjectModels, getObjectModelsByCategory } =
-    useStore((state) => state.objectModel);
-  const { categories, getCategories } = useStore((state) => state.category);
+    useStore(useCallback((state) => state.objectModel, []));
+  const { categories, getCategories } = useStore(useCallback((state) => state.category, []))
 
   const [models, setModels] = useState(objectModels);
   const [category, setCategory] = useState<string | undefined>();

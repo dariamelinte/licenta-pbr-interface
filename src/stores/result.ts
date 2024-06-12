@@ -14,6 +14,7 @@ export const resultSlice: StateCreator<
   result: {
     results: [],
     loading: false,
+    resultId: undefined,
 
     setLoading: (loading) =>
       set({
@@ -28,6 +29,14 @@ export const resultSlice: StateCreator<
         result: {
           ...get().result,
           results,
+        },
+      }),
+    
+    setResultId: (resultId) =>
+      set({
+        result: {
+          ...get().result,
+          resultId,
         },
       }),
 
@@ -101,6 +110,52 @@ export const resultSlice: StateCreator<
     deleteResult: async (accessToken, id: string) => {
       try {
         const { data } = await service.deleteResult(accessToken, id);
+
+        if (!data.success) throw Error(data.error);
+
+        const updatedResults = get().result.results.filter(
+          ({ _id }) => _id !== id,
+        );
+
+        set({
+          result: {
+            ...get().result,
+            results: updatedResults,
+          },
+        });
+
+        toast.info(data.message);
+      } catch (error: any) {
+        toast.error(error || ERROR_MESSAGE.default);
+      }
+    },
+
+    deleteResultInstance: async (accessToken, id: string, instance: string) => {
+      try {
+        const { data } = await service.deleteResultInstance(accessToken, id, instance);
+
+        if (!data.success) throw Error(data.error);
+
+        const updatedResults = get().result.results.filter(
+          ({ _id }) => _id !== id,
+        );
+
+        set({
+          result: {
+            ...get().result,
+            results: updatedResults,
+          },
+        });
+
+        toast.info(data.message);
+      } catch (error: any) {
+        toast.error(error || ERROR_MESSAGE.default);
+      }
+    },
+
+    deleteResultLinkage: async (accessToken, id: string, linkage: string) => {
+      try {
+        const { data } = await service.deleteResultLinkage(accessToken, id, linkage);
 
         if (!data.success) throw Error(data.error);
 

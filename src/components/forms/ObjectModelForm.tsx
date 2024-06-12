@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import { Form, Formik } from 'formik';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { Form as CommonForm } from '@/components/common';
 import { modelEntensions } from '@/constants/constants';
@@ -21,8 +21,8 @@ type ObjectModelProps = {
 export const ObjectModelForm: React.FC<ObjectModelProps> = ({
   objectModel,
 }) => {
-  const { setOpen, onConfirm } = useStore((state) => state.dialog);
-  const { categories, getCategories } = useStore((state) => state.category);
+  const { setOpen, onConfirm } = useStore(useCallback((state) => state.dialog, []));
+  const { categories, getCategories } = useStore(useCallback((state) => state.category, []))
 
   const optionsCategories = useMemo(
     () => [

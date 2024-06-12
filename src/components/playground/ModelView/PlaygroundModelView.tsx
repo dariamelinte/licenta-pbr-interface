@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
   boxPoints,
@@ -18,15 +18,16 @@ import { Piece } from "../Piece";
 import { ModelView } from "./ModelView";
 import styles from "./ModelView.module.css";
 import { XCircle } from "@/components/icons";
+import { ObjectInstanceType } from "@/types/common/objectInstance";
 
 type PlaygroundModelViewProps = {
-  objectInstanceId: string;
+  objectInstance: ObjectInstanceType;
   objectModel: ObjectModelApiType;
   disabled?: boolean;
 };
 
 export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
-  objectInstanceId,
+  objectInstance,
   objectModel,
   disabled,
 }) => {
@@ -34,29 +35,15 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     scale,
     changeObjectInstancePosition,
     focusedAxe,
-    instances,
     addConnectionPoint,
     removeInstance,
-  } = useStore((state) => state.playground);
-  const [buttonIds, setButtonIds] = useState<string[]>([]);
-
-  const objectInstance = useMemo(
-    () => instances[objectInstanceId],
-    [objectInstanceId, instances]
-  );
-
+  } = useStore(useCallback((state) => state.playground, []));
+  const { token } = useStore(useCallback((state) => state.auth, []));
+  const { resultId, deleteResultInstance } = useStore(useCallback((state) => state.result, []));;
   const objectSize = useMemo(
     () => objectModelSizes[objectModel.size] * scale,
     [objectModel.size, scale]
   );
-
-  useEffect(() => {
-    const ids = [];
-    for (let i = 0; i < 8; i++) {
-      ids.push(`${objectInstanceId}-${boxPoints[i]?.[focusedAxe]}`);
-    }
-    setButtonIds(ids);
-  }, [objectInstanceId, focusedAxe]);
 
   const handlePieceStop = (oldPoint: PointType, newPoint: PointType) => {
     if (!objectInstance?.position) return;
@@ -65,11 +52,12 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
       x: newPoint.x - oldPoint.x,
       y: newPoint.y - oldPoint.y,
     };
-    console.log({ delta, oldPoint, newPoint });
+
+    console.log({ delta });
 
     switch (focusedAxe) {
       case "ox":
-        changeObjectInstancePosition(objectInstanceId, {
+        changeObjectInstancePosition(objectInstance.uuid, {
           ox: newPoint,
           oy: {
             x: objectInstance.position.oy.x,
@@ -82,7 +70,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         });
         break;
       case "oy":
-        changeObjectInstancePosition(objectInstanceId, {
+        changeObjectInstancePosition(objectInstance.uuid, {
           ox: {
             x: objectInstance.position.ox.x,
             y: objectInstance.position.ox.y - delta.y,
@@ -95,7 +83,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         });
         break;
       case "oz":
-        changeObjectInstancePosition(objectInstanceId, {
+        changeObjectInstancePosition(objectInstance.uuid, {
           ox: {
             x: objectInstance.position.ox.x - delta.y,
             y: objectInstance.position.ox.y,
@@ -121,8 +109,8 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     if (!percentages) return;
 
     const connectionPoint: ConnectionPointType = {
-      instance: objectInstanceId,
-      uuid: buttonIds[index] as string,
+      instance: objectInstance.uuid,
+      uuid: `${objectInstance.uuid}-${boxPoint}` as string,
       boxPoint,
       ...percentages,
     };
@@ -153,14 +141,23 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         />
         <button
           className="relative -top-8 -left-8 text-blue-300"
-          onClick={() => removeInstance(objectInstanceId)}
+          onClick={() => {
+            if (resultId) {
+              deleteResultInstance(
+                token as string,
+                resultId,
+                objectInstance._id as string
+              );
+            }
+            removeInstance(objectInstance.uuid);
+          }}
+          disabled={disabled}
         >
           <XCircle />
         </button>
 
         <button
           className={cx(styles.linkButton, "-top-3 -left-3")}
-          id={buttonIds[0]}
           onClick={() => handlePointClick(0)}
           disabled={disabled}
         />
@@ -169,13 +166,11 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
             styles.linkButton,
             "-top-3 left-1/2 transform -translate-x-1/2"
           )}
-          id={buttonIds[1]}
           onClick={() => handlePointClick(1)}
           disabled={disabled}
         />
         <button
           className={cx(styles.linkButton, "-top-3 -right-3")}
-          id={buttonIds[2]}
           onClick={() => handlePointClick(2)}
           disabled={disabled}
         />
@@ -184,7 +179,6 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
             styles.linkButton,
             "top-1/2 -left-3 transform -translate-y-1/2"
           )}
-          id={buttonIds[3]}
           onClick={() => handlePointClick(3)}
           disabled={disabled}
         />
@@ -193,7 +187,6 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
             styles.linkButton,
             "top-1/2 -right-3 transform -translate-y-1/2"
           )}
-          id={buttonIds[4]}
           onClick={() => handlePointClick(4)}
           disabled={disabled}
         />
@@ -201,20 +194,17 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
           className={cx(styles.linkButton, "-bottom-3 -left-3")}
           onClick={() => handlePointClick(5)}
           disabled={disabled}
-          id={buttonIds[5]}
         />
         <button
           className={cx(
             styles.linkButton,
             "-bottom-3 left-1/2 transform -translate-x-1/2"
           )}
-          id={buttonIds[6]}
           onClick={() => handlePointClick(6)}
           disabled={disabled}
         />
         <button
           className={cx(styles.linkButton, "-bottom-3 -right-3")}
-          id={buttonIds[7]}
           onClick={() => handlePointClick(7)}
           disabled={disabled}
         />

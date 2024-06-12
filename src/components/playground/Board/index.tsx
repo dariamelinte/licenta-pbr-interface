@@ -1,7 +1,7 @@
 "use client";
 
 import type { ChangeEvent } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 import { Form } from "@/components/common";
@@ -28,9 +28,9 @@ export const Board: React.FC<BoardProps> = ({
   disabled,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { objectModels } = useStore((state) => state.objectModel);
+  const { objectModels } = useStore(useCallback((state) => state.objectModel, []));
   const { instances, scale, setScale, linkages, focusedAxe, resetPlayground } =
-    useStore((state) => state.playground);
+    useStore(useCallback((state) => state.playground, []));
 
   const [gridSize, setGridSize] = useState(40); // Initial grid size
 
@@ -118,7 +118,7 @@ export const Board: React.FC<BoardProps> = ({
             transform: "translate(-50%, -50%)",
           }}
         />
-        {Object.entries(instances).map(([id, instance]) => {
+        {Object.entries(instances).map(([uuid, instance]) => {
           const objectModel = objectModels.find(
             (objectModel) => objectModel._id === instance.object_model
           );
@@ -130,8 +130,8 @@ export const Board: React.FC<BoardProps> = ({
 
           return (
             <PlaygroundModelView
-              key={id}
-              objectInstanceId={id}
+              key={uuid}
+              objectInstance={instance}
               objectModel={objectModel}
               disabled={disabled}
             />

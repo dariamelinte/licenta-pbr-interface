@@ -1,16 +1,16 @@
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 
-import { Loading } from '@/components/common';
-import { TestForm } from '@/components/forms';
-import { ERROR_MESSAGE } from '@/constants/messages';
-import { VerticalMenuPage } from '@/layouts';
-import useStore from '@/stores';
-import type { ResultApiType, TestApiType } from '@/types/common/api';
-import type { ResultType } from '@/types/common/result';
-import type { TestType } from '@/types/common/test';
-import { timestampToDate } from '@/utils/timestampToDate';
+import { Loading } from "@/components/common";
+import { TestForm } from "@/components/forms";
+import { ERROR_MESSAGE } from "@/constants/messages";
+import { VerticalMenuPage } from "@/layouts";
+import useStore from "@/stores";
+import type { ResultApiType, TestApiType } from "@/types/common/api";
+import type { ResultType } from "@/types/common/result";
+import type { TestType } from "@/types/common/test";
+import { timestampToDate } from "@/utils/timestampToDate";
 
 const Index = () => {
   const router = useRouter();
@@ -18,24 +18,28 @@ const Index = () => {
   const [result, setResult] = useState<Partial<ResultApiType> | null>(null);
   const [isFirst, setIsFirst] = useState(true);
 
-  const { token, user } = useStore((state) => state.auth);
+  const { token, user } = useStore(useCallback((state) => state.auth, []));
   const {
     getTestById,
     loading: loadingT,
     updateTest,
-  } = useStore((state) => state.test);
+  } = useStore(useCallback((state) => state.test, []));
   const {
     results,
     getResultsByTest,
     loading: loadingR,
     updateResult,
     createResult,
-  } = useStore((state) => state.result);
-  const { instances, linkages, scale, loadPlayground } = useStore(
-    (state) => state.playground,
+    setResultId,
+    resultId
+  } = useStore(useCallback((state) => state.result, []));;
+  const { instances, linkages, scale, loadPlayground, resetPlayground } = useStore(
+    useCallback((state) => state.playground, [])
   );
 
-  const isStudent = useMemo(() => user.role === 'student', [user.role]);
+  const isStudent = useMemo(() => user.role === "student", [user.role]);
+
+  console.log(results, result);
 
   const handleTest = useCallback(async () => {
     const test = await getTestById(token as string, router.query.id as string);
@@ -44,18 +48,6 @@ const Index = () => {
 
     await getResultsByTest(token as string, test._id, true);
 
-    if (results[0]) {
-      loadPlayground({
-        linkages: results[0].linkages,
-        instances: results[0].instances,
-        scale: results[0].scale,
-      });
-      setResult(results[0]);
-      setIsFirst(false);
-    } else {
-      setResult({ linkages, instances, scale, test: test._id });
-    }
-
     const { start_date, due_date, ...restTest } = test;
 
     setTest({
@@ -63,15 +55,41 @@ const Index = () => {
       start_date: timestampToDate(Number(start_date)),
       due_date: timestampToDate(Number(due_date)),
     });
-  }, [getTestById, token, router.query.id, setTest, loadPlayground]);
+  }, [getTestById, token, router.query.id, setTest]);
+
+  const handleResult = useCallback(() => {
+    const [fetchedResult] = results;
+    if (fetchedResult) {
+      loadPlayground({
+        linkages: fetchedResult.linkages,
+        instances: fetchedResult.instances,
+        scale: fetchedResult.scale,
+      });
+      setResultId(fetchedResult._id);
+      setResult(fetchedResult);
+      setIsFirst(false);
+    } else {
+      setResult({ linkages, instances, scale, test: test?._id });
+    }
+  }, [loadPlayground, setResultId, setResult, setIsFirst, results]);
 
   useEffect(() => {
+    resetPlayground();
+    setResultId(undefined);
     handleTest();
   }, [handleTest]);
 
+  useEffect(() => {
+    handleResult();
+  }, [handleResult]);
+
+  useEffect(() => {
+    setResultId(result?._id)
+  }, [result, setResultId])
+
   const handleSubmit = async (values: TestType) => {
     if (!(Object.keys(instances).length && linkages.length)) {
-      toast.error('You need to have a board in order to update a test!');
+      toast.error("You need to have a board in order to update a test!");
       return;
     }
 
@@ -93,22 +111,27 @@ const Index = () => {
 
     const payload: ResultType = {
       ...result,
+      _id: resultId,
       test: test?._id,
       instances,
       linkages,
       scale,
-      status: 'submitted',
+      status: "submitted",
       submission_time: new Date(),
     };
 
+    console.log({ payload })
+
     if (isFirst) {
       const result = await createResult(token as string, payload);
+      console.log(1, { result })
       if (result) {
         setIsFirst(false);
         setResult(result);
       }
     } else {
       const result = await updateResult(token as string, payload);
+      console.log(2, { result })
       if (result) setResult(result);
     }
   };
@@ -120,17 +143,18 @@ const Index = () => {
     }
 
     if (!(Object.keys(instances).length && linkages.length)) {
-      toast.error('You need to have a board in order to update a test!');
+      toast.error("You need to have a board in order to update a test!");
       return;
     }
 
     const payload: ResultType = {
       ...result,
+      _id: resultId,
       test: test?._id,
       instances,
       linkages,
       scale,
-      status: 'saved',
+      status: "saved",
       submission_time: new Date(),
     };
 
@@ -161,8 +185,8 @@ const Index = () => {
         initialTest={test}
         onSave={isStudent ? handleSave : undefined}
         disabled={
-          user.role === 'student' &&
-          (result?.status === 'submitted' ||
+          user.role === "student" &&
+          (result?.status === "submitted" ||
             new Date() > new Date(test.due_date))
         }
       />

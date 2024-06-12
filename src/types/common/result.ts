@@ -3,6 +3,7 @@ import type { BoardType } from './playground';
 export type StatusResult = 'saved' | 'submitted';
 
 export type ResultType = BoardType & {
+  _id?: string;
   test: string;
   submission_time: Date;
   status: StatusResult;

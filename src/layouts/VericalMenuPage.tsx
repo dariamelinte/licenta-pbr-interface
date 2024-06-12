@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { VerticalMenu } from '@/components/common';
 import useStore from '@/stores';
@@ -11,7 +11,7 @@ export function VerticalMenuPage({
   children,
   ...pageProps
 }: PropsWithChildren<PageProps>) {
-  const { user, getProfile, token } = useStore((state) => state.auth);
+  const { user, getProfile, token } = useStore(useCallback((state) => state.auth, []));
 
   useEffect(() => {
     getProfile(token as string);

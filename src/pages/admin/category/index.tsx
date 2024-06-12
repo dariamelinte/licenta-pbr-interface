@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Dialog, Loading, Table } from '@/components/common';
 import { categoryColumns } from '@/components/common/Tables';
@@ -11,8 +11,8 @@ import type { ConfirmDialogType } from '@/types/store/dialog';
 const Index = () => {
   const [category, setCategory] = useState<CategoryApiType | null>(null);
 
-  const { open, setOpen, setOnConfirm } = useStore((state) => state.dialog);
-  const { token } = useStore((state) => state.auth);
+  const { open, setOpen, setOnConfirm } = useStore(useCallback((state) => state.dialog, []))
+  const { token } = useStore(useCallback((state) => state.auth, []));
   const {
     categories,
     loading,
@@ -20,7 +20,7 @@ const Index = () => {
     deleteCategory,
     createCategory,
     updateCategory,
-  } = useStore((state) => state.category);
+  } = useStore(useCallback((state) => state.category, []));
 
   useEffect(() => {
     getCategories();

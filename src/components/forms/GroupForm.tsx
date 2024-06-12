@@ -9,13 +9,14 @@ import useStore from '@/stores';
 import type { GroupFormType } from '@/types/common/group';
 
 import styles from './Form.module.css';
+import { useCallback } from 'react';
 
 type GroupFormProps = {
   group: GroupFormType | null;
 };
 
 export const GroupForm: React.FC<GroupFormProps> = ({ group }) => {
-  const { setOpen, onConfirm } = useStore((state) => state.dialog);
+  const { setOpen, onConfirm } = useStore(useCallback((state) => state.dialog, []));
 
   return (
     <Formik<GroupFormType>

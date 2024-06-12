@@ -4,10 +4,11 @@ import { Button } from '@/components/common';
 import { ProfileForm } from '@/components/forms';
 import { VerticalMenuPage } from '@/layouts';
 import useStore from '@/stores';
+import { useCallback } from 'react';
 
 const Index = () => {
   const router = useRouter();
-  const { signOut } = useStore((state) => state.auth);
+  const { signOut } = useStore(useCallback((state) => state.auth, []));
 
   return (
     <VerticalMenuPage>

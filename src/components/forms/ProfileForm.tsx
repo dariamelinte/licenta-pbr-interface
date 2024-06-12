@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import { Form, Formik } from 'formik';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { Button, Form as CommonForm } from '@/components/common';
 import { profileLabels } from '@/constants/labels';
@@ -12,10 +12,7 @@ import arrayToOptions from '@/utils/arrayToOptions';
 import styles from './Form.module.css';
 
 export const ProfileForm = () => {
-  const { user, getProfile, updateProfile, token } = useStore(
-    (state) => state.auth,
-  );
-
+  const { user, getProfile, updateProfile, token } = useStore(useCallback((state) => state.auth, []))
   useEffect(() => {
     if (token) {
       getProfile(token);

@@ -1,29 +1,39 @@
-import React, { useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useCallback, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-import { Loading } from '@/components/common';
-import { Board } from '@/components/playground';
-import { AuthPage } from '@/layouts';
-import useStore from '@/stores';
+import { Loading } from "@/components/common";
+import { Board } from "@/components/playground";
+import { VerticalMenuPage } from "@/layouts";
+import useStore from "@/stores";
 
 const Index = () => {
-  const { loading, getObjectModels } = useStore((state) => state.objectModel);
-  const { addObjectInstance, instances, linkages } = useStore((state) => state.playground);
+  const { loading, getObjectModels } = useStore(useCallback((state) => state.objectModel, []));
+  const { addObjectInstance } = useStore(useCallback((state) => state.playground, []));
+  const { setResultId } = useStore(useCallback((state) => state.result, []));
 
   useEffect(() => {
+    setResultId(undefined);
     getObjectModels();
   }, [getObjectModels]);
 
-  // console.log({ instances, linkages})
-
   if (loading) {
-    return <Loading size='large' />
+    return (
+      <VerticalMenuPage>
+        <Loading size="large" />
+      </VerticalMenuPage>
+    );
   }
 
   return (
-    <AuthPage className="max-w-[100vw] overflow-hidden">
-      <Board onAddInstance={(id, position) => addObjectInstance(uuidv4(), id, position)} />
-    </AuthPage>
+    <VerticalMenuPage className="max-h-screen max-w-[100vw] overflow-hidden">
+      <div className="w-full">
+        <Board
+          onAddInstance={(id, position) =>
+            addObjectInstance(uuidv4(), id, position)
+          }
+        />
+      </div>
+    </VerticalMenuPage>
   );
 };
 

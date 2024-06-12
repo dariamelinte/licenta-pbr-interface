@@ -16,15 +16,15 @@ type LinkageProps = {
 };
 
 export const Linkage: React.FC<LinkageProps> = ({
-  linkage: { first_connection, second_connection },
+  linkage: { first_connection, second_connection, _id },
   firstInstance,
   secondInstance,
   disabled,
 }) => {
-  const { objectModels } = useStore((state) => state.objectModel);
-  const { focusedAxe, removeLinkage, scale } = useStore(
-    (state) => state.playground
-  );
+  const { objectModels } = useStore(useCallback((state) => state.objectModel, []));
+  const { resultId, deleteResultLinkage } = useStore(useCallback((state) => state.result, []));;
+  const { token } = useStore(useCallback((state) => state.auth, []));
+  const { focusedAxe, removeLinkage, scale } = useStore(useCallback((state) => state.playground, []));
   const [first, setFirst] = useState<PointType>(
     firstInstance?.position[focusedAxe] as PointType
   );
@@ -77,17 +77,16 @@ export const Linkage: React.FC<LinkageProps> = ({
           });
           break;
       }
-      
-      console.log({ instance, connection })
     },
     [focusedAxe, objectModels, scale]
   );
 
-  console.log({ first, second })
-
   const handleClickArrow = () => {
-    console.log("handle click arrow", disabled, first_connection, second_connection)
     if (disabled) return;
+
+    if (resultId && _id) {
+      deleteResultLinkage(token as string, resultId, _id);
+    }
 
     removeLinkage(
       first_connection?.uuid as string,

@@ -33,8 +33,8 @@ export const testStatuses = {
 
 export const objectModelSizes = {
   small: 160,
-  medium: 320,
-  big: 400,
+  medium: 280,
+  big: 320,
 };
 
 export const boxPoints: CoordinatesObjectType<number>[] = [
