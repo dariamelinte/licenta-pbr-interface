@@ -16,7 +16,7 @@ export const LoginForm = () => {
     <Formik<LoginFormType>
       initialValues={INITIAL_LOGIN_FORM}
       validationSchema={loginSchema}
-      onSubmit={(values) => login(values, () => router.push('/app'))}
+      onSubmit={(values) => login(values, () => router.push('/app/groups'))}
     >
       <Form className="w-full">
         <p className="title">Log in</p>

@@ -34,10 +34,6 @@ export const tabs: { [key in UserRoleType]: MenuTab[] } = {
       url: '/app/playground',
       icon: <PuzzlePiece />,
     },
-    {
-      text: 'quick',
-      url: '/app/tests/create',
-    },
   ],
   student: [
     {

@@ -1,57 +1,150 @@
-import Xarrow from 'react-xarrows';
+import { useEffect, useState, useCallback } from "react";
 
-import { axesPoints } from '@/constants/constants';
-import useStore from '@/stores';
-import type { LinkageType } from '@/types/common/linkage';
+import { objectModelSizes } from "@/constants/constants";
+import useStore from "@/stores";
+import type { LinkageType } from "@/types/common/linkage";
+import { ObjectInstanceType } from "@/types/common/objectInstance";
+import { PointType } from "@/types/common/playground";
+import { ConnectionPointType } from "@/types/common/connectionPoint";
+import { INITIAL_OBJECT_MODEL } from "@/constants/initial-objects";
 
 type LinkageProps = {
   linkage: LinkageType;
+  firstInstance?: ObjectInstanceType;
+  secondInstance?: ObjectInstanceType;
   disabled?: boolean;
 };
 
 export const Linkage: React.FC<LinkageProps> = ({
   linkage: { first_connection, second_connection },
+  firstInstance,
+  secondInstance,
   disabled,
 }) => {
-  const { focusedAxe, removeLinkage } = useStore((state) => state.playground);
+  const { objectModels } = useStore((state) => state.objectModel);
+  const { focusedAxe, removeLinkage, scale } = useStore(
+    (state) => state.playground
+  );
+  const [first, setFirst] = useState<PointType>(
+    firstInstance?.position[focusedAxe] as PointType
+  );
+  const [second, setSecond] = useState<PointType>(
+    secondInstance?.position[focusedAxe] as PointType
+  );
 
-  const handleShowArrow = () => {
-    const visiblePoints = axesPoints[focusedAxe];
+  const handlePoint = useCallback(
+    (
+      setPoint: any,
+      instance?: ObjectInstanceType,
+      connection?: ConnectionPointType
+    ) => {
+      if (!connection || !instance) return;
 
-    const first = visiblePoints.find(
-      (point) => point === first_connection?.boxPoint,
-    );
-    const second = visiblePoints.find(
-      (point) => point === second_connection?.boxPoint,
-    );
+      const { size } =
+        objectModels.find(
+          (objectModel) => objectModel._id === instance.object_model
+        ) || INITIAL_OBJECT_MODEL;
 
-    return !!first && !!second;
-  };
+      switch (focusedAxe) {
+        case "ox":
+          setPoint({
+            x:
+              instance.position[focusedAxe].x +
+              (objectModelSizes[size] * scale * connection.oy) / 100,
+            y:
+              instance.position[focusedAxe].y +
+              (objectModelSizes[size] * scale * connection.oz) / 100,
+          });
+          break;
+        case "oy":
+          setPoint({
+            x:
+              instance.position[focusedAxe].x +
+              (objectModelSizes[size] * scale * connection.ox) / 100,
+            y:
+              instance.position[focusedAxe].y +
+              (objectModelSizes[size] * scale * connection.oz) / 100,
+          });
+          break;
+        case "oz":
+          setPoint({
+            x:
+              instance.position[focusedAxe].x +
+              (objectModelSizes[size] * scale * (100 - connection.ox)) / 100,
+            y:
+              instance.position[focusedAxe].y +
+              (objectModelSizes[size] * scale * (100 - connection.oy)) / 100,
+          });
+          break;
+      }
+      
+      console.log({ instance, connection })
+    },
+    [focusedAxe, objectModels, scale]
+  );
+
+  console.log({ first, second })
 
   const handleClickArrow = () => {
+    console.log("handle click arrow", disabled, first_connection, second_connection)
     if (disabled) return;
 
     removeLinkage(
-      first_connection?.instance as string,
-      second_connection?.instance as string,
+      first_connection?.uuid as string,
+      second_connection?.uuid as string
     );
   };
 
-  if (!first_connection?.uuid || !second_connection?.uuid) {
+  useEffect(() => {
+    handlePoint(setFirst, firstInstance, first_connection);
+    handlePoint(setSecond, secondInstance, second_connection);
+  }, [
+    handlePoint,
+    firstInstance?.position,
+    secondInstance?.position,
+    first_connection,
+    second_connection,
+  ]);
+
+  if (
+    !first_connection?.uuid ||
+    !second_connection?.uuid ||
+    !firstInstance ||
+    !secondInstance
+  ) {
     return <span />;
   }
 
+  const lineLength = Math.sqrt(
+    (second.x - first.x) ** 2 + (second.y - first.y) ** 2
+  );
+  const lineAngle =
+    Math.atan2(second.y - first.y, second.x - first.x) * (180 / Math.PI);
+
   return (
-    <Xarrow
-      start={`${first_connection.instance}-${first_connection.boxPoint}`}
-      end={`${second_connection.instance}-${second_connection.boxPoint}`}
-      showHead={false}
-      showXarrow={handleShowArrow()}
-      color="#2b6cb0"
-      passProps={{
-        cursor: 'pointer',
-        onClick: handleClickArrow,
+    <div
+      className="absolute pointer"
+      style={{
+        top: `${first.y}px`,
+        left: `${first.x}px`,
+        width: `${lineLength}px`,
+        height: "20px",
+        transform: `rotate(${lineAngle}deg)`,
+        transformOrigin: "0 0",
+        cursor: disabled ? "default" : "pointer",
       }}
-    />
+      onClick={handleClickArrow}
+    >
+      <div
+        className="bg-blue-300"
+        style={{
+          width: "100%",
+          height: "2px",
+          position: "absolute",
+          top: "4px",
+          left: "0",
+        }}
+      />
+    </div>
   );
 };

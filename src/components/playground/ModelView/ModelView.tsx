@@ -86,7 +86,7 @@ export const ModelView: React.FC<ModelViewProps> = ({
 
   return (
     <Canvas
-      style={{ width: width || '100%', height: height || '100%', padding: 15 }}
+      style={{ width: width || '100%', height: height || '100%', padding: 10 }}
     >
       <ambientLight intensity={2} />
       <pointLight position={[10, 10, 10]} intensity={4} />

@@ -26,6 +26,7 @@ export type PlaygroundStoreType = {
       position: CoordinatesObjectType<PointType>,
     ) => void;
     removeLinkage: (first: string, second: string) => void;
+    removeInstance: (id: string) => void;
     resetPlayground: () => void;
     loadPlayground: (board: BoardType) => void;
   };

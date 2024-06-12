@@ -15,5 +15,5 @@
 }
 
 .linkButton {
-    @apply absolute w-4 h-4 bg-blue-700 rounded-full hover:bg-blue-600;
+    @apply absolute w-4 h-4 bg-blue-300 rounded-full hover:bg-blue-400;
 }

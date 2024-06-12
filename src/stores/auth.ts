@@ -38,6 +38,10 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
           has_profile,
         },
       });
+
+      if (has_profile) {
+        get().auth.getProfile(token)
+      }
     },
 
     setLoading: (loading) =>
@@ -105,7 +109,7 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
       get().auth.setLoading(true);
 
       try {
-        await Cookies.remove(process.env.SECRET_TOKEN, {
+        Cookies.remove(process.env.SECRET_TOKEN, {
           path: '',
         });
 

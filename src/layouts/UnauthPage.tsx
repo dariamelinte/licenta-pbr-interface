@@ -20,18 +20,20 @@ export function UnauthPage({
     let valid = false;
 
     if (token) {
-      valid = Date.now() + 10 * 60 >= (expiration_time || 0);
+      valid = Date.now()  + 2 * 60 <= (expiration_time || 0) * 1000;
     } else if (cookieToken) {
       const { expiration_time: exp } = parseJwt(cookieToken);
-      valid = Date.now() + 10 * 60 >= (exp || 0);
+      valid = Date.now() + 2 * 60 <= (exp || 0) * 1000;
     }
 
     if (valid) {
-      router.push('/app');
+      router.push('/app/groups');
 
       if (!token && cookieToken) {
         setToken(cookieToken);
       }
+    } else {
+      Cookies.remove(process.env.SECRET_TOKEN || "");
     }
   }, [token, router, setToken]);
 

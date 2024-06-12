@@ -32,9 +32,9 @@ export const testStatuses = {
 };
 
 export const objectModelSizes = {
-  small: 60,
-  medium: 180,
-  big: 320,
+  small: 160,
+  medium: 320,
+  big: 400,
 };
 
 export const boxPoints: CoordinatesObjectType<number>[] = [
@@ -51,23 +51,23 @@ export const boxPoints: CoordinatesObjectType<number>[] = [
 export const pointPercentages: {
   [key: number]: CoordinatesObjectType<number>;
 } = {
-  1: { ox: 0, oy: 0, oz: 0 },
-  2: { ox: 50, oy: 0, oz: 0 },
-  3: { ox: 100, oy: 0, oz: 0 },
-  4: { ox: 100, oy: 0, oz: 50 },
-  5: { ox: 100, oy: 0, oz: 100 },
-  6: { ox: 50, oy: 0, oz: 100 },
-  7: { ox: 0, oy: 0, oz: 100 },
-  8: { ox: 0, oy: 0, oz: 50 },
-  9: { ox: 0, oy: 100, oz: 0 },
-  10: { ox: 0, oy: 100, oz: 0 },
-  11: { ox: 100, oy: 100, oz: 0 },
-  12: { ox: 100, oy: 100, oz: 50 },
-  13: { ox: 100, oy: 100, oz: 100 },
+  1: { oy: 0, ox: 0, oz: 0 },
+  2: { oy: 50, ox: 0, oz: 0 },
+  3: { oy: 100, ox: 0, oz: 0 },
+  4: { oy: 100, ox: 0, oz: 50 },
+  5: { oy: 100, ox: 0, oz: 100 },
+  6: { oy: 50, ox: 0, oz: 100 },
+  7: { oy: 0, ox: 0, oz: 100 },
+  8: { oy: 0, ox: 0, oz: 50 },
+  9: { oy: 0, ox: 100, oz: 0 },
+  10: { oy: 0, ox: 100, oz: 0 },
+  11: { oy: 100, ox: 100, oz: 0 },
+  12: { oy: 100, ox: 100, oz: 50 },
+  13: { oy: 100, ox: 100, oz: 100 },
 
-  17: { ox: 0, oy: 50, oz: 0 },
-  18: { ox: 100, oy: 50, oz: 0 },
-  19: { ox: 100, oy: 50, oz: 100 },
+  17: { oy: 0, ox: 50, oz: 0 },
+  18: { oy: 100, ox: 50, oz: 0 },
+  19: { oy: 100, ox: 50, oz: 100 },
 };
 
 export const axesPoints: CoordinatesObjectType<number[]> = {

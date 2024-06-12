@@ -1,13 +1,13 @@
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
-import type { PropsWithChildren } from 'react';
-import React, { useCallback, useEffect } from 'react';
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import type { PropsWithChildren } from "react";
+import React, { useCallback, useEffect } from "react";
 
-import { Navbar } from '@/components/common';
-import useStore from '@/stores';
-import { parseJwt } from '@/utils/parseJwt';
+import { Navbar } from "@/components/common";
+import useStore from "@/stores";
+import { parseJwt } from "@/utils/parseJwt";
 
-import { Page, type PageProps } from './Page';
+import { Page, type PageProps } from "./Page";
 
 export function AuthPage({
   children,
@@ -17,18 +17,19 @@ export function AuthPage({
   const { token, expiration_time, setToken } = useStore((state) => state.auth);
 
   const handleAuthUser = useCallback(() => {
-    const cookieToken = Cookies.get(process.env.SECRET_TOKEN || '');
+    const cookieToken = Cookies.get(process.env.SECRET_TOKEN || "");
     let valid = false;
 
     if (token) {
-      valid = Date.now() + 10 * 60 >= (expiration_time || 0);
+      valid = Date.now() + 2 * 60 <= (expiration_time || 0) * 1000;
     } else if (cookieToken) {
       const { expiration_time: exp } = parseJwt(cookieToken);
-      valid = Date.now() + 10 * 60 >= (exp || 0);
+      valid = Date.now() + 2 * 60 <= (exp || 0) * 1000;
     }
 
     if (!valid) {
-      router.push('/');
+      router.push("/");
+      Cookies.remove(process.env.SECRET_TOKEN || "");
       return;
     }
 

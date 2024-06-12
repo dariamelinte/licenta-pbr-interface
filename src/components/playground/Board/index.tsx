@@ -3,7 +3,6 @@
 import type { ChangeEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { Xwrapper } from "react-xarrows";
 
 import { Form } from "@/components/common";
 import { CoordinatesButton } from "@/components/common/Buttons";
@@ -96,7 +95,7 @@ export const Board: React.FC<BoardProps> = ({
   };
 
   return (
-    <Xwrapper>
+    <>
       {!disabled ? (
         <div className="t-1 l-1 absolute z-50 p-3">
           <ObjectModelMenu onAddObjectModel={handleAddInstance} />
@@ -128,7 +127,7 @@ export const Board: React.FC<BoardProps> = ({
             toast.error("Could not find an object model");
             return null;
           }
-  
+
           return (
             <PlaygroundModelView
               key={id}
@@ -139,13 +138,25 @@ export const Board: React.FC<BoardProps> = ({
           );
         })}
         {showLinks
-          ? linkages.map((linkage, idx) => (
-              <Linkage
-                disabled={disabled}
-                linkage={linkage}
-                key={`${linkage.first_connection?.uuid}-${linkage.second_connection?.uuid}-${focusedAxe}-${idx}`}
-              />
-            ))
+          ? linkages.map((linkage, idx) => {
+              const { first_connection, second_connection } = linkage;
+              if (
+                !first_connection?.uuid ||
+                !second_connection?.uuid
+              ) {
+                return <div key={idx} />;
+              }
+
+              return (
+                <Linkage
+                  disabled={disabled}
+                  linkage={linkage}
+                  firstInstance={instances[first_connection?.instance]}
+                  secondInstance={instances[second_connection?.instance]}
+                  key={`${linkage.first_connection?.uuid}-${linkage.second_connection?.uuid}-${focusedAxe}-${idx}`}
+                />
+              );
+            })
           : null}
         <button
           className="absolute right-0 top-0 m-3 rounded-xl bg-blue-200 px-2 py-1 text-blue-600"
@@ -169,6 +180,6 @@ export const Board: React.FC<BoardProps> = ({
         </div>
         <CoordinatesButton />
       </div>
-    </Xwrapper>
+    </>
   );
 };

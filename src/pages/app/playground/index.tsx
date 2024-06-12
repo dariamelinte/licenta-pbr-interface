@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import { Loading } from '@/components/common';
 import { Board } from '@/components/playground';
 import { AuthPage } from '@/layouts';
 import useStore from '@/stores';
@@ -13,11 +14,10 @@ const Index = () => {
     getObjectModels();
   }, [getObjectModels]);
 
-  console.log({ instances, linkages})
+  // console.log({ instances, linkages})
 
   if (loading) {
-    // TODO: Loading
-    return <div>Loading ..</div>;
+    return <Loading size='large' />
   }
 
   return (
