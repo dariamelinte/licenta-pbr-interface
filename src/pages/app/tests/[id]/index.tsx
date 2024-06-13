@@ -157,6 +157,8 @@ const Index = () => {
       status: "saved",
       submission_time: new Date(),
     };
+    
+    console.log(test, payload)
 
     if (isFirst) {
       const result = await createResult(token as string, payload);

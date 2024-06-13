@@ -39,7 +39,7 @@ const Index = () => {
 
     const foundUserResults: UserResultType[] = foundGroup.students.map(
       ({ first_name, last_name, phone_number, credential }) => {
-        const result = results.find((result) => result.user === credential);
+        const result = results.find((result) => result.credential === credential);
 
         return {
           first_name,
@@ -47,6 +47,7 @@ const Index = () => {
           phone_number,
           score: result?.score || 0,
           result: result?._id,
+          status: result?.status
         };
       },
     );
@@ -80,7 +81,7 @@ const Index = () => {
         <div className="card text-blue-900">
           <p className="title">{test?.name}</p>
           <div className="w-full pt-4">
-            <p className="whitespace-pre-line py-4 text-xl text-blue-900">
+            <p className="whitespace-pre-line py-4 text-lg text-blue-900">
               {test?.description}
             </p>
             <p className="pb-2 text-xl font-semibold text-blue-900">

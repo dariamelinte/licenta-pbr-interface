@@ -18,13 +18,17 @@ export const resultColumns = ({ columnHelper, onView }: ResultColumnsProps) => {
       header: 'First name',
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor('score', {
-      header: 'Score',
-      cell: (info) => info.getValue(),
-    }),
     columnHelper.accessor('phone_number', {
       header: 'Phone number',
       cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('status', {
+      header: 'Status',
+      cell: (info) => info.getValue() || '-',
+    }),
+    columnHelper.accessor('score', {
+      header: 'Score',
+      cell: (info) => info.getValue()?.toPrecision(3),
     }),
     columnHelper.accessor('result', {
       header: '',

@@ -8,12 +8,14 @@ export type ResultType = BoardType & {
   submission_time: Date;
   status: StatusResult;
   score?: number;
+  credential?: string;
 };
 
 export type UserResultType = {
   first_name: string;
   last_name: string;
   phone_number: string;
+  status?: StatusResult;
   score?: number;
   result?: string;
 };
