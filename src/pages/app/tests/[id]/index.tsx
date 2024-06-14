@@ -39,8 +39,6 @@ const Index = () => {
 
   const isStudent = useMemo(() => user.role === "student", [user.role]);
 
-  console.log(results, result);
-
   const handleTest = useCallback(async () => {
     const test = await getTestById(token as string, router.query.id as string);
 
@@ -107,43 +105,6 @@ const Index = () => {
         scale,
         submission_time: new Date(),
       });
-    }
-
-    const payload: ResultType = {
-      ...result,
-      _id: resultId,
-      test: test?._id,
-      instances,
-      linkages,
-      scale,
-      status: "submitted",
-      submission_time: new Date(),
-    };
-
-    console.log({ payload })
-
-    if (isFirst) {
-      const result = await createResult(token as string, payload);
-      console.log(1, { result })
-      if (result) {
-        setIsFirst(false);
-        setResult(result);
-      }
-    } else {
-      const result = await updateResult(token as string, payload);
-      console.log(2, { result })
-      if (result) setResult(result);
-    }
-  };
-
-  const handleSave = async () => {
-    if (!test?._id) {
-      toast.error(ERROR_MESSAGE.default);
-      return;
-    }
-
-    if (!(Object.keys(instances).length && linkages.length)) {
-      toast.error("You need to have a board in order to update a test!");
       return;
     }
 
@@ -154,11 +115,10 @@ const Index = () => {
       instances,
       linkages,
       scale,
-      status: "saved",
       submission_time: new Date(),
     };
-    
-    console.log(test, payload)
+
+    console.log({ isFirst })
 
     if (isFirst) {
       const result = await createResult(token as string, payload);
@@ -185,11 +145,9 @@ const Index = () => {
       <TestForm
         onSubmit={handleSubmit}
         initialTest={test}
-        onSave={isStudent ? handleSave : undefined}
         disabled={
           user.role === "student" &&
-          (result?.status === "submitted" ||
-            new Date() > new Date(test.due_date))
+          (new Date() > new Date(test.due_date))
         }
       />
     </VerticalMenuPage>

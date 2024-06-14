@@ -30,7 +30,6 @@ const Index = () => {
       scale,
       test: test._id,
       submission_time: new Date(),
-      status: 'submitted',
     });
 
     router.push(`/app/tests/${test._id}`);

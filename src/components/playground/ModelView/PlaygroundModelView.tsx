@@ -1,8 +1,8 @@
 import cx from "classnames";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import {
-  boxPoints,
+  box_points,
   objectModelSizes,
   pointPercentages,
 } from "@/constants/constants";
@@ -19,6 +19,8 @@ import { ModelView } from "./ModelView";
 import styles from "./ModelView.module.css";
 import { XCircle } from "@/components/icons";
 import { ObjectInstanceType } from "@/types/common/objectInstance";
+import { INITIAL_OBJECT_MODEL } from "@/constants/initial-objects";
+import { LinkageType } from "@/types/common/linkage";
 
 type PlaygroundModelViewProps = {
   objectInstance: ObjectInstanceType;
@@ -35,15 +37,60 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     scale,
     changeObjectInstancePosition,
     focusedAxe,
+    linkages,
+    setLinkages,
     addConnectionPoint,
     removeInstance,
   } = useStore(useCallback((state) => state.playground, []));
   const { token } = useStore(useCallback((state) => state.auth, []));
-  const { resultId, deleteResultInstance } = useStore(useCallback((state) => state.result, []));;
+  const { objectModels, getObjectModels } = useStore(
+    useCallback((state) => state.objectModel, [])
+  );
+  const { resultId, deleteResultInstance } = useStore(
+    useCallback((state) => state.result, [])
+  );
   const objectSize = useMemo(
     () => objectModelSizes[objectModel.size] * scale,
     [objectModel.size, scale]
   );
+
+  useEffect(() => {
+    getObjectModels();
+  }, []);
+  
+  const handleConnectionPointSpacePosition = (percentages: CoordinatesObjectType<number>) => {
+    const { size } =
+      objectModels.find(
+        (objectModel) => objectModel._id === objectInstance.object_model
+      ) || INITIAL_OBJECT_MODEL;
+
+    return {
+      ox: {
+        x:
+          objectInstance.position.ox.x +
+          (objectModelSizes[size] * scale * percentages.oy) / 100,
+        y:
+          objectInstance.position.ox.y +
+          (objectModelSizes[size] * scale * percentages.oz) / 100,
+      },
+      oy: {
+        x:
+          objectInstance.position.oy.x +
+          (objectModelSizes[size] * scale * percentages.ox) / 100,
+        y:
+          objectInstance.position.oy.y +
+          (objectModelSizes[size] * scale * percentages.oz) / 100,
+      },
+      oz: {
+        x:
+          objectInstance.position.oz.x +
+          (objectModelSizes[size] * scale * (100 - percentages.ox)) / 100,
+        y:
+          objectInstance.position.oz.y +
+          (objectModelSizes[size] * scale * (100 - percentages.oy)) / 100,
+      },
+    };
+  };
 
   const handlePieceStop = (oldPoint: PointType, newPoint: PointType) => {
     if (!objectInstance?.position) return;
@@ -52,8 +99,6 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
       x: newPoint.x - oldPoint.x,
       y: newPoint.y - oldPoint.y,
     };
-
-    console.log({ delta });
 
     switch (focusedAxe) {
       case "ox":
@@ -96,23 +141,59 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         });
         break;
     }
+  
+    const updatedLinkages: LinkageType[] = linkages.map(
+      ({ first_connection, second_connection, ...rest }) => {
+        if (first_connection?.instance === objectInstance.uuid) {
+          return {
+            ...rest,
+            second_connection,
+            first_connection: {
+              ...first_connection,
+              space_position: handleConnectionPointSpacePosition(
+                first_connection.object_position
+              ),
+            },
+          };
+        }
+
+        if (second_connection?.instance === objectInstance.uuid) {
+          return {
+            ...rest,
+            first_connection,
+            second_connection: {
+              ...second_connection,
+              space_position: handleConnectionPointSpacePosition(
+                second_connection.object_position
+              ),
+            },
+          };
+        }
+
+        return { ...rest, first_connection, second_connection };
+      }
+    );
+    console.log(linkages, updatedLinkages)
+    setLinkages(updatedLinkages)
   };
 
-  const handlePointClick = (index: number) => {
-    const boxPoint = boxPoints[index]?.[focusedAxe];
 
-    if (!boxPoint) return;
+  const handlePointClick = (index: number) => {
+    const box_point = box_points[index]?.[focusedAxe];
+
+    if (!box_point) return;
 
     const percentages: CoordinatesObjectType<number> | undefined =
-      pointPercentages[boxPoint];
+      pointPercentages[box_point];
 
     if (!percentages) return;
 
     const connectionPoint: ConnectionPointType = {
       instance: objectInstance.uuid,
-      uuid: `${objectInstance.uuid}-${boxPoint}` as string,
-      boxPoint,
-      ...percentages,
+      uuid: `${objectInstance.uuid}-${box_point}` as string,
+      box_point,
+      object_position: percentages,
+      space_position: handleConnectionPointSpacePosition(percentages),
     };
 
     addConnectionPoint(connectionPoint);

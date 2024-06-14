@@ -44,6 +44,14 @@ export const playgroundSlice: StateCreator<
         },
       }),
 
+    setLinkages: (linkages) =>
+      set({
+        playground: {
+          ...get().playground,
+          linkages,
+        },
+      }),
+
     addObjectInstance: (id, objectModelId, position) =>
       set({
         playground: {
@@ -145,16 +153,17 @@ export const playgroundSlice: StateCreator<
           ...board,
         },
       }),
-    
+
     removeInstance: (id) => {
       const { instances, linkages } = get().playground;
 
       const updatedInstances = { ...instances };
       delete updatedInstances[id];
-  
+
       const updatedLinkages = linkages.filter(
-        ({ first_connection, second_connection }) => 
-          first_connection?.instance !== id && second_connection?.instance !== id
+        ({ first_connection, second_connection }) =>
+          first_connection?.instance !== id &&
+          second_connection?.instance !== id
       );
 
       set({
@@ -164,6 +173,6 @@ export const playgroundSlice: StateCreator<
           linkages: updatedLinkages,
         },
       });
-    }
+    },
   },
 });

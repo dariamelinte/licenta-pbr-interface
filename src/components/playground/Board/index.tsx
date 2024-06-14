@@ -151,8 +151,6 @@ export const Board: React.FC<BoardProps> = ({
                 <Linkage
                   disabled={disabled}
                   linkage={linkage}
-                  firstInstance={instances[first_connection?.instance]}
-                  secondInstance={instances[second_connection?.instance]}
                   key={`${linkage.first_connection?.uuid}-${linkage.second_connection?.uuid}-${focusedAxe}-${idx}`}
                 />
               );

@@ -1,8 +1,9 @@
+import { CoordinatesObjectType, PointType } from "./playground";
+
 export type ConnectionPointType = {
   uuid: string;
   instance: string;
-  ox: number;
-  oy: number;
-  oz: number;
-  boxPoint: number;
+  object_position: CoordinatesObjectType<number>;
+  space_position: CoordinatesObjectType<PointType>;
+  box_point: number;
 };

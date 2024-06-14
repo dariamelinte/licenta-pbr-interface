@@ -1,84 +1,32 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
-import { objectModelSizes } from "@/constants/constants";
 import useStore from "@/stores";
 import type { LinkageType } from "@/types/common/linkage";
-import { ObjectInstanceType } from "@/types/common/objectInstance";
-import { PointType } from "@/types/common/playground";
-import { ConnectionPointType } from "@/types/common/connectionPoint";
-import { INITIAL_OBJECT_MODEL } from "@/constants/initial-objects";
 
 type LinkageProps = {
   linkage: LinkageType;
-  firstInstance?: ObjectInstanceType;
-  secondInstance?: ObjectInstanceType;
   disabled?: boolean;
 };
 
 export const Linkage: React.FC<LinkageProps> = ({
   linkage: { first_connection, second_connection, _id },
-  firstInstance,
-  secondInstance,
   disabled,
 }) => {
-  const { objectModels } = useStore(useCallback((state) => state.objectModel, []));
-  const { resultId, deleteResultLinkage } = useStore(useCallback((state) => state.result, []));;
+  const { resultId, deleteResultLinkage } = useStore(
+    useCallback((state) => state.result, [])
+  );
   const { token } = useStore(useCallback((state) => state.auth, []));
-  const { focusedAxe, removeLinkage, scale } = useStore(useCallback((state) => state.playground, []));
-  const [first, setFirst] = useState<PointType>(
-    firstInstance?.position[focusedAxe] as PointType
-  );
-  const [second, setSecond] = useState<PointType>(
-    secondInstance?.position[focusedAxe] as PointType
+  const { focusedAxe, removeLinkage } = useStore(
+    useCallback((state) => state.playground, [])
   );
 
-  const handlePoint = useCallback(
-    (
-      setPoint: any,
-      instance?: ObjectInstanceType,
-      connection?: ConnectionPointType
-    ) => {
-      if (!connection || !instance) return;
-
-      const { size } =
-        objectModels.find(
-          (objectModel) => objectModel._id === instance.object_model
-        ) || INITIAL_OBJECT_MODEL;
-
-      switch (focusedAxe) {
-        case "ox":
-          setPoint({
-            x:
-              instance.position[focusedAxe].x +
-              (objectModelSizes[size] * scale * connection.oy) / 100,
-            y:
-              instance.position[focusedAxe].y +
-              (objectModelSizes[size] * scale * connection.oz) / 100,
-          });
-          break;
-        case "oy":
-          setPoint({
-            x:
-              instance.position[focusedAxe].x +
-              (objectModelSizes[size] * scale * connection.ox) / 100,
-            y:
-              instance.position[focusedAxe].y +
-              (objectModelSizes[size] * scale * connection.oz) / 100,
-          });
-          break;
-        case "oz":
-          setPoint({
-            x:
-              instance.position[focusedAxe].x +
-              (objectModelSizes[size] * scale * (100 - connection.ox)) / 100,
-            y:
-              instance.position[focusedAxe].y +
-              (objectModelSizes[size] * scale * (100 - connection.oy)) / 100,
-          });
-          break;
-      }
-    },
-    [focusedAxe, objectModels, scale]
+  const first = useMemo(
+    () => first_connection?.space_position[focusedAxe],
+    [first_connection, focusedAxe]
+  );
+  const second = useMemo(
+    () => second_connection?.space_position[focusedAxe],
+    [second_connection, focusedAxe]
   );
 
   const handleClickArrow = () => {
@@ -94,22 +42,11 @@ export const Linkage: React.FC<LinkageProps> = ({
     );
   };
 
-  useEffect(() => {
-    handlePoint(setFirst, firstInstance, first_connection);
-    handlePoint(setSecond, secondInstance, second_connection);
-  }, [
-    handlePoint,
-    firstInstance?.position,
-    secondInstance?.position,
-    first_connection,
-    second_connection,
-  ]);
-
   if (
     !first_connection?.uuid ||
     !second_connection?.uuid ||
-    !firstInstance ||
-    !secondInstance
+    !first ||
+    !second
   ) {
     return <span />;
   }

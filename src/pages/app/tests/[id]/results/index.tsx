@@ -47,7 +47,7 @@ const Index = () => {
           phone_number,
           score: result?.score || 0,
           result: result?._id,
-          status: result?.status
+          status: result?._id
         };
       },
     );

@@ -37,7 +37,7 @@ export const objectModelSizes = {
   big: 320,
 };
 
-export const boxPoints: CoordinatesObjectType<number>[] = [
+export const box_points: CoordinatesObjectType<number>[] = [
   { ox: 1, oy: 3, oz: 11 },
   { ox: 2, oy: 18, oz: 18 },
   { ox: 3, oy: 11, oz: 3 },
