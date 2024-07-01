@@ -67,10 +67,10 @@ export const ModelView: React.FC<ModelViewProps> = ({
         // Set camera position based on the focused axis
         switch (focusedAxe) {
           case 'ox':
-            camera.position.set(-distance, center.y, center.z);
+            camera.position.set(distance, center.y, center.z);
             break;
           case 'oy':
-            camera.position.set(center.x, center.y, -distance);
+            camera.position.set(center.x, center.y, distance);
             break;
           case 'oz':
             camera.position.set(center.x, distance, center.z);
@@ -102,7 +102,7 @@ export const ModelView: React.FC<ModelViewProps> = ({
       )}
       <OrbitControls
         enableRotate={!disableControls}
-        enableZoom={!disableControls}
+        // enableZoom={!disableControls}
         enableDamping={!disableControls}
         enablePan={!disableControls}
         enabled={!disableControls}

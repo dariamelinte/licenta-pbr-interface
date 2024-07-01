@@ -8,7 +8,7 @@ export type ObjectModelStoreType = {
 
     setLoading: (loading: boolean) => void;
 
-    getObjectModels: () => void;
+    getObjectModels: (refresh?: boolean) => void;
     deleteObjectModel: (token: string, id: string) => void;
 
     createObjectModel: (

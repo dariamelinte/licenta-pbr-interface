@@ -25,8 +25,8 @@ export const objectModelSlice: StateCreator<
         },
       }),
 
-    getObjectModels: async () => {
-      if (get().objectModel.objectModels.length) {
+    getObjectModels: async (refresh = false) => {
+      if (!refresh && get().objectModel.objectModels.length) {
         return;
       }
 
@@ -114,12 +114,7 @@ export const objectModelSlice: StateCreator<
         });
         if (!data.success) throw Error(data.error);
 
-        set({
-          objectModel: {
-            ...get().objectModel,
-            objectModels: [...get().objectModel.objectModels, data.data],
-          },
-        });
+        get().objectModel.getObjectModels(true);
 
         // toast.info(data.message);
       } catch (error: any) {

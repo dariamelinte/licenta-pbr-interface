@@ -17,7 +17,7 @@ export const canvasCoordinatesAxes: CoordinatesObjectType<string> = {
 export const getCameraPerspective = (axe: keyof CoordinatesObjectType<any>) => {
   switch (canvasCoordinatesAxes[axe]) {
     case canvasCoordinatesAxes.oy:
-      return [0, -10, 0];
+      return [0, 10, 0];
     case canvasCoordinatesAxes.oz:
       return [0, 0, 10];
     default:
@@ -32,7 +32,7 @@ export const testStatuses = {
 };
 
 export const objectModelSizes = {
-  small: 160,
+  small: 200,
   medium: 280,
   big: 320,
 };

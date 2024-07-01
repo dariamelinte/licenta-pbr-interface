@@ -1,5 +1,9 @@
 .title {
-    @apply font-semibold text-xs;
+    @apply font-semibold text-xs text-blue-800;
+}
+
+.description {
+    @apply text-xs text-gray-800;
 }
 
 .info {

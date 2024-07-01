@@ -31,11 +31,10 @@ const Index = () => {
     updateResult,
     createResult,
     setResultId,
-    resultId
-  } = useStore(useCallback((state) => state.result, []));;
-  const { instances, linkages, scale, loadPlayground, resetPlayground } = useStore(
-    useCallback((state) => state.playground, [])
-  );
+    resultId,
+  } = useStore(useCallback((state) => state.result, []));
+  const { instances, linkages, scale, loadPlayground, resetPlayground } =
+    useStore(useCallback((state) => state.playground, []));
 
   const isStudent = useMemo(() => user.role === "student", [user.role]);
 
@@ -82,8 +81,8 @@ const Index = () => {
   }, [handleResult]);
 
   useEffect(() => {
-    setResultId(result?._id)
-  }, [result, setResultId])
+    setResultId(result?._id);
+  }, [result, setResultId]);
 
   const handleSubmit = async (values: TestType) => {
     if (!(Object.keys(instances).length && linkages.length)) {
@@ -118,17 +117,21 @@ const Index = () => {
       submission_time: new Date(),
     };
 
-    console.log({ isFirst })
+    console.log({ isFirst });
 
     if (isFirst) {
       const result = await createResult(token as string, payload);
       if (result) {
         setIsFirst(false);
         setResult(result);
+        toast.info(`You have obtained ${result.score?.toFixed(2)} points.`);
       }
     } else {
       const result = await updateResult(token as string, payload);
-      if (result) setResult(result);
+      if (result) {
+        setResult(result);
+        toast.info(`You have obtained ${result.score?.toFixed(2)} points.`);
+      }
     }
   };
 
@@ -146,8 +149,7 @@ const Index = () => {
         onSubmit={handleSubmit}
         initialTest={test}
         disabled={
-          user.role === "student" &&
-          (new Date() > new Date(test.due_date))
+          user.role === "student" && new Date() > new Date(test.due_date)
         }
       />
     </VerticalMenuPage>
