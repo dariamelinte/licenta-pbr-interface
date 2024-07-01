@@ -1,5 +1,6 @@
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 
 import { Button, Form as CommonForm } from '@/components/common';
 import { INITIAL_LOGIN_FORM } from '@/constants/initial-objects';
@@ -7,7 +8,6 @@ import { authLabels } from '@/constants/labels';
 import { loginSchema } from '@/constants/validation-schemas';
 import useStore from '@/stores';
 import type { LoginFormType } from '@/types/common/auth';
-import { useCallback } from 'react';
 
 export const LoginForm = () => {
   const router = useRouter();

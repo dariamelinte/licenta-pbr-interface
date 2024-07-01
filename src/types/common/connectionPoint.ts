@@ -1,4 +1,4 @@
-import { CoordinatesObjectType, PointType } from "./playground";
+import type { CoordinatesObjectType, PointType } from './playground';
 
 export type ConnectionPointType = {
   uuid: string;

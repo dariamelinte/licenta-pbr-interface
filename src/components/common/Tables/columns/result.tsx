@@ -24,7 +24,7 @@ export const resultColumns = ({ columnHelper, onView }: ResultColumnsProps) => {
     }),
     columnHelper.accessor('status', {
       header: 'Status',
-      cell: (info) => info.getValue() ? 'Submitted' : '-',
+      cell: (info) => (info.getValue() ? 'Submitted' : '-'),
     }),
     columnHelper.accessor('score', {
       header: 'Score',

@@ -1,11 +1,13 @@
 import cx from 'classnames';
+import { useCallback } from 'react';
 
 import { coordinatesAxes } from '@/constants/constants';
 import useStore from '@/stores';
-import { useCallback } from 'react';
 
 export const CoordinatesButton: React.FC = () => {
-  const { focusedAxe, setFocusedAxe } = useStore(useCallback((state) => state.playground, []));
+  const { focusedAxe, setFocusedAxe } = useStore(
+    useCallback((state) => state.playground, []),
+  );
 
   return (
     <div className="rounded-xl border border-blue-200 bg-blue-100 shadow">

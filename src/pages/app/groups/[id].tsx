@@ -16,11 +16,15 @@ const Index = () => {
   const router = useRouter();
   const [group, setGroup] = useState<CompleteGroupApiType | null>(null);
 
-  const { token, credential, user } = useStore(useCallback((state) => state.auth, []));
+  const { token, credential, user } = useStore(
+    useCallback((state) => state.auth, []),
+  );
   const { getGroupById, loading, updateGroup, groups, setGroups } = useStore(
     useCallback((state) => state.group, []),
   );
-  const { open, setOpen, setOnConfirm } = useStore(useCallback((state) => state.dialog, []));
+  const { open, setOpen, setOnConfirm } = useStore(
+    useCallback((state) => state.dialog, []),
+  );
 
   const handleGroup = useCallback(async () => {
     const foundGroup = await getGroupById(
@@ -31,31 +35,37 @@ const Index = () => {
     setGroup(foundGroup);
   }, [getGroupById, token, router.query.id, setGroup]);
 
-  const handleRemoveStudent = async (id: string) => {
-    const students =
-      group?.students.filter((student) => student.credential !== id) || [];
+  const handleRemoveStudent = useCallback(
+    async (id: string) => {
+      const students =
+        group?.students.filter((student) => student.credential !== id) || [];
 
-    const filteredStudents = (students?.map((student) => student.credential) ||
-      []) as string[];
+      const filteredStudents = (students?.map(
+        (student) => student.credential,
+      ) || []) as string[];
 
-    updateGroup(
-      token as string,
-      { _id: group?._id, students: filteredStudents },
-      () => {
-        if (user.role === 'student') {
-          const filteredGroups = groups.filter(({ _id }) => _id !== group?._id);
-          setGroups(filteredGroups);
+      updateGroup(
+        token as string,
+        { _id: group?._id, students: filteredStudents },
+        () => {
+          if (user.role === 'student') {
+            const filteredGroups = groups.filter(
+              ({ _id }) => _id !== group?._id,
+            );
+            setGroups(filteredGroups);
 
-          router.push('/app/groups');
-        }
+            router.push('/app/groups');
+          }
 
-        setGroup((group) => ({
-          ...(group as CompleteGroupApiType),
-          students,
-        }));
-      },
-    );
-  };
+          setGroup((group) => ({
+            ...(group as CompleteGroupApiType),
+            students,
+          }));
+        },
+      );
+    },
+    [group, groups, router, updateGroup, token, setGroup, setGroups, user.role],
+  );
 
   const columnProps = useMemo(() => {
     if (user.role === 'student') {

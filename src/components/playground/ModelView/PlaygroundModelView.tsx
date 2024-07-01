@@ -1,26 +1,26 @@
-import cx from "classnames";
-import { useCallback, useEffect, useMemo } from "react";
+import cx from 'classnames';
+import { useCallback, useEffect, useMemo } from 'react';
 
+import { XCircle } from '@/components/icons';
 import {
   box_points,
   objectModelSizes,
   pointPercentages,
-} from "@/constants/constants";
-import useStore from "@/stores";
-import type { ObjectModelApiType } from "@/types/common/api";
-import type { ConnectionPointType } from "@/types/common/connectionPoint";
+} from '@/constants/constants';
+import { INITIAL_OBJECT_MODEL } from '@/constants/initial-objects';
+import useStore from '@/stores';
+import type { ObjectModelApiType } from '@/types/common/api';
+import type { ConnectionPointType } from '@/types/common/connectionPoint';
+import type { LinkageType } from '@/types/common/linkage';
+import type { ObjectInstanceType } from '@/types/common/objectInstance';
 import type {
   CoordinatesObjectType,
   PointType,
-} from "@/types/common/playground";
+} from '@/types/common/playground';
 
-import { Piece } from "../Piece";
-import { ModelView } from "./ModelView";
-import styles from "./ModelView.module.css";
-import { XCircle } from "@/components/icons";
-import { ObjectInstanceType } from "@/types/common/objectInstance";
-import { INITIAL_OBJECT_MODEL } from "@/constants/initial-objects";
-import { LinkageType } from "@/types/common/linkage";
+import { Piece } from '../Piece';
+import { ModelView } from './ModelView';
+import styles from './ModelView.module.css';
 
 type PlaygroundModelViewProps = {
   objectInstance: ObjectInstanceType;
@@ -44,24 +44,26 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
   } = useStore(useCallback((state) => state.playground, []));
   const { token } = useStore(useCallback((state) => state.auth, []));
   const { objectModels, getObjectModels } = useStore(
-    useCallback((state) => state.objectModel, [])
+    useCallback((state) => state.objectModel, []),
   );
   const { resultId, deleteResultInstance } = useStore(
-    useCallback((state) => state.result, [])
+    useCallback((state) => state.result, []),
   );
   const objectSize = useMemo(
     () => objectModelSizes[objectModel.size] * scale,
-    [objectModel.size, scale]
+    [objectModel.size, scale],
   );
 
   useEffect(() => {
     getObjectModels();
-  }, []);
-  
-  const handleConnectionPointSpacePosition = (percentages: CoordinatesObjectType<number>) => {
+  }, [getObjectModels]);
+
+  const handleConnectionPointSpacePosition = (
+    percentages: CoordinatesObjectType<number>,
+  ) => {
     const { size } =
       objectModels.find(
-        (objectModel) => objectModel._id === objectInstance.object_model
+        (objectModel) => objectModel._id === objectInstance.object_model,
       ) || INITIAL_OBJECT_MODEL;
 
     return {
@@ -101,7 +103,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
     };
 
     switch (focusedAxe) {
-      case "ox":
+      case 'ox':
         changeObjectInstancePosition(objectInstance.uuid, {
           ox: newPoint,
           oy: {
@@ -114,7 +116,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
           },
         });
         break;
-      case "oy":
+      case 'oy':
         changeObjectInstancePosition(objectInstance.uuid, {
           ox: {
             x: objectInstance.position.ox.x,
@@ -127,7 +129,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
           },
         });
         break;
-      case "oz":
+      case 'oz':
         changeObjectInstancePosition(objectInstance.uuid, {
           ox: {
             x: objectInstance.position.ox.x - delta.y,
@@ -140,8 +142,10 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
           oz: newPoint,
         });
         break;
+      default:
+        break;
     }
-  
+
     const updatedLinkages: LinkageType[] = linkages.map(
       ({ first_connection, second_connection, ...rest }) => {
         if (first_connection?.instance === objectInstance.uuid) {
@@ -151,7 +155,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
             first_connection: {
               ...first_connection,
               space_position: handleConnectionPointSpacePosition(
-                first_connection.object_position
+                first_connection.object_position,
               ),
             },
           };
@@ -164,19 +168,18 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
             second_connection: {
               ...second_connection,
               space_position: handleConnectionPointSpacePosition(
-                second_connection.object_position
+                second_connection.object_position,
               ),
             },
           };
         }
 
         return { ...rest, first_connection, second_connection };
-      }
+      },
     );
-    console.log(linkages, updatedLinkages)
-    setLinkages(updatedLinkages)
+    console.log(linkages, updatedLinkages);
+    setLinkages(updatedLinkages);
   };
-
 
   const handlePointClick = (index: number) => {
     const box_point = box_points[index]?.[focusedAxe];
@@ -208,7 +211,7 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
       disabled={disabled}
     >
       <div
-        className="absolute border-[4px] border-blue-300"
+        className="absolute border-4 border-blue-300"
         style={{
           width: objectSize,
           height: objectSize,
@@ -221,13 +224,13 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
           height={objectSize - 10}
         />
         <button
-          className="relative -top-8 -left-8 text-blue-300"
+          className="relative -left-8 -top-8 text-blue-300"
           onClick={() => {
             if (resultId) {
               deleteResultInstance(
                 token as string,
                 resultId,
-                objectInstance._id as string
+                objectInstance._id as string,
               );
             }
             removeInstance(objectInstance.uuid);
@@ -238,27 +241,27 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         </button>
 
         <button
-          className={cx(styles.linkButton, "-top-3 -left-3")}
+          className={cx(styles.linkButton, '-top-3 -left-3')}
           onClick={() => handlePointClick(0)}
           disabled={disabled}
         />
         <button
           className={cx(
             styles.linkButton,
-            "-top-3 left-1/2 transform -translate-x-1/2"
+            '-top-3 left-1/2 transform -translate-x-1/2',
           )}
           onClick={() => handlePointClick(1)}
           disabled={disabled}
         />
         <button
-          className={cx(styles.linkButton, "-top-3 -right-3")}
+          className={cx(styles.linkButton, '-top-3 -right-3')}
           onClick={() => handlePointClick(2)}
           disabled={disabled}
         />
         <button
           className={cx(
             styles.linkButton,
-            "top-1/2 -left-3 transform -translate-y-1/2"
+            'top-1/2 -left-3 transform -translate-y-1/2',
           )}
           onClick={() => handlePointClick(3)}
           disabled={disabled}
@@ -266,26 +269,26 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         <button
           className={cx(
             styles.linkButton,
-            "top-1/2 -right-3 transform -translate-y-1/2"
+            'top-1/2 -right-3 transform -translate-y-1/2',
           )}
           onClick={() => handlePointClick(4)}
           disabled={disabled}
         />
         <button
-          className={cx(styles.linkButton, "-bottom-3 -left-3")}
+          className={cx(styles.linkButton, '-bottom-3 -left-3')}
           onClick={() => handlePointClick(5)}
           disabled={disabled}
         />
         <button
           className={cx(
             styles.linkButton,
-            "-bottom-3 left-1/2 transform -translate-x-1/2"
+            '-bottom-3 left-1/2 transform -translate-x-1/2',
           )}
           onClick={() => handlePointClick(6)}
           disabled={disabled}
         />
         <button
-          className={cx(styles.linkButton, "-bottom-3 -right-3")}
+          className={cx(styles.linkButton, '-bottom-3 -right-3')}
           onClick={() => handlePointClick(7)}
           disabled={disabled}
         />

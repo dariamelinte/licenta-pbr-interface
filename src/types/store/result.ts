@@ -22,8 +22,16 @@ export type ResultStoreType = {
       own?: boolean,
     ) => Promise<void>;
     deleteResult: (accessToken: string, id: string) => void;
-    deleteResultInstance: (accessToken: string, id: string, instance: string) => void;
-    deleteResultLinkage: (accessToken: string, id: string, linkage: string) => void;
+    deleteResultInstance: (
+      accessToken: string,
+      id: string,
+      instance: string,
+    ) => void;
+    deleteResultLinkage: (
+      accessToken: string,
+      id: string,
+      linkage: string,
+    ) => void;
 
     createResult: (
       accessToken: string,

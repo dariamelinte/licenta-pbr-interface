@@ -1,9 +1,9 @@
-import type { PropsWithChildren } from "react";
-import { useEffect, useRef, useState } from "react";
-import type { DraggableData, DraggableEvent } from "react-draggable";
-import Draggable from "react-draggable";
+import type { PropsWithChildren } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { DraggableData, DraggableEvent } from 'react-draggable';
+import Draggable from 'react-draggable';
 
-import type { PointType } from "@/types/common/playground";
+import type { PointType } from '@/types/common/playground';
 
 type PieceProps = {
   initialPos: PointType;
@@ -31,7 +31,7 @@ export const Piece: React.FC<PropsWithChildren<PieceProps>> = ({
     ) {
       setPosition(initialPos);
     }
-  }, [initialPos?.x, initialPos?.y, position.x, position.y]);
+  }, [initialPos, position.x, position.y, setPosition]);
 
   const handleDrag = (_: DraggableEvent, data: DraggableData) => {
     isDraggingRef.current = true;

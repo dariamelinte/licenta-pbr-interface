@@ -1,9 +1,9 @@
-import { toast } from "react-toastify";
-import type { StateCreator } from "zustand";
+import { toast } from 'react-toastify';
+import type { StateCreator } from 'zustand';
 
-import { getCameraPerspective } from "@/constants/constants";
-import type { ObjectInstanceType } from "@/types/common/objectInstance";
-import type { PlaygroundStoreType } from "@/types/store/playground";
+import { getCameraPerspective } from '@/constants/constants';
+import type { ObjectInstanceType } from '@/types/common/objectInstance';
+import type { PlaygroundStoreType } from '@/types/store/playground';
 
 export const playgroundSlice: StateCreator<
   PlaygroundStoreType,
@@ -12,9 +12,9 @@ export const playgroundSlice: StateCreator<
   PlaygroundStoreType
 > = (set, get) => ({
   playground: {
-    focusedAxe: "oz",
+    focusedAxe: 'oz',
     instances: {},
-    cameraPerspective: getCameraPerspective("oz"),
+    cameraPerspective: getCameraPerspective('oz'),
     scale: 1,
     linkages: [],
 
@@ -95,7 +95,7 @@ export const playgroundSlice: StateCreator<
       if (first_connection?.instance === connectionPoint.instance) {
         linkages.pop();
         set({ playground: { ...get().playground, linkages } });
-        toast.error("Cannot link an object to itself");
+        toast.error('Cannot link an object to itself');
         return;
       }
 
@@ -123,7 +123,7 @@ export const playgroundSlice: StateCreator<
       const updatedLinkages = linkages.filter(
         ({ first_connection: f, second_connection: s }) =>
           !(f?.uuid === first && s?.uuid === second) &&
-          !(f?.uuid === second && s?.uuid === second)
+          !(f?.uuid === second && s?.uuid === second),
       );
 
       set({
@@ -138,9 +138,9 @@ export const playgroundSlice: StateCreator<
       set({
         playground: {
           ...get().playground,
-          focusedAxe: "oz",
+          focusedAxe: 'oz',
           instances: {},
-          cameraPerspective: getCameraPerspective("oz"),
+          cameraPerspective: getCameraPerspective('oz'),
           scale: 1,
           linkages: [],
         },
@@ -163,7 +163,7 @@ export const playgroundSlice: StateCreator<
       const updatedLinkages = linkages.filter(
         ({ first_connection, second_connection }) =>
           first_connection?.instance !== id &&
-          second_connection?.instance !== id
+          second_connection?.instance !== id,
       );
 
       set({

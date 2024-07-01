@@ -31,7 +31,7 @@ export const resultSlice: StateCreator<
           results,
         },
       }),
-    
+
     setResultId: (resultId) =>
       set({
         result: {
@@ -132,7 +132,11 @@ export const resultSlice: StateCreator<
 
     deleteResultInstance: async (accessToken, id: string, instance: string) => {
       try {
-        const { data } = await service.deleteResultInstance(accessToken, id, instance);
+        const { data } = await service.deleteResultInstance(
+          accessToken,
+          id,
+          instance,
+        );
 
         if (!data.success) throw Error(data.error);
 
@@ -155,7 +159,11 @@ export const resultSlice: StateCreator<
 
     deleteResultLinkage: async (accessToken, id: string, linkage: string) => {
       try {
-        const { data } = await service.deleteResultLinkage(accessToken, id, linkage);
+        const { data } = await service.deleteResultLinkage(
+          accessToken,
+          id,
+          linkage,
+        );
 
         if (!data.success) throw Error(data.error);
 

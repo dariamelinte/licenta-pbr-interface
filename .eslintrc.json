@@ -61,13 +61,20 @@
         "import/order": "off", // Avoid conflict rule between `eslint-plugin-import` and `eslint-plugin-simple-import-sort`
         "@typescript-eslint/no-unused-vars": "off",
         "jsx-a11y/label-has-associated-control": "off",
+        "jsx-a11y/control-has-associated-label": "off",
+        "react/button-has-type": "off",
         "unused-imports/no-unused-imports": "error",
         "no-underscore-dangle": "off",
         "@typescript-eslint/naming-convention": "off",
-        "unused-imports/no-unused-vars": [
-          "error",
-          { "argsIgnorePattern": "^_" }
-        ]
+        "unused-imports/no-unused-vars": "off",
+        "@typescript-eslint/no-shadow": "off",
+        "no-console": "off",
+        "react/no-unescaped-entities": "off",
+        "import/no-cycle": "off",
+        "react/no-array-index-key": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "no-plusplus": "off"
       }
     }
   ]

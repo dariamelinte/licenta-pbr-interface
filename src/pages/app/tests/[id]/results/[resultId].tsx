@@ -10,8 +10,12 @@ const Index = () => {
   const router = useRouter();
 
   const { token } = useStore(useCallback((state) => state.auth, []));
-  const { getResultById, loading, setResultId } = useStore(useCallback((state) => state.result, []));;
-  const { loadPlayground } = useStore(useCallback((state) => state.playground, []));
+  const { getResultById, loading, setResultId } = useStore(
+    useCallback((state) => state.result, []),
+  );
+  const { loadPlayground } = useStore(
+    useCallback((state) => state.playground, []),
+  );
 
   const handleResult = useCallback(async () => {
     const { resultId } = router.query;
@@ -23,14 +27,14 @@ const Index = () => {
 
     const { instances, linkages, scale } = result;
     loadPlayground({ instances, linkages, scale });
-  }, [getResultById, token, loadPlayground]);
+  }, [getResultById, token, loadPlayground, router.query]);
 
   useEffect(() => {
     if (router.query.resultId) {
       setResultId(router.query.resultId as string);
       handleResult();
     }
-  }, [handleResult, router.query.resultId]);
+  }, [handleResult, router.query.resultId, setResultId]);
 
   if (loading) {
     return (

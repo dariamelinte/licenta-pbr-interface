@@ -1,18 +1,20 @@
 import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import { TestForm } from '@/components/forms';
 import { VerticalMenuPage } from '@/layouts';
 import useStore from '@/stores';
 import type { TestType } from '@/types/common/test';
-import { useCallback } from 'react';
 
 const Index = () => {
   const router = useRouter();
   const { token } = useStore(useCallback((state) => state.auth, []));
   const { createTest } = useStore(useCallback((state) => state.test, []));
-  const { createResult } = useStore(useCallback((state) => state.result, []));;
-  const { instances, linkages, scale } = useStore(useCallback((state) => state.playground, []));
+  const { createResult } = useStore(useCallback((state) => state.result, []));
+  const { instances, linkages, scale } = useStore(
+    useCallback((state) => state.playground, []),
+  );
 
   const handleSubmit = async (values: TestType) => {
     if (!(Object.keys(instances).length && linkages.length)) {

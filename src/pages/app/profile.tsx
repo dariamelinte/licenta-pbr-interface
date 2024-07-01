@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 
 import { Button } from '@/components/common';
 import { ProfileForm } from '@/components/forms';
 import { VerticalMenuPage } from '@/layouts';
 import useStore from '@/stores';
-import { useCallback } from 'react';
 
 const Index = () => {
   const router = useRouter();

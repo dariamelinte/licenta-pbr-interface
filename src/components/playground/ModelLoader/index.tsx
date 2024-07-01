@@ -2,11 +2,8 @@ import { useFBX } from '@react-three/drei';
 import React, { useEffect } from 'react';
 import * as THREE from 'three';
 
-import type { modelEntensions } from '@/constants/constants';
-
 type ModelLoaderType = {
   url: string;
-  extension: (typeof modelEntensions)[number];
   scale?: number[];
   rotation?: number[];
 
@@ -26,7 +23,7 @@ export const ModelLoader: React.FC<ModelLoaderType> = ({
       const boundingBox = new THREE.Box3().setFromObject(fbx);
       onBoundingBoxCalculated?.(boundingBox);
     }
-  }, [fbx]);
+  }, [fbx, onBoundingBoxCalculated]);
 
   return <primitive object={fbx} scale={scale} rotation={rotation} />;
 };

@@ -1,9 +1,9 @@
-import { Button } from "@/components/common";
-import { Plus } from "@/components/icons";
-import type { ObjectModelApiType } from "@/types/common/api";
+import { Button } from '@/components/common';
+import { Plus } from '@/components/icons';
+import type { ObjectModelApiType } from '@/types/common/api';
 
-import { ModelView } from "./ModelView";
-import styles from "./ModelView.module.css";
+import { ModelView } from './ModelView';
+import styles from './ModelView.module.css';
 
 type AddModelViewProps = {
   objectModel: ObjectModelApiType;

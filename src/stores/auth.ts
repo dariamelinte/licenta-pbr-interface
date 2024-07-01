@@ -40,7 +40,7 @@ export const authSlice: StateCreator<AuthStoreType, [], [], AuthStoreType> = (
       });
 
       if (has_profile) {
-        get().auth.getProfile(token)
+        get().auth.getProfile(token);
       }
     },
 

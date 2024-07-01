@@ -1,14 +1,14 @@
-import { Form, Formik } from "formik";
-import { useCallback, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { Form, Formik } from 'formik';
+import { useCallback, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-import { Button, Dialog, Loading } from "@/components/common";
-import { CheckCircle, PencilSquare } from "@/components/icons";
-import { Board } from "@/components/playground";
-import { INITIAL_TEST_FORM } from "@/constants/initial-objects";
-import { testSchema } from "@/constants/validation-schemas";
-import useStore from "@/stores";
-import type { TestType } from "@/types/common/test";
+import { Button, Dialog, Loading } from '@/components/common';
+import { CheckCircle, PencilSquare } from '@/components/icons';
+import { Board } from '@/components/playground';
+import { INITIAL_TEST_FORM } from '@/constants/initial-objects';
+import { testSchema } from '@/constants/validation-schemas';
+import useStore from '@/stores';
+import type { TestType } from '@/types/common/test';
 
 type TestFormProps = {
   initialTest?: TestType;
@@ -25,10 +25,10 @@ export const TestForm: React.FC<TestFormProps> = ({
 }) => {
   const { open, setOpen } = useStore(useCallback((state) => state.dialog, []));
   const { loading, getObjectModels } = useStore(
-    useCallback((state) => state.objectModel, [])
+    useCallback((state) => state.objectModel, []),
   );
   const { addObjectInstance } = useStore(
-    useCallback((state) => state.playground, [])
+    useCallback((state) => state.playground, []),
   );
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const TestForm: React.FC<TestFormProps> = ({
               icon={<PencilSquare />}
               theme="base"
               onClick={() => {
-                setOpen("test-information");
+                setOpen('test-information');
               }}
               className="mr-4 !flex w-full items-center justify-center"
             >
@@ -72,7 +72,7 @@ export const TestForm: React.FC<TestFormProps> = ({
             </Button>
           </div>
 
-          {open === "test-information" && <Dialog.TestInformation />}
+          {open === 'test-information' && <Dialog.TestInformation />}
         </Form>
       </Formik>
       <Board

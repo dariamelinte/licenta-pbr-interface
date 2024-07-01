@@ -14,7 +14,9 @@ const Index = () => {
   const router = useRouter();
   const [group, setGroup] = useState<GroupFormType | null>(null);
 
-  const { open, setOpen, setOnConfirm } = useStore(useCallback((state) => state.dialog, []));
+  const { open, setOpen, setOnConfirm } = useStore(
+    useCallback((state) => state.dialog, []),
+  );
   const { token, user } = useStore(useCallback((state) => state.auth, []));
   const {
     groups,
@@ -48,7 +50,16 @@ const Index = () => {
       },
       onView: (id: string) => router.push(`/app/groups/${id}`),
     };
-  }, [user.role, setOpen, setGroup, setOnConfirm, updateGroup, router]);
+  }, [
+    user.role,
+    setOpen,
+    setGroup,
+    setOnConfirm,
+    updateGroup,
+    router,
+    deleteGroup,
+    token,
+  ]);
 
   useEffect(() => {
     getGroups(token as string);

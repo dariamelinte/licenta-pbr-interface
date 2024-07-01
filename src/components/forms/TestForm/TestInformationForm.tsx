@@ -12,7 +12,9 @@ type TestFormProps = {};
 
 export const TestInformationForm: React.FC<TestFormProps> = () => {
   const { token, user } = useStore(useCallback((state) => state.auth, []));
-  const { groups, getGroups } = useStore(useCallback((state) => state.group, []));
+  const { groups, getGroups } = useStore(
+    useCallback((state) => state.group, []),
+  );
 
   const isStudent = useMemo(() => user.role === 'student', [user.role]);
   const groupOptions = useMemo(

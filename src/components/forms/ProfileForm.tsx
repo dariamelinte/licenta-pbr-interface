@@ -12,7 +12,9 @@ import arrayToOptions from '@/utils/arrayToOptions';
 import styles from './Form.module.css';
 
 export const ProfileForm = () => {
-  const { user, getProfile, updateProfile, token } = useStore(useCallback((state) => state.auth, []))
+  const { user, getProfile, updateProfile, token } = useStore(
+    useCallback((state) => state.auth, []),
+  );
   useEffect(() => {
     if (token) {
       getProfile(token);
