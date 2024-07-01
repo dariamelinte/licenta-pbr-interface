@@ -103,6 +103,7 @@ export const playgroundSlice: StateCreator<
     },
 
     changeObjectInstancePosition: (id, position) => {
+      // console.log({ id, position, axis: get().playground.focusedAxe})
       set({
         playground: {
           ...get().playground,

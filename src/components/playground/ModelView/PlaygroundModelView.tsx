@@ -177,7 +177,6 @@ export const PlaygroundModelView: React.FC<PlaygroundModelViewProps> = ({
         return { ...rest, first_connection, second_connection };
       },
     );
-    console.log(linkages, updatedLinkages);
     setLinkages(updatedLinkages);
   };
 

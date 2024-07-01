@@ -98,7 +98,7 @@ export const Board: React.FC<BoardProps> = ({
   return (
     <>
       {!disabled ? (
-        <div className="absolute p-3">
+        <div className="absolute z-50 p-3">
           <ObjectModelMenu onAddObjectModel={handleAddInstance} />
         </div>
       ) : null}

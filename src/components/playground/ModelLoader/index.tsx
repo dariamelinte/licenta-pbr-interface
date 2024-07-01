@@ -23,7 +23,7 @@ export const ModelLoader: React.FC<ModelLoaderType> = ({
       const boundingBox = new THREE.Box3().setFromObject(fbx);
       onBoundingBoxCalculated?.(boundingBox);
     }
-  }, [fbx, onBoundingBoxCalculated]);
+  }, [fbx]);
 
   return <primitive object={fbx} scale={scale} rotation={rotation} />;
 };
