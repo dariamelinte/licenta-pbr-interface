@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import { Form, Formik } from 'formik';
+import { useCallback } from 'react';
 
 import { Form as CommonForm } from '@/components/common';
 import { INITIAL_CATEGORY } from '@/constants/initial-objects';
@@ -10,14 +11,15 @@ import type { CategoryApiType } from '@/types/common/api';
 import type { CategoryType } from '@/types/common/category';
 
 import styles from './Form.module.css';
-import { useCallback } from 'react';
 
 type CategoryFormProps = {
   category: CategoryApiType | null;
 };
 
 export const CategoryForm: React.FC<CategoryFormProps> = ({ category }) => {
-  const { setOpen, onConfirm } = useStore(useCallback((state) => state.dialog, []));
+  const { setOpen, onConfirm } = useStore(
+    useCallback((state) => state.dialog, []),
+  );
 
   return (
     <Formik<CategoryType>

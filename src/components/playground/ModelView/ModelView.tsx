@@ -75,6 +75,8 @@ export const ModelView: React.FC<ModelViewProps> = ({
           case 'oz':
             camera.position.set(center.x, distance, center.z);
             break;
+          default:
+            break;
         }
 
         camera.lookAt(center);
@@ -95,7 +97,6 @@ export const ModelView: React.FC<ModelViewProps> = ({
       {modelUrl && (
         <ModelLoader
           url={modelUrl}
-          extension=".fbx"
           scale={scale}
           onBoundingBoxCalculated={handleBoundingBoxCalculated}
         />

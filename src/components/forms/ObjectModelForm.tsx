@@ -21,8 +21,12 @@ type ObjectModelProps = {
 export const ObjectModelForm: React.FC<ObjectModelProps> = ({
   objectModel,
 }) => {
-  const { setOpen, onConfirm } = useStore(useCallback((state) => state.dialog, []));
-  const { categories, getCategories } = useStore(useCallback((state) => state.category, []))
+  const { setOpen, onConfirm } = useStore(
+    useCallback((state) => state.dialog, []),
+  );
+  const { categories, getCategories } = useStore(
+    useCallback((state) => state.category, []),
+  );
 
   const optionsCategories = useMemo(
     () => [

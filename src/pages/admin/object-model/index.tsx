@@ -13,7 +13,9 @@ const Index = () => {
     null,
   );
 
-  const { open, setOpen, setOnConfirm } = useStore(useCallback((state) => state.dialog, []));
+  const { open, setOpen, setOnConfirm } = useStore(
+    useCallback((state) => state.dialog, []),
+  );
   const { token } = useStore(useCallback((state) => state.auth, []));
   const {
     objectModels,

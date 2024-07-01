@@ -19,7 +19,9 @@ export const ObjectModelMenu: React.FC<ObjectModelMenuType> = ({
 }) => {
   const { objectModels, loading, getObjectModels, getObjectModelsByCategory } =
     useStore(useCallback((state) => state.objectModel, []));
-  const { categories, getCategories } = useStore(useCallback((state) => state.category, []))
+  const { categories, getCategories } = useStore(
+    useCallback((state) => state.category, []),
+  );
 
   const [models, setModels] = useState(objectModels);
   const [category, setCategory] = useState<string | undefined>();

@@ -1,16 +1,16 @@
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { toast } from "react-toastify";
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 
-import { Loading } from "@/components/common";
-import { TestForm } from "@/components/forms";
-import { ERROR_MESSAGE } from "@/constants/messages";
-import { VerticalMenuPage } from "@/layouts";
-import useStore from "@/stores";
-import type { ResultApiType, TestApiType } from "@/types/common/api";
-import type { ResultType } from "@/types/common/result";
-import type { TestType } from "@/types/common/test";
-import { timestampToDate } from "@/utils/timestampToDate";
+import { Loading } from '@/components/common';
+import { TestForm } from '@/components/forms';
+import { ERROR_MESSAGE } from '@/constants/messages';
+import { VerticalMenuPage } from '@/layouts';
+import useStore from '@/stores';
+import type { ResultApiType, TestApiType } from '@/types/common/api';
+import type { ResultType } from '@/types/common/result';
+import type { TestType } from '@/types/common/test';
+import { timestampToDate } from '@/utils/timestampToDate';
 
 const Index = () => {
   const router = useRouter();
@@ -36,7 +36,7 @@ const Index = () => {
   const { instances, linkages, scale, loadPlayground, resetPlayground } =
     useStore(useCallback((state) => state.playground, []));
 
-  const isStudent = useMemo(() => user.role === "student", [user.role]);
+  const isStudent = useMemo(() => user.role === 'student', [user.role]);
 
   const handleTest = useCallback(async () => {
     const test = await getTestById(token as string, router.query.id as string);
@@ -52,7 +52,7 @@ const Index = () => {
       start_date: timestampToDate(Number(start_date)),
       due_date: timestampToDate(Number(due_date)),
     });
-  }, [getTestById, token, router.query.id, setTest]);
+  }, [getTestById, token, router.query.id, setTest, getResultsByTest]);
 
   const handleResult = useCallback(() => {
     const [fetchedResult] = results;
@@ -68,13 +68,23 @@ const Index = () => {
     } else {
       setResult({ linkages, instances, scale, test: test?._id });
     }
-  }, [loadPlayground, setResultId, setResult, setIsFirst, results]);
+  }, [
+    loadPlayground,
+    setResultId,
+    setResult,
+    setIsFirst,
+    results,
+    instances,
+    linkages,
+    scale,
+    test?._id,
+  ]);
 
   useEffect(() => {
     resetPlayground();
     setResultId(undefined);
     handleTest();
-  }, [handleTest]);
+  }, [handleTest, resetPlayground, setResultId]);
 
   useEffect(() => {
     handleResult();
@@ -86,7 +96,7 @@ const Index = () => {
 
   const handleSubmit = async (values: TestType) => {
     if (!(Object.keys(instances).length && linkages.length)) {
-      toast.error("You need to have a board in order to update a test!");
+      toast.error('You need to have a board in order to update a test!');
       return;
     }
 
@@ -116,8 +126,6 @@ const Index = () => {
       scale,
       submission_time: new Date(),
     };
-
-    console.log({ isFirst });
 
     if (isFirst) {
       const result = await createResult(token as string, payload);
@@ -149,7 +157,7 @@ const Index = () => {
         onSubmit={handleSubmit}
         initialTest={test}
         disabled={
-          user.role === "student" && new Date() > new Date(test.due_date)
+          user.role === 'student' && new Date() > new Date(test.due_date)
         }
       />
     </VerticalMenuPage>

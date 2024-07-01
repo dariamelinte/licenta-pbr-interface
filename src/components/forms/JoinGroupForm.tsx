@@ -1,4 +1,5 @@
 import { Form, Formik } from 'formik';
+import { useCallback } from 'react';
 
 import { Form as CommonForm } from '@/components/common';
 import { INITIAL_JOIN_GROUP } from '@/constants/initial-objects';
@@ -8,10 +9,11 @@ import useStore from '@/stores';
 import type { JoinGroupFormType } from '@/types/common/group';
 
 import styles from './Form.module.css';
-import { useCallback } from 'react';
 
 export const JoinGroupForm: React.FC = () => {
-  const { setOpen, onConfirm } = useStore(useCallback((state) => state.dialog, []));
+  const { setOpen, onConfirm } = useStore(
+    useCallback((state) => state.dialog, []),
+  );
 
   return (
     <Formik<JoinGroupFormType>

@@ -2,11 +2,8 @@ import { useFBX } from '@react-three/drei';
 import React, { useEffect } from 'react';
 import * as THREE from 'three';
 
-import type { modelEntensions } from '@/constants/constants';
-
 type ModelLoaderType = {
   url: string;
-  extension: (typeof modelEntensions)[number];
   scale?: number[];
   rotation?: number[];
 

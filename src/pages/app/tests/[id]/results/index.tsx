@@ -16,18 +16,22 @@ const Index = () => {
   const [userResults, setUserResults] = useState<UserResultType[]>([]);
 
   const { token } = useStore(useCallback((state) => state.auth, []));
-  const { loading: loadingT, getTestById } = useStore(useCallback((state) => state.test, []));
+  const { loading: loadingT, getTestById } = useStore(
+    useCallback((state) => state.test, []),
+  );
   const {
     results,
     loading: loadingR,
     getResultsByTest,
-  } = useStore(useCallback((state) => state.result, []));;
-  const { loading: loadingG, getGroupById } = useStore(useCallback((state) => state.group, []));
+  } = useStore(useCallback((state) => state.result, []));
+  const { loading: loadingG, getGroupById } = useStore(
+    useCallback((state) => state.group, []),
+  );
 
   const handleTest = useCallback(async () => {
     const res = await getTestById(token as string, router.query.id as string);
     if (res) setTest(res);
-  }, [getTestById, token, setTest]);
+  }, [getTestById, token, setTest, router.query.id]);
 
   const handleUserResults = useCallback(async () => {
     const foundGroup = await getGroupById(
@@ -39,7 +43,9 @@ const Index = () => {
 
     const foundUserResults: UserResultType[] = foundGroup.students.map(
       ({ first_name, last_name, phone_number, credential }) => {
-        const result = results.find((result) => result.credential === credential);
+        const result = results.find(
+          (result) => result.credential === credential,
+        );
 
         return {
           first_name,
@@ -47,7 +53,7 @@ const Index = () => {
           phone_number,
           score: result?.score || 0,
           result: result?._id,
-          status: result?._id
+          status: result?._id,
         };
       },
     );
@@ -65,7 +71,7 @@ const Index = () => {
 
   useEffect(() => {
     getResultsByTest(token as string, router.query.id as string);
-  }, [getResultsByTest, router.query.id]);
+  }, [getResultsByTest, router.query.id, token]);
 
   if (loadingT || loadingR || loadingG) {
     return (

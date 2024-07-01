@@ -1,5 +1,6 @@
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 
 import { Button, Form as CommonForm } from '@/components/common';
 import { INITIAL_REGISTER_FORM } from '@/constants/initial-objects';
@@ -7,11 +8,12 @@ import { authLabels } from '@/constants/labels';
 import { registerSchema } from '@/constants/validation-schemas';
 import useStore from '@/stores';
 import type { RegisterFormType } from '@/types/common/auth';
-import { useCallback } from 'react';
 
 export const RegisterForm = () => {
   const router = useRouter();
-  const { register, loading } = useStore(useCallback((state) => state.auth, []));
+  const { register, loading } = useStore(
+    useCallback((state) => state.auth, []),
+  );
 
   return (
     <Formik<RegisterFormType>

@@ -11,7 +11,9 @@ export function VerticalMenuPage({
   children,
   ...pageProps
 }: PropsWithChildren<PageProps>) {
-  const { user, getProfile, token } = useStore(useCallback((state) => state.auth, []));
+  const { user, getProfile, token } = useStore(
+    useCallback((state) => state.auth, []),
+  );
 
   useEffect(() => {
     getProfile(token as string);

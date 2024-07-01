@@ -11,7 +11,9 @@ import type { ConfirmDialogType } from '@/types/store/dialog';
 const Index = () => {
   const [category, setCategory] = useState<CategoryApiType | null>(null);
 
-  const { open, setOpen, setOnConfirm } = useStore(useCallback((state) => state.dialog, []))
+  const { open, setOpen, setOnConfirm } = useStore(
+    useCallback((state) => state.dialog, []),
+  );
   const { token } = useStore(useCallback((state) => state.auth, []));
   const {
     categories,

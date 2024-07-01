@@ -21,7 +21,11 @@ export type PlaygroundStoreType = {
     setCameraPerspective: (cameraPerspective: number[]) => void;
     setLinkages: (linkages: LinkageType[]) => void;
 
-    addObjectInstance: (id: string, objectModelId: string, position: PointType) => void;
+    addObjectInstance: (
+      id: string,
+      objectModelId: string,
+      position: PointType,
+    ) => void;
     addConnectionPoint: (connectionPoint: ConnectionPointType) => void;
     changeObjectInstancePosition: (
       id: string,

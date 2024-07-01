@@ -13,14 +13,16 @@ export function UnauthPage({
   ...pageProps
 }: PropsWithChildren<PageProps>) {
   const router = useRouter();
-  const { token, expiration_time, setToken } = useStore(useCallback((state) => state.auth, []));
+  const { token, expiration_time, setToken } = useStore(
+    useCallback((state) => state.auth, []),
+  );
 
   const handleAuthUser = useCallback(() => {
     const cookieToken = Cookies.get(process.env.SECRET_TOKEN || '');
     let valid = false;
 
     if (token) {
-      valid = Date.now()  + 2 * 60 <= (expiration_time || 0) * 1000;
+      valid = Date.now() + 2 * 60 <= (expiration_time || 0) * 1000;
     } else if (cookieToken) {
       const { expiration_time: exp } = parseJwt(cookieToken);
       valid = Date.now() + 2 * 60 <= (exp || 0) * 1000;
@@ -33,9 +35,9 @@ export function UnauthPage({
         setToken(cookieToken);
       }
     } else {
-      Cookies.remove(process.env.SECRET_TOKEN || "");
+      Cookies.remove(process.env.SECRET_TOKEN || '');
     }
-  }, [token, router, setToken]);
+  }, [token, router, setToken, expiration_time]);
 
   useEffect(() => {
     handleAuthUser();

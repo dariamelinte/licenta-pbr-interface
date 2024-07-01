@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import type { ChangeEvent } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
+import type { ChangeEvent } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 
-import { Form } from "@/components/common";
-import { CoordinatesButton } from "@/components/common/Buttons";
-import { ArrowPath } from "@/components/icons";
+import { Form } from '@/components/common';
+import { CoordinatesButton } from '@/components/common/Buttons';
+import { ArrowPath } from '@/components/icons';
 import {
   Linkage,
   ObjectModelMenu,
   PlaygroundModelView,
-} from "@/components/playground";
-import { objectModelSizes } from "@/constants/constants";
-import useStore from "@/stores";
-import { PointType } from "@/types/common/playground";
+} from '@/components/playground';
+import { objectModelSizes } from '@/constants/constants';
+import useStore from '@/stores';
+import type { PointType } from '@/types/common/playground';
 
 type BoardProps = {
   shouldResetBoard?: boolean;
@@ -28,7 +28,9 @@ export const Board: React.FC<BoardProps> = ({
   disabled,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { objectModels } = useStore(useCallback((state) => state.objectModel, []));
+  const { objectModels } = useStore(
+    useCallback((state) => state.objectModel, []),
+  );
   const { instances, scale, setScale, linkages, focusedAxe, resetPlayground } =
     useStore(useCallback((state) => state.playground, []));
 
@@ -40,7 +42,6 @@ export const Board: React.FC<BoardProps> = ({
     if (shouldResetBoard) {
       resetPlayground();
     }
-    () => resetPlayground();
   }, [resetPlayground, shouldResetBoard]);
 
   useEffect(() => {
@@ -61,10 +62,10 @@ export const Board: React.FC<BoardProps> = ({
 
     // Update grid size on initial render and when window resizes
     updateGridSize();
-    window.addEventListener("resize", updateGridSize);
+    window.addEventListener('resize', updateGridSize);
 
     return () => {
-      window.removeEventListener("resize", updateGridSize);
+      window.removeEventListener('resize', updateGridSize);
     };
   }, []);
 
@@ -75,7 +76,7 @@ export const Board: React.FC<BoardProps> = ({
   const handleAddInstance = (id: string) => {
     const rect = containerRef.current?.getBoundingClientRect();
     const objectModel = objectModels.find(
-      (objectModel) => objectModel._id === id
+      (objectModel) => objectModel._id === id,
     );
 
     if (!objectModel || !rect) return;
@@ -83,11 +84,11 @@ export const Board: React.FC<BoardProps> = ({
     const position: PointType = {
       x: Math.max(
         (rect.left + (rect.width - objectModelSizes[objectModel.size])) / 2,
-        0
+        0,
       ),
       y: Math.max(
         (rect.top + (rect.height - objectModelSizes[objectModel.size])) / 2,
-        0
+        0,
       ),
     };
 
@@ -97,7 +98,7 @@ export const Board: React.FC<BoardProps> = ({
   return (
     <>
       {!disabled ? (
-        <div className="t-1 l-1 absolute z-50 p-3">
+        <div className="absolute z-50 p-3">
           <ObjectModelMenu onAddObjectModel={handleAddInstance} />
         </div>
       ) : null}
@@ -113,18 +114,18 @@ export const Board: React.FC<BoardProps> = ({
         <div
           className="absolute size-2 rounded-full bg-red-500"
           style={{
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
           }}
         />
         {Object.entries(instances).map(([uuid, instance]) => {
           const objectModel = objectModels.find(
-            (objectModel) => objectModel._id === instance.object_model
+            (objectModel) => objectModel._id === instance.object_model,
           );
 
           if (!objectModel) {
-            toast.error("Could not find an object model");
+            toast.error('Could not find an object model');
             return null;
           }
 
@@ -140,10 +141,7 @@ export const Board: React.FC<BoardProps> = ({
         {showLinks
           ? linkages.map((linkage, idx) => {
               const { first_connection, second_connection } = linkage;
-              if (
-                !first_connection?.uuid ||
-                !second_connection?.uuid
-              ) {
+              if (!first_connection?.uuid || !second_connection?.uuid) {
                 return <div key={idx} />;
               }
 
